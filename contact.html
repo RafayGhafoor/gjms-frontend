@@ -1,311 +1,176 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Contact Us - Creative Solutions</title>
-  </head>
-  <body>
-    <!-- Navigation Bar -->
-    <header class="text-gray-600 body-font">
-      <div
-        class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
-      >
-        <a
-          class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-10 h-10 text-white p-2 bg-blue-500 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-            ></path>
-          </svg>
-          <span class="ml-3 text-xl">Creative Solutions</span>
-        </a>
-        <nav
-          class="md:ml-auto flex flex-wrap items-center text-base justify-center"
-        >
-          <a href="index.html" class="mr-10 hover:text-gray-900">Home</a>
-          <a href="pricing.html" class="mr-10 hover:text-gray-900">Pricing</a>
-          <a href="aboutus.html" class="mr-10 hover:text-gray-900">About Us</a>
-          <a href="contact.html" class="mr-10 hover:text-gray-900"
-            >Contact Us</a
-          >
-        </nav>
-      </div>
-    </header>
 
-    <!-- Contact Us Form -->
-    <section class="text-gray-600 body-font mx-12">
-      <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          <h1 class="title-font font-medium text-3xl text-gray-900">
-            Get in Touch with Us
-          </h1>
-          <p class="leading-relaxed mt-4">
-            Drop your query with RFQ and we will immediately get back to you
-            with High-Service Packed modern solutions in adjustable prices. Get
-            Hands-On experience, Prototype, Use-case Model and Demo Application
-            overview.
-            <br /><span class="font-bold"
-              >Powered By team Creative Solutions.</span
-            >
-          </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50:'#f0f4fa', 100:'#dce4f5', 200:'#b8c9eb', 300:'#8aa6d9', 400:'#5c82c7', 500:'#3d66b5', 600:'#2d4f96', 700:'#1e3a6e', 800:'#152a52', 900:'#0f2557', 950:'#060d1b' },
+            gold: { 400:'#d4af37', 500:'#c8a94e', 600:'#b8962e' }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="theme.js"></script>
+  <title>Contact - Global Journal of Management, Social Sciences and Humanities</title>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white dark:bg-navy-950 shadow-sm border-b border-gray-100 dark:border-navy-800">
+    <div class="container mx-auto flex flex-wrap px-6 py-4 items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 text-navy-900 dark:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+          stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-navy-800 dark:bg-gold-500 rounded-lg"
+          viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        <div>
+          <span class="text-lg md:text-xl font-heading font-bold leading-tight">GJMSSH</span>
+          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400">Global Journal of Management, Social Sciences &amp; Humanities</span>
         </div>
-        <div
-          class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
-        >
-          <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
-            Request For Quotation
-          </h2>
-          <div class="relative mb-4">
-            <label for="full-name" class="leading-7 text-sm text-gray-600"
-              >Full Name</label
-            >
-            <input
-              type="text"
-              id="full-name"
-              placeholder="Your Full Name Here"
-              name="full-name"
-              class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            />
-          </div>
-          <div class="relative mb-4">
-            <label for="email" class="leading-7 text-sm text-gray-600"
-              >Email</label
-            >
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Your Email Here"
-              class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            />
-          </div>
-          <button
-            class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg"
-          >
-            Submit
-          </button>
-          <p class="text-xs text-gray-500 mt-3">
-            After submitting, you will soon hear back from us.
-          </p>
+      </a>
+      <button onclick="toggleTheme()" class="theme-toggle text-gray-600 dark:text-gray-300" aria-label="Toggle theme">
+        <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
+        <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+      </button>
+    </div>
+    <nav class="bg-navy-900 dark:bg-navy-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="relative flex h-14 items-center justify-between text-sm text-navy-200 overflow-x-auto gap-1">
+          <a href="index.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Home</a>
+          <a href="impact-factor.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Impact Factor</a>
+          <a href="editorial-board.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Editorial Board</a>
+          <a href="author-guideline.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Author's Guide</a>
+          <a href="Publication Ethics.pdf" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Publication Ethics</a>
+          <a href="vision-mission.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Vision/Mission</a>
+          <a href="archive.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Archive</a>
+          <a href="current-issue.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Current Issue</a>
         </div>
       </div>
-    </section>
+    </nav>
+  </header>
 
-    <footer class="text-gray-600 body-font">
-      <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-wrap md:text-left text-center order-first">
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2
-              class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3"
-            >
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2
-              class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3"
-            >
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2
-              class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3"
-            >
-              CATEGORIES
-            </h2>
-            <nav class="list-none mb-10">
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">First Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-              </li>
-            </nav>
-          </div>
-          <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2
-              class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3"
-            >
-              Newsletter
-            </h2>
-            <div
-              class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start"
-            >
-              <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
-                <label
-                  for="footer-field"
-                  class="leading-7 text-sm text-gray-600"
-                  >Subsribe</label
-                >
-                <input
-                  type="text"
-                  id="footer-field"
-                  placeholder="Your Email Here"
-                  name="footer-field"
-                  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-blue-200 focus:border-blue-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
+  <!-- Page Header -->
+  <section class="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white py-14 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h1 class="text-3xl md:text-5xl font-heading font-bold mb-3 hero-fade-in">Contact Us</h1>
+      <p class="text-navy-300 text-lg hero-fade-in-delay">Get in touch with the editorial team</p>
+    </div>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="py-16 flex-1">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- Contact Info -->
+        <div class="animate-on-scroll">
+          <h2 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Get in Touch</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            We welcome inquiries about manuscript submissions, publication policies, and collaboration opportunities.
+            Please feel free to reach out to our editorial team.
+          </p>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
               </div>
-              <button
-                class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded"
-              >
-                Get Feed
-              </button>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
+                <p class="text-gray-500 dark:text-gray-400">info@gjmsweb.com</p>
+              </div>
             </div>
-            <p class="text-gray-500 text-sm mt-2 md:text-left text-center">
-              Subcribe to our Monthly Newsletter
-              <br class="lg:block hidden" />to stay updated about latest
-              Services, Offerings & Discount seasons.
-            </p>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 003 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white">Website</h3>
+                <p class="text-gray-500 dark:text-gray-400">gjmsweb.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 animate-on-scroll animate-delay-100">
+          <h2 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-6">Send a Message</h2>
+          <div class="space-y-4">
+            <div>
+              <label for="full-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+              <input type="text" id="full-name" placeholder="Your full name"
+                class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2.5 text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-200 dark:focus:ring-navy-800 outline-none transition" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+              <input type="email" id="email" placeholder="your@email.com"
+                class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2.5 text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-200 dark:focus:ring-navy-800 outline-none transition" />
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
+              <textarea id="message" rows="4" placeholder="Your message..."
+                class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2.5 text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-200 dark:focus:ring-navy-800 outline-none transition resize-none"></textarea>
+            </div>
+            <button class="w-full bg-navy-800 hover:bg-navy-900 text-white font-semibold py-2.5 px-6 rounded-lg transition">
+              Send Message
+            </button>
           </div>
         </div>
       </div>
-      <div class="bg-gray-100">
-        <div
-          class="container px-5 py-6 mx-auto flex items-center sm:flex-row flex-col"
-        >
-          <a
-            class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-10 h-10 text-white p-2 bg-blue-500 rounded-full"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              ></path>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-navy-950 text-gray-400 mt-auto">
+    <div class="container mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-8 h-8 text-white p-1.5 bg-navy-800 rounded-lg"
+              viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
-            <span class="ml-3 text-xl">Creative Solutions</span>
-          </a>
-          <p class="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
-            © 2020 YPMedia —
-            <a
-              href="https://twitter.com/knyttneve"
-              rel="noopener noreferrer"
-              class="text-gray-600 ml-1"
-              target="_blank"
-              >@knyttneve</a
-            >
-          </p>
-          <span
-            class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
-          >
-            <a class="text-gray-500">
-              <svg
-                fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"
-                ></path>
-              </svg>
-            </a>
-            <a class="ml-3 text-gray-500">
-              <svg
-                fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
-                ></path>
-              </svg>
-            </a>
-            <a class="ml-3 text-gray-500">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                <path
-                  d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"
-                ></path>
-              </svg>
-            </a>
-            <a class="ml-3 text-gray-500">
-              <svg
-                fill="currentColor"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="0"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="none"
-                  d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
-                ></path>
-                <circle cx="4" cy="4" r="2" stroke="none"></circle>
-              </svg>
-            </a>
-          </span>
+            <span class="text-white font-heading font-bold">GJMSSH</span>
+          </div>
+          <p class="text-sm">A blind peer-reviewed quarterly journal since 2015.</p>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="current-issue.html" class="hover:text-gold-500 transition">Current Issue</a></li>
+            <li><a href="archive.html" class="hover:text-gold-500 transition">Archive</a></li>
+            <li><a href="author-guideline.html" class="hover:text-gold-500 transition">Author's Guide</a></li>
+            <li><a href="editorial-board.html" class="hover:text-gold-500 transition">Editorial Board</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-white font-semibold mb-4">Contact</h3>
+          <ul class="space-y-2 text-sm">
+            <li>Email: info@gjmsweb.com</li>
+            <li>Website: gjmsweb.com</li>
+          </ul>
         </div>
       </div>
-    </footer>
-  </body>
+      <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
+        &copy; 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</body>
+
 </html>
