@@ -236,7 +236,7 @@
     // Auto-calculate years of academic excellence
     var currentYear = new Date().getFullYear();
     var startYear = 2015;
-    var yearsOfExcellence = currentYear - startYear;
+    var yearsOfExcellence = (currentYear - startYear) + 1;
     document.getElementById('years-badge').textContent = yearsOfExcellence + ' Years of Academic Excellence (' + startYear + ' - ' + currentYear + ')';
     document.getElementById('footer-year').textContent = currentYear;
   </script>
