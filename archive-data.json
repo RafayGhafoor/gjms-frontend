@@ -2254,5 +2254,32 @@
         "pdf": "http://gjms.b-cdn.net/2024/Volume 10/Issue 4, 2024/Kanwal Fatima paper.pdf"
       }
     ]
+  },
+  {
+    "volume": "Vol 11",
+    "title": "Vol 11 - No. 1 (Jan - March, 2025)",
+    "articles": [
+      {
+        "num": 1,
+        "title": "Oil Price Fluctuations and Its Impact on Balance of Payment: Evidence From Pakistan",
+        "authors": "Rahat-Ul-Ain, Abdul Ghafoor Awan",
+        "pages": "1-34",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume 11/Issue 1, 2025/Rahatul Ain research paper.pdf"
+      },
+      {
+        "num": 2,
+        "title": "A Comparative Analysis of Renewable and Non-Renewable Energy Resources in Pakistan",
+        "authors": "Ali Gauhar, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "35-79",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume 11/Issue 1, 2025/Ali Gauhar paper.pdf"
+      },
+      {
+        "num": 3,
+        "title": "Interest Rate and Input Cost: Impact on the Performance of the Textile Industry in Pakistan",
+        "authors": "Hafiz Muhammad Yousaf, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "80-113",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume 11/Issue 1, 2025/Yousaf paper.pdf"
+      }
+    ]
   }
 ]

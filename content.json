@@ -1,0 +1,387 @@
+{
+  "site": {
+    "name": "GJMSSH",
+    "fullName": "Global Journal of Management, Social Sciences and Humanities",
+    "tagline": "A Blind Peer-Reviewed Quarterly Journal",
+    "email": "info@gjmsweb.com",
+    "website": "gjmsweb.com",
+    "startYear": 2015
+  },
+  "stats": {
+    "impactFactor": "5.99",
+    "daysToPublish": "30",
+    "acceptanceRate": "50%",
+    "publicationFee": "$200"
+  },
+  "home": {
+    "about": "Global Journal of Management, Social Sciences and Humanities (GJMSSH) is a blind peer review quarterly journal. Its Editorial Board consists of experienced and renowned academicians, researchers and professionals, who have developed vision and mission as well as policy of journal. The aim of GJMSSH is to provide a platform to research community to share knowledge and exchange their innovative research work. The researchers from all over the world are invited to submit their research papers for publishing in this journal.",
+    "features": [
+      {
+        "title": "Submit Your Paper",
+        "description": "Send your manuscript via email for review",
+        "linkText": "info@gjmsweb.com",
+        "linkHref": "mailto:info@gjmsweb.com"
+      },
+      {
+        "title": "Expert Editorial Board",
+        "description": "International academics and professionals",
+        "linkText": "View Board",
+        "linkHref": "editorial-board.html"
+      },
+      {
+        "title": "Fast Publishing",
+        "description": "Decision within 2 weeks, publication in 30 days",
+        "linkText": "Author's Guide",
+        "linkHref": "author-guideline.html"
+      }
+    ]
+  },
+  "impactFactor": {
+    "sjif": [
+      {
+        "year": "2023",
+        "value": "5.99",
+        "trend": "▲ +0.03",
+        "highlight": true
+      },
+      {
+        "year": "2022",
+        "value": "5.96",
+        "trend": "▲ +0.94",
+        "highlight": false
+      },
+      {
+        "year": "2021",
+        "value": "5.02",
+        "trend": "▲ +0.04",
+        "highlight": false
+      },
+      {
+        "year": "2020",
+        "value": "4.98",
+        "trend": "▲ +0.06",
+        "highlight": false
+      },
+      {
+        "year": "2019",
+        "value": "4.92",
+        "trend": "▲ +0.12",
+        "highlight": false
+      },
+      {
+        "year": "2018",
+        "value": "4.80",
+        "trend": "▲ +0.07",
+        "highlight": false
+      },
+      {
+        "year": "2017",
+        "value": "4.73",
+        "trend": "▲ +0.40",
+        "highlight": false
+      },
+      {
+        "year": "2016",
+        "value": "4.33",
+        "trend": "▲ +0.24",
+        "highlight": false
+      },
+      {
+        "year": "2015",
+        "value": "4.09",
+        "trend": "— Base Year",
+        "highlight": false
+      }
+    ],
+    "googleScholar": "2.89"
+  },
+  "currentIssue": {
+    "title": "Vol 12 - No. 1 (Jan - Mar, 2026)",
+    "articles": [
+      {
+        "num": 1,
+        "title": "Impact of Renewable and Non-Renewable Energy Consumption on Environmental Quality: Evidence From Pakistan",
+        "authors": "Tania Manzoor, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "01-33",
+        "pdf": "http://gjms.b-cdn.net/2026/Volume 12/Issue 1, 2026/Tania Manzoor Paper.pdf"
+      },
+      {
+        "num": 2,
+        "title": "Green Energy and Economic Development: A Macro Analysis",
+        "authors": "Sahifa, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "34-65",
+        "pdf": "http://gjms.b-cdn.net/2026/Volume 12/Issue 1, 2026/Sahifa Research paper.pdf"
+      },
+      {
+        "num": 3,
+        "title": "Impact of Green Technology and Innovation on CO2 Emissions in Pakistan",
+        "authors": "Khuld Jamshaid, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "66-98",
+        "pdf": "http://gjms.b-cdn.net/2026/Volume 12/Issue 1, 2026/Khuld research paper.pdf"
+      }
+    ]
+  },
+  "editorialBoard": {
+    "editorInChief": "Prof. Dr. Nicholas Perdikis",
+    "members": [
+      {
+        "name": "Prof. Dr. Gary Lynn",
+        "affiliation": "Howe School of Technology Management, Stevens Institute of Technology, Hooken, NJ07030, U.S.A."
+      },
+      {
+        "name": "Prof. Dr. Peter Midmore",
+        "affiliation": "Professor of Economics, School of Management and Business, Llanbadarn Centre, Aberystwyth University, United Kingdom."
+      },
+      {
+        "name": "Prof. Dr. M. David Waterman",
+        "affiliation": "Directeur du département LEA, Departement Langues Etrangeres Appliquees, France."
+      },
+      {
+        "name": "Prof. Dr. Jozef Colpaert",
+        "affiliation": "University of Antwerp, Belgium."
+      },
+      {
+        "name": "Prof. Dr. Javed Ghulam Hussain",
+        "affiliation": "Professor of Entrepreneurial Finance, Birmingham City University, United Kingdom."
+      },
+      {
+        "name": "Dr. Manne Bondesson",
+        "affiliation": "University of Lund, Sweden."
+      },
+      {
+        "name": "Dr. Sajjad M. Jasimuddin",
+        "affiliation": "Professor (Professeur senior) of Management, Kedge Business School, France."
+      },
+      {
+        "name": "Dr. Zafar Yaqub",
+        "affiliation": "King Abdul Aziz University, Jeddah, Saudi Arabia."
+      },
+      {
+        "name": "Dr. Arshad Jamal",
+        "affiliation": "Northumbria University, United Kingdom."
+      },
+      {
+        "name": "Dr. Haider Shah",
+        "affiliation": "University of Hertfordshire, United Kingdom."
+      },
+      {
+        "name": "Prof. Dr. Ali Malik",
+        "affiliation": "University of Hertfordshire, United Kingdom."
+      },
+      {
+        "name": "Mr. Zaffarullah Khan",
+        "affiliation": "University of Toronto, Canada."
+      },
+      {
+        "name": "Prof. Dr. Mehmet Asutay",
+        "affiliation": "Durham Centre for Islamic and Finance Business School, Durham University, UK."
+      },
+      {
+        "name": "Dr. Alim Al Ayub Ahmad",
+        "affiliation": "ASA University of Bangladesh, Bangladesh."
+      },
+      {
+        "name": "Prof. Dr. Abuzer Wajidi",
+        "affiliation": "Director, Institute of Health and Business Management, Jinnah Sindh Medical University, Karachi, Pakistan."
+      },
+      {
+        "name": "Prof. Dr. Muhammad Shaukat Malik",
+        "affiliation": "Pro-Rector, Times Institute, Multan, Pakistan."
+      },
+      {
+        "name": "Prof. Dr. Rana Ejaz Ali Khan",
+        "affiliation": "Ex-Chairman, Department of Economics, Islamia University of Bahawalpur, Pakistan."
+      },
+      {
+        "name": "Prof. Dr. Nasir Nadeem",
+        "affiliation": "Muhammad Nawaz Sharif University of Agriculture, Multan, Pakistan."
+      },
+      {
+        "name": "Dr. Zohariah Saludin",
+        "affiliation": "Center for Economics and Business Studies, University Teknologi, MARA, Malaysia."
+      },
+      {
+        "name": "Dr. Mumtaz Bhutta",
+        "affiliation": "King Abdul Aziz University, Saudi Arabia."
+      },
+      {
+        "name": "Dr. Ammarah Ghafoor",
+        "affiliation": "Birmingham Medical University Hospital, United Kingdom."
+      },
+      {
+        "name": "Dr. Junaid Zia Hashmi",
+        "affiliation": "Birmingham Medical University Hospital, United Kingdom."
+      },
+      {
+        "name": "Dr. Nimrah Khan",
+        "affiliation": "Dublin, Ireland."
+      }
+    ]
+  },
+  "authorGuidelines": {
+    "intro": "The authors are requested to carefully read the following terms and conditions before submitting a manuscript. It will save time and efforts and expedite publishing of paper.",
+    "sections": [
+      {
+        "title": "Paper Length",
+        "text": "Articles should be between 4000 and 6000 words in length. This includes all text including references and appendices. Please allow 280 words for each figure or table. There must be 1.5 space between line and all text will be in \"Times New Roman\" with 12 font size."
+      },
+      {
+        "title": "Paper Title",
+        "text": "A title of paper should not be more than 30 words."
+      },
+      {
+        "title": "Author Details",
+        "text": "All contributing authors' names should be mentioned below title of paper, and their names arranged in the correct order for publication."
+      },
+      {
+        "title": "Email Address",
+        "text": "Correct email addresses and cell number of every author should be provided for record and communication purpose."
+      },
+      {
+        "title": "Contribution",
+        "text": "The contribution of each author must be given in order to determine who is the core author and who is the helper in research work. The corresponding author should be core author who knows the whole scheme of research and can communicate with the Editor about technical issues of the paper."
+      },
+      {
+        "title": "Affiliation",
+        "text": "The affiliation of each contributing author(s) should be clearly mentioned. The affiliation listed should be where they were based at the time when the research for the paper was conducted. The author should mention the institution/University, Research Institute and other organization in which they are currently working."
+      },
+      {
+        "title": "Biographies and Acknowledgements",
+        "text": "Authors should give brief notes on their individual biographies if they wish to publish with their paper. The sketch of biographies should be given at the end of paper. The professional biography of author should not be more than 100 words. Author must acknowledge those who provided necessary guide or funds for completion of research work."
+      },
+      {
+        "title": "Abstract",
+        "text": "The abstract must be consisted of 250 words in italic style and contains following elements:",
+        "list": [
+          "Objective of study",
+          "Design/methodology/approaches",
+          "Findings & Results",
+          "Research limitations/implications (Optional)",
+          "Practical implications (Optional)",
+          "Social implications (Optional)",
+          "Originality/value"
+        ]
+      },
+      {
+        "title": "Keywords",
+        "text": "Authors should provide appropriate and short keywords at the end of abstract that encapsulate the principal topics of the paper. The maximum number of keywords is 12."
+      },
+      {
+        "title": "Type of Paper",
+        "text": "The author must mention whether his paper is original research article, a case study, a review report or conceptual paper. Types of papers:",
+        "labeledList": [
+          {
+            "label": "Original Research Paper",
+            "text": "Covers papers which report on any type of research undertaken by the author(s). The research may involve the construction or testing of a model or framework, action research, testing of data, market research or surveys, empirical, scientific or clinical research."
+          },
+          {
+            "label": "Viewpoint",
+            "text": "Any paper where content is dependent on the author's opinion and interpretation; this also includes journalistic pieces."
+          },
+          {
+            "label": "Technical Paper",
+            "text": "Describes and evaluates technical products, processes or services."
+          },
+          {
+            "label": "Conceptual Paper",
+            "text": "These papers will not be based on research but will develop hypotheses. The papers are likely to be descriptive and will cover philosophical discussions and comparative studies of others' work and thinking."
+          },
+          {
+            "label": "A Case Study",
+            "text": "Case studies describe actual interventions or experiences within organizations."
+          },
+          {
+            "label": "Literature Review",
+            "text": "The main purpose is to annotate and/or critique the literature in a particular subject area."
+          },
+          {
+            "label": "General Review",
+            "text": "Covers papers which provide an overview or historical examination of some concept, technique or phenomenon."
+          }
+        ]
+      },
+      {
+        "title": "Headings",
+        "text": "Headings must be concise, with a clear indication of the distinction between the hierarchy of headings. The font size of title should be 14 Arial while the name of authors should in 12 fonts. The headline of abstract should have 14 fonts. All sub-headlines in the paper should of 12 font bold Arial."
+      },
+      {
+        "title": "Notes/Endnotes",
+        "text": "Notes or Endnotes should be used only if absolutely necessary and must be identified in the text by consecutive numbers, enclosed in square brackets and listed at the end of the article."
+      },
+      {
+        "title": "Figures",
+        "text": "All Figures (charts, diagrams, line drawings, web pages/screenshots, and photographic images) should be adjusted in the text at relevant place and they must have number and captions. All Figures should be of high quality, legible and numbered consecutively with Arabic numerals."
+      },
+      {
+        "title": "Tables",
+        "text": "Tables should be typed in Excel format and should have a caption relating to the data in the table. Table should be adjusted at relevant position of text and fully explain the data given in the table. Source of data must be mentioned below table."
+      },
+      {
+        "title": "References",
+        "text": "References must be in APA style and carefully checked for completeness, accuracy and consistency. You should cite publications in the text: (Smith, 2006) using the last name of author or (Smith and Brown, 2006) citing both names of two, or (Adams et al., 2006), when there are three or more authors.",
+        "text2": "Reference formats:",
+        "labeledList": [
+          {
+            "label": "Books",
+            "text": "Surname, Initials (year), Title of Book, Publisher, Place of publication."
+          },
+          {
+            "label": "Book Chapters",
+            "text": "Surname, Initials (year), \"Chapter title\", Editor's Surname, Initials, Title of Book, Publisher, Place of publication, pages."
+          },
+          {
+            "label": "Journals",
+            "text": "Surname, Initials (year), \"Title of article\", Journal Name, volume, issue, pages."
+          },
+          {
+            "label": "Conference Proceedings",
+            "text": "Surname, Initials (year), \"Title of paper\", in Surname, Initials (Ed.), Title of proceeding, Publisher, Place, Pages."
+          },
+          {
+            "label": "Working Papers",
+            "text": "Surname, Initials (year), \"Title\", working paper [number], Institution, Place, date."
+          },
+          {
+            "label": "Electronic Sources",
+            "text": "Full URL should be mentioned at the end of the reference with access date."
+          }
+        ]
+      },
+      {
+        "title": "Plagiarism",
+        "text": "Zero tolerance of plagiarism because it is a social taboo in research. The plagiarism of every paper will be checked before publishing. If plagiarism is found more than 15 percent the paper will be rejected."
+      }
+    ],
+    "highlights": [
+      {
+        "title": "Publication Fee",
+        "text": "US$200 will be charged from the author. The fee can be paid with submission of paper or after its acceptance. Some portion of waiver will be granted to the students belonging to low income countries.",
+        "style": "gold"
+      },
+      {
+        "title": "Decision Timeline",
+        "text": "The decision whether the paper is accepted or rejected will be communicated to corresponding author within two weeks of submission. After acceptance, the paper will be published in the next issue.",
+        "style": "navy"
+      }
+    ],
+    "disclaimer": "The author or authors will be responsible for material, data, images, table, diagrams, etc, quoted in the text and the journal will not be responsible for their originality, validity, legality in any way because the Journal publishes a research paper under good faith, aiming to facilitate exchange of knowledge among the research community living in different parts of the world."
+  },
+  "visionMission": {
+    "vision": "The vision of the Global Journal of Management & Social Sciences and Humanities is to provide a platform to the members of research community living in different parts of the world to exchange knowledge and reap benefit from the experience of one another. The Journal has intended to promote healthy values among the researchers so that they may be able to contribute in the uplift of human beings. The important point of vision is to make this journal as a leading star by promoting original and innovative research which will not only be beneficial for existing generation but also for coming generations. The objective of this journal is to facilitate knowledge accumulation, knowledge management and knowledge dissemination and as such all research papers will be published in good faith without any discrimination. All papers will be evaluated on merit which means that if a research paper written by any author meets basic criteria of research it will be published without any other consideration.",
+    "missionIntro": "Keeping in view the above vision, this journal has opted the following principles as its core objectives:",
+    "missionItems": [
+      "To make this Journal as a leading research document which will be reliable, useable and beneficial for the researchers living in different parts of world.",
+      "To encourage young researchers to get published their original research work and become a versatile member of research community.",
+      "To strictly discourage plagiarism in any form and blacklist the author to be involved in such unethical activities.",
+      "To publish research papers, research reports, case studies and articles written on specific social and business issues and having their possible solutions.",
+      "To encourage the authors to get published papers having originality values and practical implications.",
+      "To make this journal as a leading research entity by following healthy standards, norms of ethics and unbiased approach.",
+      "To widen the scope of journal so that the researchers of the whole world may be able to contribute into it."
+    ]
+  },
+  "contact": {
+    "intro": "We welcome inquiries about manuscript submissions, publication policies, and collaboration opportunities. Please feel free to reach out to our editorial team.",
+    "email": "info@gjmsweb.com",
+    "website": "gjmsweb.com"
+  }
+}

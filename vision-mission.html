@@ -69,64 +69,10 @@
     </div>
   </section>
 
-  <!-- Content -->
+  <!-- Content rendered by JS -->
   <section class="py-12 flex-1">
-    <div class="container mx-auto px-6 max-w-4xl space-y-10">
-
-      <!-- Vision -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-on-scroll">
-        <div class="bg-navy-800 dark:bg-navy-900 px-6 py-4">
-          <h2 class="text-2xl font-heading font-bold text-white">Vision</h2>
-        </div>
-        <div class="p-8">
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
-            The vision of the Global Journal of Management &amp; Social Sciences and Humanities is to provide a platform to the members of research community living in different parts of the world to exchange knowledge and reap benefit from the experience of one another. The Journal has intended to promote healthy values among the researchers so that they may be able to contribute in the uplift of human beings. The important point of vision is to make this journal as a leading star by promoting original and innovative research which will not only be beneficial for existing generation but also for coming generations. The objective of this journal is to facilitate knowledge accumulation, knowledge management and knowledge dissemination and as such all research papers will be published in good faith without any discrimination. All papers will be evaluated on merit which means that if a research paper written by any author meets basic criteria of research it will be published without any other consideration.
-          </p>
-        </div>
-      </div>
-
-      <!-- Mission -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-on-scroll animate-delay-100">
-        <div class="bg-gold-500 px-6 py-4">
-          <h2 class="text-2xl font-heading font-bold text-navy-950">Mission</h2>
-        </div>
-        <div class="p-8">
-          <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            Keeping in view the above vision, this journal has opted the following principles as its core objectives:
-          </p>
-          <ol class="space-y-4">
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">1</span>
-              <p class="text-gray-700 dark:text-gray-300">To make this Journal as a leading research document which will be reliable, useable and beneficial for the researchers living in different parts of world.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">2</span>
-              <p class="text-gray-700 dark:text-gray-300">To encourage young researchers to get published their original research work and become a versatile member of research community.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">3</span>
-              <p class="text-gray-700 dark:text-gray-300">To strictly discourage plagiarism in any form and blacklist the author to be involved in such unethical activities.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">4</span>
-              <p class="text-gray-700 dark:text-gray-300">To publish research papers, research reports, case studies and articles written on specific social and business issues and having their possible solutions.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">5</span>
-              <p class="text-gray-700 dark:text-gray-300">To encourage the authors to get published papers having originality values and practical implications.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">6</span>
-              <p class="text-gray-700 dark:text-gray-300">To make this journal as a leading research entity by following healthy standards, norms of ethics and unbiased approach.</p>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">7</span>
-              <p class="text-gray-700 dark:text-gray-300">To widen the scope of journal so that the researchers of the whole world may be able to contribute into it.</p>
-            </li>
-          </ol>
-        </div>
-      </div>
-
+    <div class="container mx-auto px-6 max-w-4xl space-y-10" id="page-content">
+      <div class="text-center py-16 text-gray-400">Loading&hellip;</div>
     </div>
   </section>
 
@@ -156,17 +102,42 @@
         </div>
         <div>
           <h3 class="text-white font-semibold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm">
-            <li>Email: info@gjmsweb.com</li>
-            <li>Website: gjmsweb.com</li>
-          </ul>
+          <ul class="space-y-2 text-sm" id="footer-contact"></ul>
         </div>
       </div>
       <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
-        &copy; 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+        &copy; <span id="footer-year"></span> Global Journal of Management, Social Sciences and Humanities. All rights reserved.
       </div>
     </div>
   </footer>
+
+  <script>
+    function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+    fetch('content.json').then(function(r){ return r.json(); }).then(function(c) {
+      var s = c.site, vm = c.visionMission;
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      document.getElementById('footer-contact').innerHTML =
+        '<li>Email: ' + esc(s.email) + '</li><li>Website: ' + esc(s.website) + '</li>';
+
+      var missionItemsHtml = vm.missionItems.map(function(item, i) {
+        return '<li class="flex items-start gap-3">' +
+          '<span class="flex-shrink-0 w-7 h-7 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-700 dark:text-navy-400 flex items-center justify-center text-sm font-bold">' + (i + 1) + '</span>' +
+          '<p class="text-gray-700 dark:text-gray-300">' + esc(item) + '</p></li>';
+      }).join('');
+
+      document.getElementById('page-content').innerHTML =
+        '<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-on-scroll">' +
+        '<div class="bg-navy-800 dark:bg-navy-900 px-6 py-4"><h2 class="text-2xl font-heading font-bold text-white">Vision</h2></div>' +
+        '<div class="p-8"><p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">' + esc(vm.vision) + '</p></div></div>' +
+        '<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-on-scroll animate-delay-100">' +
+        '<div class="bg-gold-500 px-6 py-4"><h2 class="text-2xl font-heading font-bold text-navy-950">Mission</h2></div>' +
+        '<div class="p-8"><p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">' + esc(vm.missionIntro) + '</p>' +
+        '<ol class="space-y-4">' + missionItemsHtml + '</ol></div></div>';
+
+      if (window.observeAnimations) window.observeAnimations();
+    });
+  </script>
 </body>
 
 </html>

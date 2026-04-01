@@ -35,8 +35,8 @@
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg>
         <div>
-          <span class="text-lg md:text-xl font-heading font-bold leading-tight">GJMSSH</span>
-          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400">Global Journal of Management, Social Sciences &amp; Humanities</span>
+          <span class="text-lg md:text-xl font-heading font-bold leading-tight" id="site-name">GJMSSH</span>
+          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400" id="site-fullname"></span>
         </div>
       </a>
       <button onclick="toggleTheme()" class="theme-toggle text-gray-600 dark:text-gray-300" aria-label="Toggle theme">
@@ -60,142 +60,13 @@
     </nav>
   </header>
 
-  <!-- Hero Banner -->
-  <section class="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
-    <div class="container mx-auto px-6 py-16 md:py-24 relative z-10">
-      <div class="text-center max-w-4xl mx-auto">
-        <h1 class="text-3xl md:text-5xl font-heading font-bold mb-4 leading-tight hero-fade-in">
-          Global Journal of Management, Social Sciences and Humanities
-        </h1>
-        <p class="text-navy-200 text-lg md:text-xl font-medium mb-8 hero-fade-in-delay">A Blind Peer-Reviewed Quarterly Journal</p>
-        <p class="inline-block bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 text-gold-400 font-semibold text-sm md:text-base mb-10 hero-fade-in-delay" id="years-badge">
-        </p>
-
-        <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center hero-fade-in-delay">
-          <a href="current-issue.html"
-            class="inline-flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold py-3 px-8 rounded-lg transition">
-            View Current Issue
-          </a>
-          <a href="archive.html"
-            class="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg border border-white/20 transition">
-            Browse Archive
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="bg-white dark:bg-gray-800 py-16">
-    <div class="container mx-auto px-6 max-w-4xl animate-on-scroll">
-      <h2 class="text-2xl md:text-3xl font-heading font-bold text-center mb-8 text-gray-900 dark:text-white">About the Journal</h2>
-      <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-center">
-        Global Journal of Management, Social Sciences and Humanities (GJMSSH) is a blind peer review quarterly journal.
-        Its Editorial Board consists of experienced and renowned academicians, researchers and professionals, who have
-        developed vision and mission as well as policy of journal. The aim of GJMSSH is to provide a platform to
-        research community to share knowledge and exchange their innovative research work. The researchers from all over
-        the world are invited to submit their research papers for publishing in this journal.
-      </p>
-    </div>
-  </section>
-
-  <!-- Features / Open Access -->
-  <section class="bg-gray-50 dark:bg-gray-900 py-16">
-    <div class="container mx-auto px-6">
-      <h2 class="text-2xl md:text-3xl font-heading font-bold text-center mb-4 text-gray-900 dark:text-white animate-on-scroll">Open Access Journal</h2>
-      <p class="text-gray-500 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto animate-on-scroll">All published articles are freely available to researchers worldwide</p>
-      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 text-center card-hover animate-on-scroll">
-          <div class="w-14 h-14 inline-flex items-center justify-center rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 mb-5 mx-auto">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-7 h-7" viewBox="0 0 24 24">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-heading font-semibold mb-3 text-gray-900 dark:text-white">Submit Your Paper</h3>
-          <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">Send your manuscript via email for review</p>
-          <a href="mailto:info@gjmsweb.com" class="text-navy-600 dark:text-navy-400 font-medium text-sm inline-flex items-center hover:underline">
-            info@gjmsweb.com
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-          </a>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 text-center card-hover animate-on-scroll animate-delay-100">
-          <div class="w-14 h-14 inline-flex items-center justify-center rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 mb-5 mx-auto">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-7 h-7" viewBox="0 0 24 24">
-              <circle cx="6" cy="6" r="3"></circle>
-              <circle cx="6" cy="18" r="3"></circle>
-              <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-heading font-semibold mb-3 text-gray-900 dark:text-white">Expert Editorial Board</h3>
-          <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">International academics and professionals</p>
-          <a href="editorial-board.html" class="text-navy-600 dark:text-navy-400 font-medium text-sm inline-flex items-center hover:underline">
-            View Board
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-          </a>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 text-center card-hover animate-on-scroll animate-delay-200">
-          <div class="w-14 h-14 inline-flex items-center justify-center rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 mb-5 mx-auto">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-7 h-7" viewBox="0 0 24 24">
-              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-heading font-semibold mb-3 text-gray-900 dark:text-white">Fast Publishing</h3>
-          <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">Decision within 2 weeks, publication in 30 days</p>
-          <a href="author-guideline.html" class="text-navy-600 dark:text-navy-400 font-medium text-sm inline-flex items-center hover:underline">
-            Author's Guide
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call for Papers Section (at end) -->
-  <section class="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-[0.05]" style="background-image: radial-gradient(circle at 80% 20%, white 1px, transparent 1px); background-size: 30px 30px;"></div>
-    <div class="container mx-auto px-6 py-16 md:py-20 relative z-10">
-      <div class="text-center max-w-4xl mx-auto">
-        <p class="text-gold-400 font-semibold text-sm md:text-base uppercase tracking-widest mb-4 animate-on-scroll">Now Accepting Submissions</p>
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-3 text-white animate-on-scroll">Call for Papers</h2>
-        <p class="text-navy-200 text-lg mb-10 animate-on-scroll">Submit your research and join our global academic community</p>
-
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto mb-10 animate-on-scroll">
-          <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 card-hover">
-            <div class="text-2xl md:text-3xl font-bold text-gold-400">5.99</div>
-            <div class="text-xs md:text-sm text-navy-200 mt-1">Impact Factor</div>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 card-hover">
-            <div class="text-2xl md:text-3xl font-bold text-gold-400">30</div>
-            <div class="text-xs md:text-sm text-navy-200 mt-1">Speed to Publish</div>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 card-hover">
-            <div class="text-2xl md:text-3xl font-bold text-gold-400">50%</div>
-            <div class="text-xs md:text-sm text-navy-200 mt-1">Acceptance Rate</div>
-          </div>
-          <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 card-hover">
-            <div class="text-2xl md:text-3xl font-bold text-gold-400">$200</div>
-            <div class="text-xs md:text-sm text-navy-200 mt-1">Publication Fee</div>
-          </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-on-scroll">
-          <a href="author-guideline.html"
-            class="inline-flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold py-3 px-8 rounded-lg transition">
-            Submit Your Paper
-          </a>
-          <a href="mailto:info@gjmsweb.com"
-            class="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg border border-white/20 transition">
-            Contact Editorial Team
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Page content rendered by JS -->
+  <div id="page-content" class="flex-1 flex flex-col">
+    <div class="flex-1 flex items-center justify-center py-24 text-gray-400">Loading&hellip;</div>
+  </div>
 
   <!-- Footer -->
-  <footer class="bg-navy-950 text-gray-400 mt-auto">
+  <footer class="bg-navy-950 text-gray-400">
     <div class="container mx-auto px-6 py-12">
       <div class="grid md:grid-cols-3 gap-8">
         <div>
@@ -220,10 +91,7 @@
         </div>
         <div>
           <h3 class="text-white font-semibold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm">
-            <li>Email: info@gjmsweb.com</li>
-            <li>Website: gjmsweb.com</li>
-          </ul>
+          <ul class="space-y-2 text-sm" id="footer-contact"></ul>
         </div>
       </div>
       <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
@@ -233,12 +101,96 @@
   </footer>
 
   <script>
-    // Auto-calculate years of academic excellence
-    var currentYear = new Date().getFullYear();
-    var startYear = 2015;
-    var yearsOfExcellence = (currentYear - startYear) + 1;
-    document.getElementById('years-badge').textContent = yearsOfExcellence + ' Years of Academic Excellence (' + startYear + ' - ' + currentYear + ')';
-    document.getElementById('footer-year').textContent = currentYear;
+    function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+    fetch('content.json').then(function(r){ return r.json(); }).then(function(c) {
+      var s = c.site, st = c.stats, h = c.home;
+      var currentYear = new Date().getFullYear();
+      var years = (currentYear - s.startYear) + 1;
+
+      // Header
+      document.getElementById('site-name').textContent = s.name;
+      document.getElementById('site-fullname').textContent = s.fullName;
+
+      // Footer
+      document.getElementById('footer-year').textContent = currentYear;
+      document.getElementById('footer-contact').innerHTML =
+        '<li>Email: ' + esc(s.email) + '</li><li>Website: ' + esc(s.website) + '</li>';
+
+      // Feature icons (reusable)
+      var icons = [
+        '<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>',
+        '<circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>',
+        '<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>'
+      ];
+
+      var featuresHtml = h.features.map(function(f, i) {
+        return '<div class="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 text-center card-hover animate-on-scroll' + (i > 0 ? ' animate-delay-' + (i * 100) : '') + '">' +
+          '<div class="w-14 h-14 inline-flex items-center justify-center rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 mb-5 mx-auto">' +
+          '<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-7 h-7" viewBox="0 0 24 24">' + icons[i] + '</svg></div>' +
+          '<h3 class="text-xl font-heading font-semibold mb-3 text-gray-900 dark:text-white">' + esc(f.title) + '</h3>' +
+          '<p class="text-gray-500 dark:text-gray-400 text-sm mb-4">' + esc(f.description) + '</p>' +
+          '<a href="' + esc(f.linkHref) + '" class="text-navy-600 dark:text-navy-400 font-medium text-sm inline-flex items-center hover:underline">' +
+          esc(f.linkText) + '<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>' +
+          '</div>';
+      }).join('');
+
+      var statsHtml = [
+        { val: st.impactFactor, label: 'Impact Factor' },
+        { val: st.daysToPublish, label: 'Speed to Publish' },
+        { val: st.acceptanceRate, label: 'Acceptance Rate' },
+        { val: st.publicationFee, label: 'Publication Fee' }
+      ].map(function(item) {
+        return '<div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10 card-hover">' +
+          '<div class="text-2xl md:text-3xl font-bold text-gold-400">' + esc(item.val) + '</div>' +
+          '<div class="text-xs md:text-sm text-navy-200 mt-1">' + esc(item.label) + '</div></div>';
+      }).join('');
+
+      document.getElementById('page-content').innerHTML =
+        // Hero
+        '<section class="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white overflow-hidden">' +
+        '<div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px); background-size: 40px 40px;"></div>' +
+        '<div class="container mx-auto px-6 py-16 md:py-24 relative z-10"><div class="text-center max-w-4xl mx-auto">' +
+        '<h1 class="text-3xl md:text-5xl font-heading font-bold mb-4 leading-tight hero-fade-in">' + esc(s.fullName) + '</h1>' +
+        '<p class="text-navy-200 text-lg md:text-xl font-medium mb-8 hero-fade-in-delay">' + esc(s.tagline) + '</p>' +
+        '<p class="inline-block bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 text-gold-400 font-semibold text-sm md:text-base mb-10 hero-fade-in-delay">' +
+        years + ' Years of Academic Excellence (' + s.startYear + ' \u2013 ' + currentYear + ')</p>' +
+        '<div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center hero-fade-in-delay">' +
+        '<a href="current-issue.html" class="inline-flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold py-3 px-8 rounded-lg transition">View Current Issue</a>' +
+        '<a href="archive.html" class="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg border border-white/20 transition">Browse Archive</a>' +
+        '</div></div></div></section>' +
+
+        // About
+        '<section class="bg-white dark:bg-gray-800 py-16">' +
+        '<div class="container mx-auto px-6 max-w-4xl animate-on-scroll">' +
+        '<h2 class="text-2xl md:text-3xl font-heading font-bold text-center mb-8 text-gray-900 dark:text-white">About the Journal</h2>' +
+        '<p class="text-lg leading-relaxed text-gray-600 dark:text-gray-300 text-center">' + esc(h.about) + '</p>' +
+        '</div></section>' +
+
+        // Features
+        '<section class="bg-gray-50 dark:bg-gray-900 py-16">' +
+        '<div class="container mx-auto px-6">' +
+        '<h2 class="text-2xl md:text-3xl font-heading font-bold text-center mb-4 text-gray-900 dark:text-white animate-on-scroll">Open Access Journal</h2>' +
+        '<p class="text-gray-500 dark:text-gray-400 text-center mb-12 max-w-2xl mx-auto animate-on-scroll">All published articles are freely available to researchers worldwide</p>' +
+        '<div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">' + featuresHtml + '</div>' +
+        '</div></section>' +
+
+        // Call for Papers
+        '<section class="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950 text-white overflow-hidden">' +
+        '<div class="absolute inset-0 opacity-[0.05]" style="background-image: radial-gradient(circle at 80% 20%, white 1px, transparent 1px); background-size: 30px 30px;"></div>' +
+        '<div class="container mx-auto px-6 py-16 md:py-20 relative z-10"><div class="text-center max-w-4xl mx-auto">' +
+        '<p class="text-gold-400 font-semibold text-sm md:text-base uppercase tracking-widest mb-4 animate-on-scroll">Now Accepting Submissions</p>' +
+        '<h2 class="text-3xl md:text-4xl font-heading font-bold mb-3 text-white animate-on-scroll">Call for Papers</h2>' +
+        '<p class="text-navy-200 text-lg mb-10 animate-on-scroll">Submit your research and join our global academic community</p>' +
+        '<div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto mb-10 animate-on-scroll">' + statsHtml + '</div>' +
+        '<div class="flex flex-col sm:flex-row gap-4 justify-center animate-on-scroll">' +
+        '<a href="author-guideline.html" class="inline-flex items-center justify-center bg-gold-500 hover:bg-gold-600 text-navy-950 font-semibold py-3 px-8 rounded-lg transition">Submit Your Paper</a>' +
+        '<a href="mailto:' + esc(s.email) + '" class="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg border border-white/20 transition">Contact Editorial Team</a>' +
+        '</div></div></div></section>';
+
+      // Re-trigger scroll animations for newly added elements
+      if (window.observeAnimations) window.observeAnimations();
+    });
   </script>
 </body>
 

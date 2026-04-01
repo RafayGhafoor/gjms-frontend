@@ -73,40 +73,10 @@
   <section class="py-16 flex-1">
     <div class="container mx-auto px-6 max-w-4xl">
       <div class="grid md:grid-cols-2 gap-10">
-        <!-- Contact Info -->
-        <div class="animate-on-scroll">
-          <h2 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Get in Touch</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            We welcome inquiries about manuscript submissions, publication policies, and collaboration opportunities.
-            Please feel free to reach out to our editorial team.
-          </p>
-          <div class="space-y-6">
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
-                <p class="text-gray-500 dark:text-gray-400">info@gjmsweb.com</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 flex items-center justify-center flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 003 12c0-1.605.42-3.113 1.157-4.418" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white">Website</h3>
-                <p class="text-gray-500 dark:text-gray-400">gjmsweb.com</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Contact Info rendered by JS -->
+        <div id="contact-info" class="text-gray-400">Loading&hellip;</div>
 
-        <!-- Contact Form -->
+        <!-- Contact Form (structural, stays in HTML) -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 animate-on-scroll animate-delay-100">
           <h2 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-6">Send a Message</h2>
           <div class="space-y-4">
@@ -160,17 +130,45 @@
         </div>
         <div>
           <h3 class="text-white font-semibold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm">
-            <li>Email: info@gjmsweb.com</li>
-            <li>Website: gjmsweb.com</li>
-          </ul>
+          <ul class="space-y-2 text-sm" id="footer-contact"></ul>
         </div>
       </div>
       <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
-        &copy; 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+        &copy; <span id="footer-year"></span> Global Journal of Management, Social Sciences and Humanities. All rights reserved.
       </div>
     </div>
   </footer>
+
+  <script>
+    function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+    fetch('content.json').then(function(r){ return r.json(); }).then(function(c) {
+      var s = c.site, ct = c.contact;
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      document.getElementById('footer-contact').innerHTML =
+        '<li>Email: ' + esc(s.email) + '</li><li>Website: ' + esc(s.website) + '</li>';
+
+      var emailSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>';
+      var webSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>';
+
+      var iconClass = 'w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-900/50 text-navy-600 dark:text-navy-400 flex items-center justify-center flex-shrink-0';
+
+      document.getElementById('contact-info').className = 'animate-on-scroll';
+      document.getElementById('contact-info').innerHTML =
+        '<h2 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Get in Touch</h2>' +
+        '<p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">' + esc(ct.intro) + '</p>' +
+        '<div class="space-y-6">' +
+        '<div class="flex items-start gap-4"><div class="' + iconClass + '">' + emailSvg + '</div>' +
+        '<div><h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>' +
+        '<p class="text-gray-500 dark:text-gray-400">' + esc(ct.email) + '</p></div></div>' +
+        '<div class="flex items-start gap-4"><div class="' + iconClass + '">' + webSvg + '</div>' +
+        '<div><h3 class="font-semibold text-gray-900 dark:text-white">Website</h3>' +
+        '<p class="text-gray-500 dark:text-gray-400">' + esc(ct.website) + '</p></div></div>' +
+        '</div>';
+
+      if (window.observeAnimations) window.observeAnimations();
+    });
+  </script>
 </body>
 
 </html>
