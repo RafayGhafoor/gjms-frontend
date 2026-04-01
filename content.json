@@ -3,7 +3,7 @@
     "name": "GJMSSH",
     "fullName": "Global Journal of Management, Social Sciences and Humanities",
     "tagline": "A Blind Peer-Reviewed Quarterly Journal",
-    "email": "info@gjmsweb.com",
+    "email": "gjmsweb@proton.me",
     "website": "gjmsweb.com",
     "startYear": 2015
   },
@@ -19,8 +19,8 @@
       {
         "title": "Submit Your Paper",
         "description": "Send your manuscript via email for review",
-        "linkText": "info@gjmsweb.com",
-        "linkHref": "mailto:info@gjmsweb.com"
+        "linkText": "gjmsweb@proton.me",
+        "linkHref": "mailto:gjmsweb@proton.me"
       },
       {
         "title": "Expert Editorial Board",
