@@ -144,6 +144,8 @@
         '<p class="text-gray-500 dark:text-gray-400 mt-2">5-Year Impact Factor</p></div></div>';
 
       if (window.observeAnimations) window.observeAnimations();
+    }).catch(function(err) {
+      console.error('Failed to load content.json:', err);
     });
   </script>
 </body>

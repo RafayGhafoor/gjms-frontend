@@ -150,6 +150,8 @@
     fetch('archive-data.json').then(function(r){ return r.json(); }).then(function(data){
       ARCHIVE_DATA = data;
       buildVolumePills();
+    }).catch(function(err) {
+      console.error('Failed to load archive-data.json:', err);
     });
 
     function buildVolumePills() {

@@ -146,6 +146,8 @@
         '</tr></thead><tbody class="divide-y divide-gray-100 dark:divide-gray-700">' + rowsHtml + '</tbody></table></div></div>';
 
       if (window.observeAnimations) window.observeAnimations();
+    }).catch(function(err) {
+      console.error('Failed to load content.json:', err);
     });
   </script>
 </body>

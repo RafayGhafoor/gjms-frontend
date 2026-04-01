@@ -136,6 +136,8 @@
         '<ol class="space-y-4">' + missionItemsHtml + '</ol></div></div>';
 
       if (window.observeAnimations) window.observeAnimations();
+    }).catch(function(err) {
+      console.error('Failed to load content.json:', err);
     });
   </script>
 </body>
