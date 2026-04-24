@@ -4,231 +4,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Global Journal of Management, Social Sciences and Humanities - A peer-reviewed academic journal advancing research excellence." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            navy: { 50:'#f0f4fa', 100:'#dce4f5', 200:'#b8c9eb', 300:'#8aa6d9', 400:'#5c82c7', 500:'#3d66b5', 600:'#2d4f96', 700:'#1e3a6e', 800:'#152a52', 900:'#0f2557', 950:'#060d1b' },
-            gold: { 400:'#d4af37', 500:'#c8a94e', 600:'#b8962e' }
-          }
-        }
-      }
-    }
-  </script>
   <script src="theme.js"></script>
   <title>Home - Global Journal of Management, Social Sciences and Humanities</title>
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+<body>
   <!-- Header -->
-  <header class="bg-white dark:bg-navy-950 shadow-sm border-b border-gray-100 dark:border-navy-800">
-    <div class="container mx-auto flex flex-wrap px-6 py-4 items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 text-navy-900 dark:text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-navy-800 dark:bg-gold-500 rounded-lg"
-          viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg>
-        <div>
-          <span class="text-lg md:text-xl font-heading font-bold leading-tight" id="site-name">GJMSSH</span>
-          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400" id="site-fullname"></span>
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo-wrapper">
+        <div class="logo-icon">📖</div>
+        <div class="logo-text">
+          <h1>GJMSSH</h1>
+          <p>Global Academic Journal</p>
         </div>
       </a>
-      <button onclick="toggleTheme()" class="theme-toggle text-gray-600 dark:text-gray-300" aria-label="Toggle theme">
+      <button onclick="toggleTheme()" class="theme-toggle" aria-label="Toggle theme">
         <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
         <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
       </button>
     </div>
-    <nav class="bg-navy-900 dark:bg-navy-950">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="relative flex h-12 items-center justify-between text-sm text-navy-200 overflow-x-auto gap-1">
-          <a href="index.html" class="active text-white font-semibold whitespace-nowrap">Home</a>
-          <a href="impact-factor.html" class="text-navy-300 hover:text-white whitespace-nowrap">Impact Factor</a>
-          <a href="editorial-board.html" class="text-navy-300 hover:text-white whitespace-nowrap">Editorial Board</a>
-          <a href="author-guideline.html" class="text-navy-300 hover:text-white whitespace-nowrap">Author's Guide</a>
-          <a href="Publication Ethics.pdf" class="text-navy-300 hover:text-white whitespace-nowrap">Publication Ethics</a>
-          <a href="vision-mission.html" class="text-navy-300 hover:text-white whitespace-nowrap">Vision/Mission</a>
-          <a href="archive.html" class="text-navy-300 hover:text-white whitespace-nowrap">Archive</a>
-          <a href="current-issue.html" class="text-navy-300 hover:text-white whitespace-nowrap">Current Issue</a>
-        </div>
-      </div>
-    </nav>
   </header>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <div>
+        <a href="index.html" class="active">Home</a>
+        <a href="impact-factor.html">Impact Factor</a>
+        <a href="editorial-board.html">Editorial Board</a>
+        <a href="author-guideline.html">Author's Guide</a>
+        <a href="Publication Ethics.pdf">Publication Ethics</a>
+        <a href="vision-mission.html">Vision/Mission</a>
+        <a href="archive.html">Archive</a>
+        <a href="current-issue.html">Current Issue</a>
+        <div class="nav-spacer"></div>
+        <a href="author-guideline.html" class="nav-cta">✉ Submit Paper</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-fade-in">Global Journal of Management, Social Sciences and Humanities</h1>
-      <p class="hero-fade-in-delay">A premier peer-reviewed platform advancing research and innovation across disciplines</p>
-      <div class="hero-fade-in-delay-2" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="current-issue.html" class="btn btn-primary">Read Latest Issue</a>
-        <a href="author-guideline.html" class="btn btn-secondary" style="border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.9);">Submit Research</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Dashboard -->
-  <section class="stats-section">
     <div class="container">
-      <h2 class="text-center animate-on-scroll">By The Numbers</h2>
-      <div class="stats-grid">
-        <div class="stat-card animate-on-scroll delay-1">
-          <div class="stat-number">25+</div>
-          <div class="stat-label">Years of Excellence</div>
-        </div>
-        <div class="stat-card animate-on-scroll delay-2">
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Papers Published</div>
-        </div>
-        <div class="stat-card animate-on-scroll delay-3">
-          <div class="stat-number">150+</div>
-          <div class="stat-label">Expert Reviewers</div>
-        </div>
-        <div class="stat-card animate-on-scroll delay-4">
-          <div class="stat-number">4.8★</div>
-          <div class="stat-label">Impact Factor</div>
-        </div>
+      <div class="hero-eyebrow">A Blind Peer-Reviewed Quarterly Journal</div>
+      <h1>Global Journal of Management, Social Sciences and Humanities</h1>
+      <p class="hero-subheadline">12 Years of Academic Excellence (2015 – 2026)</p>
+      <div class="hero-ctas">
+        <a href="current-issue.html" class="btn btn-primary">View Current Issue</a>
+        <a href="archive.html" class="btn btn-secondary">Browse Archive</a>
       </div>
     </div>
   </section>
 
-  <!-- Featured Papers -->
-  <section class="featured-section">
+  <!-- Stats Bar -->
+  <section class="stats-bar">
     <div class="container">
-      <h2 class="animate-on-scroll">Featured Research</h2>
-      <div class="papers-grid">
-        <article class="paper-card animate-on-scroll delay-1">
-          <div class="paper-header">
-            <div class="paper-category">Management</div>
-            <h3 class="paper-title">Sustainable Business Innovation</h3>
-            <p class="paper-authors">Dr. Sarah Chen, Prof. James Mitchell</p>
-          </div>
-          <div class="paper-body">
-            <p class="paper-abstract">Exploring the intersection of environmental responsibility and corporate growth strategies in the modern business landscape. This comprehensive study examines case studies from leading organizations.</p>
-            <div class="paper-stats">
-              <div class="stat-item">Vol. 12, Issue 3</div>
-              <div class="stat-item">2024</div>
-              <div class="stat-item">15 Citations</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="paper-card animate-on-scroll delay-2">
-          <div class="paper-header">
-            <div class="paper-category">Social Sciences</div>
-            <h3 class="paper-title">Digital Transformation in Communities</h3>
-            <p class="paper-authors">Dr. Maria Rodriguez, Dr. Ahmed Hassan</p>
-          </div>
-          <div class="paper-body">
-            <p class="paper-abstract">An analysis of how digital technologies are reshaping community structures and social interactions. Includes ethnographic research from five different communities across continents.</p>
-            <div class="paper-stats">
-              <div class="stat-item">Vol. 12, Issue 2</div>
-              <div class="stat-item">2024</div>
-              <div class="stat-item">8 Citations</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="paper-card animate-on-scroll delay-3">
-          <div class="paper-header">
-            <div class="paper-category">Humanities</div>
-            <h3 class="paper-title">Cultural Narratives in Digital Age</h3>
-            <p class="paper-authors">Prof. Elena Rossi, Dr. David Kumar</p>
-          </div>
-          <div class="paper-body">
-            <p class="paper-abstract">Investigating how cultural stories are being recontextualized and reimagined through digital platforms. Explores the tension between traditional narratives and new media expressions.</p>
-            <div class="paper-stats">
-              <div class="stat-item">Vol. 12, Issue 1</div>
-              <div class="stat-item">2024</div>
-              <div class="stat-item">22 Citations</div>
-            </div>
-          </div>
-        </article>
+      <div class="stat">
+        <div class="stat-number">5.99</div>
+        <div class="stat-label">Impact Factor</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">30 days</div>
+        <div class="stat-label">Speed to Publish</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50%</div>
+        <div class="stat-label">Acceptance Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$200</div>
+        <div class="stat-label">Publication Fee</div>
       </div>
     </div>
   </section>
 
-  <!-- Timeline Section -->
-  <section class="timeline-section">
+  <!-- About Section -->
+  <section class="about-section">
     <div class="container">
-      <h2 class="animate-on-scroll">Our Journey</h2>
-      <div class="timeline animate-on-scroll">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-year">2015</div>
-            <div class="timeline-description">Founded as a visionary platform for interdisciplinary research</div>
-          </div>
+      <div class="about-content">
+        <h2>About the Journal</h2>
+        <p>The Global Journal of Management, Social Sciences and Humanities is a peer-reviewed academic platform committed to advancing knowledge across multiple disciplines. Since 2015, we have published over 500 articles from researchers worldwide, maintaining the highest standards of scholarly rigor and ethical publication practices.</p>
+        <p>Our blind peer-review process ensures objective evaluation of every manuscript, while our international editorial board brings diverse perspectives to academic discourse. We believe in open access to knowledge, making research freely available to the global academic community.</p>
+        <p>Serving as a bridge between theory and practice, GJMSSH publishes original research, theoretical frameworks, and applied studies that contribute meaningfully to management, social sciences, and humanities disciplines.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🔓</div>
+        <h3>Open Access Journal</h3>
+        <p>All published articles are freely available to researchers worldwide, advancing knowledge democratization and global academic progress.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <h2>Why Choose GJMSSH</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✉</div>
+          <h3>Submit Your Paper</h3>
+          <p>Easy submission process. Email your manuscript to:</p>
+          <p style="font-weight: 600; margin: 12px 0 8px 0;">gjmsweb@proton.me</p>
+          <button class="copy-btn" onclick="copyEmail()">Copy Email</button>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-year">2018</div>
-            <div class="timeline-description">Achieved international recognition and expanded editorial board</div>
-          </div>
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3>Expert Editorial Board</h3>
+          <p>International academics and professionals ensuring rigorous peer review and scholarly excellence.</p>
+          <a href="editorial-board.html">View Board →</a>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-year">2021</div>
-            <div class="timeline-description">Launched digital platform and open access initiatives</div>
-          </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Fast Publishing</h3>
+          <p>Decision within 2 weeks, publication in 30 days. Your research reaches global audiences quickly.</p>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-year">2023</div>
-            <div class="timeline-description">Reached 500+ published papers with global contributor network</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-year">2024</div>
-            <div class="timeline-description">Introducing AI-powered research discovery and analytics tools</div>
-          </div>
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Author's Guide</h3>
+          <p>Now Accepting Submissions. Clear guidelines and support throughout the publication journey.</p>
+          <a href="author-guideline.html">View Guide →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Submission Workflow -->
-  <section class="workflow-section">
+
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
     <div class="container">
-      <h2 class="animate-on-scroll">Publication Process</h2>
-      <div class="workflow-steps">
-        <div class="workflow-step">
-          <div class="workflow-content">
-            <h3 class="workflow-title">Submit</h3>
-            <p class="workflow-description">Upload your manuscript with a detailed abstract and key information</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="workflow-content">
-            <h3 class="workflow-title">Review</h3>
-            <p class="workflow-description">Expert peer review by specialists in your research field</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="workflow-content">
-            <h3 class="workflow-title">Revise</h3>
-            <p class="workflow-description">Work with editors to refine and strengthen your research</p>
-          </div>
-        </div>
-        <div class="workflow-step">
-          <div class="workflow-content">
-            <h3 class="workflow-title">Publish</h3>
-            <p class="workflow-description">Your research reaches our global audience of scholars</p>
-          </div>
-        </div>
-      </div>
+      <h2>Call for Papers</h2>
+      <p>Submit your research and join our global academic community. We welcome original manuscripts across all areas of management, social sciences, and humanities.</p>
+      <a href="author-guideline.html" class="btn btn-gold">Submit Your Paper</a>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>GJMSSH</h3>
+        <p style="margin: 0; font-size: 14px; color: rgba(255,255,255,0.7);">Global Journal of Management, Social Sciences and Humanities</p>
+        <p style="margin: 16px 0 0 0; font-size: 12px;">© 2026 GJMSSH. All rights reserved.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="current-issue.html">Current Issue</a>
+        <a href="archive.html">Archive</a>
+        <a href="author-guideline.html">Author's Guide</a>
+        <a href="editorial-board.html">Editorial Board</a>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <a href="mailto:gjmsweb@proton.me">📧 gjmsweb@proton.me</a>
+        <a href="https://gjmsweb.com" target="_blank">🌐 gjmsweb.com</a>
+      </div>
+      <div>
+        <h3>Journal Info</h3>
+        <a href="Publication Ethics.pdf">Publication Ethics</a>
+        <a href="vision-mission.html">Vision & Mission</a>
+        <a href="impact-factor.html">Impact Factor</a>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      © 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('gjmsweb@proton.me').then(() => {
+        alert('Email copied to clipboard!');
+      });
+    }
+
+    // Scroll animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  </script>
 
   <!-- Footer -->
   <footer class="bg-navy-950 text-gray-400">
