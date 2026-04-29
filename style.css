@@ -44,12 +44,83 @@
 
 /* ── DARK MODE ── */
 .dark {
-  --text-primary: #F3F4F6;
-  --text-secondary: #D1D5DB;
-  --bg-off-white: #111827;
-  --bg-white: #1F2937;
-  --border-color: #374151;
-  --border-color-light: rgba(55, 65, 81, 0.5);
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --bg-off-white: #0F172A;
+  --bg-white: #1E293B;
+  --border-color: #334155;
+  --border-color-light: rgba(51, 65, 85, 0.5);
+}
+
+.dark body {
+  background-color: #0F172A;
+  color: #F8FAFC;
+}
+
+.dark header {
+  background-color: #1E293B;
+  border-bottom-color: #334155;
+}
+
+.dark nav {
+  background-color: #1E293B;
+  border-bottom-color: #334155;
+}
+
+.dark h2 {
+  color: #E2E8F0;
+}
+
+.dark h1, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #F1F5F9;
+}
+
+.dark section {
+  background-color: #1E293B;
+  color: #CBD5E1;
+}
+
+.dark footer {
+  background-color: #0F172A;
+}
+
+.dark .about-section {
+  background-color: #1E293B;
+}
+
+.dark .features-section {
+  background-color: #0F172A;
+}
+
+.dark .feature-card {
+  background-color: #1E293B;
+  border-color: #334155;
+}
+
+.dark .feature-card h3 {
+  color: #F1F5F9;
+}
+
+.dark .feature-card p {
+  color: #CBD5E1;
+}
+
+.dark .feature-icon {
+  background-color: #334155;
+}
+
+.dark .cta-banner {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+}
+
+.dark .copy-btn {
+  background-color: #334155;
+  color: #F8FAFC;
+  border: 1px solid #475569;
+}
+
+.dark .copy-btn:hover {
+  background-color: #475569;
 }
 
 /* ── RESET & BASE STYLES ── */
@@ -92,6 +163,10 @@ h2 {
   font-size: clamp(28px, 4vw, 36px);
   color: var(--primary-navy);
   margin-bottom: var(--spacing-lg);
+}
+
+.dark h2 {
+  color: #E2E8F0;
 }
 
 h3 {
@@ -202,6 +277,14 @@ header .container {
 
 .theme-toggle:hover svg {
   color: var(--primary-navy);
+}
+
+.dark .theme-toggle svg {
+  color: #94A3B8;
+}
+
+.dark .theme-toggle:hover svg {
+  color: #E2E8F0;
 }
 
 /* ── NAVIGATION ── */
@@ -423,6 +506,12 @@ nav a.active::after {
   border-bottom: 1px solid var(--border-color);
 }
 
+.dark .stats-bar {
+  background: #1E293B;
+  border-top-color: #334155;
+  border-bottom-color: #334155;
+}
+
 .stats-bar .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -456,6 +545,10 @@ nav a.active::after {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.dark .stat-label {
+  color: #94A3B8;
 }
 
 /* ── ABOUT SECTION ── */
