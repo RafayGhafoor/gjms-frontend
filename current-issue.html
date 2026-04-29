@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Issue - GJMSSH</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
-  <title>Current Issue - Global Journal of Management, Social Sciences and Humanities</title>
 </head>
-
 <body>
   <!-- Header -->
   <header>
@@ -18,7 +16,7 @@
         <div class="logo-icon">📖</div>
         <div class="logo-text">
           <h1>GJMSSH</h1>
-          <p>Global Academic Journal</p>
+          <p>Academic Journal</p>
         </div>
       </a>
       <button onclick="toggleTheme()" class="theme-toggle" aria-label="Toggle theme">
@@ -33,108 +31,118 @@
     <div class="container">
       <div>
         <a href="index.html">Home</a>
+        <a href="current-issue.html" class="active">Current Issue</a>
+        <a href="archive.html">Archive</a>
         <a href="impact-factor.html">Impact Factor</a>
         <a href="editorial-board.html">Editorial Board</a>
         <a href="author-guideline.html">Author's Guide</a>
+        <a href="vision-mission.html">Vision & Mission</a>
         <a href="Publication Ethics.pdf">Publication Ethics</a>
-        <a href="vision-mission.html">Vision/Mission</a>
-        <a href="archive.html">Archive</a>
-        <a href="current-issue.html" class="active">Current Issue</a>
         <div class="nav-spacer"></div>
         <a href="author-guideline.html" class="nav-cta">✉ Submit Paper</a>
       </div>
     </div>
   </nav>
 
-  <!-- Page Header -->
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <h1>Current Issue</h1>
-      <p class="text-navy-300 text-lg hero-fade-in-delay" id="page-subtitle">Loading&hellip;</p>
+      <p class="hero-subheadline">Latest Research & Insights</p>
     </div>
   </section>
 
-  <!-- Content rendered by JS -->
-  <section class="py-12 flex-1">
-    <div class="container mx-auto px-6 max-w-5xl" id="page-content">
-      <div class="text-center py-16 text-gray-400">Loading&hellip;</div>
+  <!-- Content -->
+  <section style="padding: 3rem var(--spacing-lg);">
+    <div class="container">
+      <div id="current-issue-content"></div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-navy-950 text-gray-400 mt-auto">
-    <div class="container mx-auto px-6 py-12">
-      <div class="grid md:grid-cols-3 gap-8">
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
         <div>
-          <div class="flex items-center gap-2 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-              stroke-linejoin="round" stroke-width="2" class="w-8 h-8 text-white p-1.5 bg-navy-800 rounded-lg"
-              viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <span class="text-white font-heading font-bold">GJMSSH</span>
-          </div>
-          <p class="text-sm">A blind peer-reviewed quarterly journal since 2015.</p>
+          <h3>GJMSSH</h3>
+          <p>Global Journal of Management, Social Sciences and Humanities</p>
+          <p style="margin-top: var(--spacing-md); font-size: 0.8rem; color: var(--text-tertiary);">© 2015-2026 GJMSSH</p>
         </div>
         <div>
-          <h3 class="text-white font-semibold mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-sm">
-            <li><a href="current-issue.html" class="hover:text-gold-500 transition">Current Issue</a></li>
-            <li><a href="archive.html" class="hover:text-gold-500 transition">Archive</a></li>
-            <li><a href="author-guideline.html" class="hover:text-gold-500 transition">Author's Guide</a></li>
-            <li><a href="editorial-board.html" class="hover:text-gold-500 transition">Editorial Board</a></li>
-          </ul>
+          <h3>Quick Links</h3>
+          <a href="current-issue.html">Current Issue</a>
+          <a href="archive.html">Archive</a>
+          <a href="author-guideline.html">Author's Guide</a>
+          <a href="editorial-board.html">Editorial Board</a>
         </div>
         <div>
-          <h3 class="text-white font-semibold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm" id="footer-contact"></ul>
+          <h3>Information</h3>
+          <a href="impact-factor.html">Impact Factor</a>
+          <a href="vision-mission.html">Vision & Mission</a>
+          <a href="Publication Ethics.pdf">Publication Ethics</a>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <a href="mailto:gjmsweb@proton.me">📧 Email</a>
+          <a href="https://gjmsweb.com" target="_blank">🌐 Website</a>
+          <p style="margin-top: var(--spacing-md); font-size: 0.8rem;">gjmsweb@proton.me</p>
         </div>
       </div>
-      <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
-        &copy; <span id="footer-year"></span> Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+      <div class="footer-copyright">
+        © 2015-2026 GJMSSH. All rights reserved.
       </div>
     </div>
   </footer>
 
   <script>
-    function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
-
-    fetch('content.json').then(function(r){ return r.json(); }).then(function(c) {
-      var s = c.site, ci = c.currentIssue;
-      document.getElementById('footer-year').textContent = new Date().getFullYear();
-      document.getElementById('footer-contact').innerHTML =
-        '<li>Email: ' + esc(s.email) + '</li><li>Website: ' + esc(s.website) + '</li>';
-      document.getElementById('page-subtitle').textContent = ci.title;
-
-      var rowsHtml = ci.articles.map(function(a) {
-        return '<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">' +
-          '<td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400 align-top">' + a.num + '</td>' +
-          '<td class="px-4 py-4 text-sm text-gray-800 dark:text-gray-200">' +
-          '<span class="font-medium">' + esc(a.title) + '</span>' +
-          '<br><span class="text-gray-500 dark:text-gray-400 text-xs mt-1">' + esc(a.authors) + '</span></td>' +
-          '<td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-400 align-top">' + esc(a.pages) + '</td>' +
-          '<td class="px-4 py-4 align-top"><a class="inline-flex items-center px-3 py-1 rounded-md bg-navy-50 dark:bg-navy-900/30 text-navy-700 dark:text-navy-400 text-sm font-medium hover:bg-navy-100 dark:hover:bg-navy-900/50 transition" href="' + esc(a.pdf) + '">PDF</a></td>' +
-          '</tr>';
-      }).join('');
-
-      document.getElementById('page-content').innerHTML =
-        '<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 animate-on-scroll">' +
-        '<div class="bg-navy-800 dark:bg-navy-900 px-6 py-4">' +
-        '<h2 class="text-xl font-heading font-bold text-white">' + esc(ci.title) + '</h2>' +
-        '<p class="text-navy-300 text-sm">' + ci.articles.length + ' Articles</p></div>' +
-        '<div class="overflow-x-auto"><table class="w-full text-left">' +
-        '<thead class="bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600"><tr>' +
-        '<th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12">#</th>' +
-        '<th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title &amp; Authors</th>' +
-        '<th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-20">Pages</th>' +
-        '<th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-16">PDF</th>' +
-        '</tr></thead><tbody class="divide-y divide-gray-100 dark:divide-gray-700">' + rowsHtml + '</tbody></table></div></div>';
-
-      if (window.observeAnimations) window.observeAnimations();
-    }).catch(function(err) {
-      console.error('Failed to load content.json:', err);
-    });
+    fetch('content.json')
+      .then(res => res.json())
+      .then(data => {
+        const issue = data.currentIssue;
+        let html = `<h2>${issue.title}</h2><div style="margin-top: var(--spacing-3xl);">`;
+        
+        if (issue.articles && issue.articles.length > 0) {
+          issue.articles.forEach((article, index) => {
+            html += `
+              <div class="article-item animate-on-scroll" style="transition-delay: ${index * 100}ms;">
+                <h3 style="margin: 0 0 var(--spacing-sm) 0; color: var(--text-primary);">
+                  ${article.num}. ${article.title}
+                </h3>
+                <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--text-secondary); font-size: 0.95rem;">
+                  <strong>Authors:</strong> ${article.authors}
+                </p>
+                <p style="margin: 0 0 var(--spacing-md) 0; color: var(--text-tertiary); font-size: 0.875rem;">
+                  <strong>Pages:</strong> ${article.pages}
+                </p>
+                <a href="${article.pdf}" target="_blank" style="display: inline-block; padding: 0.5rem 1rem; background: var(--accent-blue); color: white; border-radius: var(--radius); text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s;">
+                  Download PDF
+                </a>
+              </div>
+            `;
+          });
+        }
+        
+        html += '</div>';
+        document.getElementById('current-issue-content').innerHTML = html;
+        
+        // Trigger animations
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -100px 0px'
+        };
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-visible');
+            }
+          });
+        }, observerOptions);
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+      })
+      .catch(err => {
+        console.error('Error loading issue:', err);
+        document.getElementById('current-issue-content').innerHTML = '<p>Unable to load current issue data</p>';
+      });
   </script>
 </body>
-
 </html>

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive - GJMSSH</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
-  <title>Archive - Global Journal of Management, Social Sciences and Humanities</title>
 </head>
-
 <body>
   <!-- Header -->
   <header>
@@ -18,7 +16,7 @@
         <div class="logo-icon">📖</div>
         <div class="logo-text">
           <h1>GJMSSH</h1>
-          <p>Global Academic Journal</p>
+          <p>Academic Journal</p>
         </div>
       </a>
       <button onclick="toggleTheme()" class="theme-toggle" aria-label="Toggle theme">
@@ -33,62 +31,62 @@
     <div class="container">
       <div>
         <a href="index.html">Home</a>
+        <a href="current-issue.html">Current Issue</a>
+        <a href="archive.html" class="active">Archive</a>
         <a href="impact-factor.html">Impact Factor</a>
         <a href="editorial-board.html">Editorial Board</a>
         <a href="author-guideline.html">Author's Guide</a>
+        <a href="vision-mission.html">Vision & Mission</a>
         <a href="Publication Ethics.pdf">Publication Ethics</a>
-        <a href="vision-mission.html">Vision/Mission</a>
-        <a href="archive.html" class="active">Archive</a>
-        <a href="current-issue.html">Current Issue</a>
         <div class="nav-spacer"></div>
         <a href="author-guideline.html" class="nav-cta">✉ Submit Paper</a>
       </div>
     </div>
   </nav>
 
-  <!-- Page Header -->
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <h1>Archive</h1>
-      <p class="hero-subheadline">Browse all volumes and issues (2015 – 2024)</p>
+      <p class="hero-subheadline">Browse all volumes and issues since 2015</p>
     </div>
   </section>
 
-  <!-- Archive Browser -->
-  <section style="padding: 40px var(--spacing-md); flex: 1;">
+  <!-- Archive Content -->
+  <section style="padding: 3rem var(--spacing-lg); flex: 1;">
     <div class="container">
-      <!-- Volume Pills -->
-      <div class="animate-on-scroll mb-8">
-        <p class="text-base font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Select Volume</p>
-        <div id="volume-pills" class="flex flex-wrap gap-2"></div>
+      <!-- Volume Selection -->
+      <div class="mb-8">
+        <h2 style="margin-bottom: var(--spacing-lg);">Select Volume</h2>
+        <div id="volume-pills" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);"></div>
       </div>
 
-      <!-- Issue Buttons -->
+      <!-- Issue Selection -->
       <div id="issue-section" class="mb-8 hidden">
-        <p class="text-base font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Select Issue</p>
-        <div id="issue-buttons" class="flex flex-wrap gap-3"></div>
+        <h2 style="margin-bottom: var(--spacing-lg);">Select Issue</h2>
+        <div id="issue-buttons" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);"></div>
       </div>
 
-      <!-- Placeholder -->
+      <!-- Articles List -->
       <div id="summary-section">
-        <p class="text-gray-400 dark:text-gray-500 text-center py-16 text-lg">Select a volume above to browse issues and articles.</p>
+        <p style="text-align: center; color: var(--text-tertiary); padding: 4rem 0; font-size: 1.125rem;">Select a volume to browse issues and articles</p>
       </div>
     </div>
   </section>
 
-  <!-- Slide-out Modal Panel -->
+  <!-- Modal -->
   <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
-  <div id="modal-panel" class="modal-panel bg-white dark:bg-gray-900 shadow-2xl border-l border-gray-200 dark:border-gray-700">
-    <div class="sticky top-0 bg-navy-900 dark:bg-navy-950 text-white px-6 py-4 flex items-center justify-between z-10">
+  <div id="modal-panel" class="modal-panel">
+    <div style="position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: var(--spacing-lg); display: flex; align-items: center; justify-content: space-between; z-index: 10;">
       <div>
-        <h2 id="modal-title" class="font-heading text-xl font-bold"></h2>
-        <p id="modal-subtitle" class="text-navy-300 text-sm"></p>
+        <h2 id="modal-title" style="margin: 0; font-size: 1.25rem;"></h2>
+        <p id="modal-subtitle" style="margin: 0.5rem 0 0 0; color: var(--text-secondary); font-size: 0.875rem;"></p>
       </div>
-      <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-lg transition" aria-label="Close">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      <button onclick="closeModal()" style="background: transparent; border: none; cursor: pointer; color: var(--text-secondary); padding: var(--spacing-sm); transition: all 0.3s;" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
     </div>
-    <div id="modal-content" class="p-6"></div>
+    <div id="modal-content" style="padding: var(--spacing-lg); overflow-y: auto; max-height: calc(100vh - 120px);"></div>
   </div>
 
   <!-- Footer -->
@@ -98,7 +96,7 @@
         <div>
           <h3>GJMSSH</h3>
           <p>Global Journal of Management, Social Sciences and Humanities</p>
-          <p style="margin-top: 12px; font-size: 12px; color: #64748b;">© 2026 GJMSSH</p>
+          <p style="margin-top: var(--spacing-md); font-size: 0.8rem; color: var(--text-tertiary);">© 2015-2026 GJMSSH</p>
         </div>
         <div>
           <h3>Quick Links</h3>
@@ -108,118 +106,181 @@
           <a href="editorial-board.html">Editorial Board</a>
         </div>
         <div>
-          <h3>Contact</h3>
-          <a href="mailto:gjmsweb@proton.me">gjmsweb@proton.me</a>
-          <a href="https://gjmsweb.com" target="_blank">gjmsweb.com</a>
+          <h3>Information</h3>
+          <a href="impact-factor.html">Impact Factor</a>
+          <a href="vision-mission.html">Vision & Mission</a>
+          <a href="Publication Ethics.pdf">Publication Ethics</a>
         </div>
         <div>
-          <h3>Journal Info</h3>
-          <a href="Publication Ethics.pdf">Publication Ethics</a>
-          <a href="vision-mission.html">Vision & Mission</a>
-          <a href="impact-factor.html">Impact Factor</a>
+          <h3>Contact</h3>
+          <a href="mailto:gjmsweb@proton.me">📧 Email</a>
+          <a href="https://gjmsweb.com" target="_blank">🌐 Website</a>
+          <p style="margin-top: var(--spacing-md); font-size: 0.8rem;">gjmsweb@proton.me</p>
         </div>
       </div>
       <div class="footer-copyright">
-        © 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+        © 2015-2026 GJMSSH. All rights reserved.
       </div>
     </div>
   </footer>
 
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    section {
+      flex: 0 0 auto;
+    }
+    
+    section[style*="padding: 3rem"] {
+      flex: 1;
+    }
+  </style>
+
   <script>
-    var ARCHIVE_DATA = null;
+    let archiveData = [];
+    let selectedVolume = null;
+    let selectedIssue = null;
 
-    fetch('archive-data.json').then(function(r){ return r.json(); }).then(function(data){
-      ARCHIVE_DATA = data;
-      buildVolumePills();
-    }).catch(function(err) {
-      console.error('Failed to load archive-data.json:', err);
-    });
-
-    function buildVolumePills() {
-      var volumes = [];
-      var seen = {};
-      ARCHIVE_DATA.forEach(function(issue) {
-        if (!seen[issue.volume]) { seen[issue.volume] = true; volumes.push(issue.volume); }
-      });
-      volumes.sort(function(a, b) {
-        var na = parseInt((a.match(/\d+/) || [0])[0]);
-        var nb = parseInt((b.match(/\d+/) || [0])[0]);
-        if (a === 'Special') return 1;
-        if (b === 'Special') return -1;
-        return na - nb;
-      });
-
-      var container = document.getElementById('volume-pills');
-      volumes.forEach(function(vol) {
-        var btn = document.createElement('button');
-        btn.className = 'vol-pill px-6 py-3 rounded-full text-base font-semibold border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-navy-400 dark:hover:border-gold-500 hover:shadow-md transition cursor-pointer';
-        btn.textContent = vol;
-        btn.onclick = function() { selectVolume(vol); };
-        container.appendChild(btn);
-      });
-    }
-
-    function selectVolume(vol) {
-      document.querySelectorAll('.vol-pill').forEach(function(p) {
-        p.classList.toggle('active', p.textContent === vol);
-      });
-
-      var issues = ARCHIVE_DATA.filter(function(i) { return i.volume === vol; });
-      var container = document.getElementById('issue-buttons');
-      container.innerHTML = '';
-
-      issues.forEach(function(issue) {
-        var btn = document.createElement('button');
-        btn.className = 'issue-btn px-6 py-4 rounded-xl text-base border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-lg hover:border-navy-300 dark:hover:border-gold-500 transition cursor-pointer text-left card-hover';
-        btn.innerHTML = '<span class="block font-semibold text-navy-800 dark:text-white font-heading text-base">' + escapeHtml(issue.title) + '</span><span class="text-sm text-gray-500 dark:text-gray-400 mt-1 block">' + issue.articles.length + ' articles</span>';
-        btn.onclick = function() { openIssue(issue, btn); };
-        container.appendChild(btn);
-      });
-
-      document.getElementById('issue-section').classList.remove('hidden');
-      document.getElementById('summary-section').innerHTML = '<p class="text-gray-400 dark:text-gray-500 text-center py-8">Select an issue to view its articles.</p>';
-    }
-
-    function openIssue(issue, btn) {
-      document.querySelectorAll('.issue-btn').forEach(function(b){ b.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
-
-      document.getElementById('modal-title').textContent = issue.title;
-      document.getElementById('modal-subtitle').textContent = issue.articles.length + ' articles';
-
-      var html = '<div class="space-y-3">';
-      issue.articles.forEach(function(a) {
-        html += '<div class="article-row flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-navy-50 dark:hover:bg-gray-700/70 border border-transparent hover:border-navy-200 dark:hover:border-gray-600 transition group">';
-        html += '<span class="flex-shrink-0 w-9 h-9 rounded-lg bg-navy-100 dark:bg-navy-900 text-navy-700 dark:text-navy-300 flex items-center justify-center text-sm font-bold mt-0.5">' + a.num + '</span>';
-        html += '<div class="flex-1 min-w-0">';
-        html += '<p class="text-base font-medium text-gray-900 dark:text-white leading-snug">' + escapeHtml(a.title) + '</p>';
-        if (a.pages) html += '<p class="text-sm text-gray-400 mt-1">Pages ' + escapeHtml(a.pages) + '</p>';
-        html += '</div>';
-        if (a.pdf) {
-          html += '<a href="' + a.pdf + '" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-navy-800 dark:bg-gold-500 text-white dark:text-navy-950 text-sm font-semibold hover:bg-navy-700 dark:hover:bg-gold-400 transition mt-0.5 shadow-sm">';
-          html += '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>';
-          html += 'PDF</a>';
+    // Load archive data from JSON
+    fetch('content.json')
+      .then(res => res.json())
+      .then(data => {
+        archiveData = data.archive || [];
+        if (archiveData.length === 0) {
+          // Generate archive data from current issue if not available
+          archiveData = generateArchiveData(data.currentIssue);
         }
-        html += '</div>';
+        renderVolumes();
+      })
+      .catch(err => {
+        console.error('Error loading archive:', err);
+        document.getElementById('summary-section').innerHTML = '<p style="text-align: center; color: var(--text-tertiary);">Unable to load archive data</p>';
       });
-      html += '</div>';
 
-      document.getElementById('modal-content').innerHTML = html;
-      document.getElementById('modal-overlay').classList.add('active');
-      document.getElementById('modal-panel').classList.add('active');
-      document.body.style.overflow = 'hidden';
+    function generateArchiveData(currentIssue) {
+      // Generate sample archive structure
+      const volumes = [];
+      const currentYear = new Date().getFullYear();
+      for (let v = 12; v >= 1; v--) {
+        const year = currentYear - (12 - v);
+        volumes.push({
+          volume: v,
+          year: year,
+          issues: [
+            { issue: 1, quarter: 'Jan-Mar', articles: [] },
+            { issue: 2, quarter: 'Apr-Jun', articles: [] },
+            { issue: 3, quarter: 'Jul-Sep', articles: [] },
+            { issue: 4, quarter: 'Oct-Dec', articles: [] }
+          ]
+        });
+      }
+      
+      // Add current issue articles to latest volume
+      if (volumes.length > 0 && currentIssue && currentIssue.articles) {
+        volumes[0].issues[0].articles = currentIssue.articles;
+      }
+      
+      return volumes;
+    }
+
+    function renderVolumes() {
+      const container = document.getElementById('volume-pills');
+      container.innerHTML = '';
+      
+      archiveData.forEach(vol => {
+        const btn = document.createElement('button');
+        btn.className = 'vol-pill';
+        btn.textContent = `Volume ${vol.volume} (${vol.year})`;
+        btn.onclick = () => selectVolume(vol);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectVolume(volume) {
+      selectedVolume = volume;
+      selectedIssue = null;
+      
+      // Update active state
+      document.querySelectorAll('.vol-pill').forEach(el => {
+        el.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Show issue selection
+      const issueSection = document.getElementById('issue-section');
+      issueSection.classList.remove('hidden');
+      
+      const issueContainer = document.getElementById('issue-buttons');
+      issueContainer.innerHTML = '';
+      
+      volume.issues.forEach(issue => {
+        const btn = document.createElement('button');
+        btn.className = 'issue-btn';
+        btn.textContent = `Issue ${issue.issue} (${issue.quarter})`;
+        btn.onclick = () => selectIssue(issue);
+        issueContainer.appendChild(btn);
+      });
+      
+      document.getElementById('summary-section').innerHTML = '<p style="text-align: center; color: var(--text-tertiary); padding: 2rem 0;">Select an issue to view articles</p>';
+    }
+
+    function selectIssue(issue) {
+      selectedIssue = issue;
+      
+      // Update active state
+      document.querySelectorAll('.issue-btn').forEach(el => {
+        el.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Display articles
+      const summary = document.getElementById('summary-section');
+      
+      if (!issue.articles || issue.articles.length === 0) {
+        summary.innerHTML = `<p style="text-align: center; color: var(--text-tertiary); padding: 2rem 0;">No articles available for this issue</p>`;
+        return;
+      }
+      
+      let html = `<h2 style="margin-bottom: var(--spacing-lg);">Vol ${selectedVolume.volume}, Issue ${issue.issue}</h2><div>`;
+      
+      issue.articles.forEach(article => {
+        html += `
+          <div class="article-item">
+            <h3 style="margin: 0 0 var(--spacing-sm) 0; color: var(--text-primary);">
+              ${article.title}
+            </h3>
+            <p style="margin: 0 0 var(--spacing-sm) 0; color: var(--text-secondary); font-size: 0.95rem;">
+              <strong>Authors:</strong> ${article.authors}
+            </p>
+            <p style="margin: 0 0 var(--spacing-md) 0; color: var(--text-tertiary); font-size: 0.875rem;">
+              <strong>Pages:</strong> ${article.pages}
+            </p>
+            <a href="${article.pdf}" target="_blank" style="display: inline-block; padding: 0.5rem 1rem; background: var(--accent-blue); color: white; border-radius: var(--radius); text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s;">
+              Download PDF
+            </a>
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      summary.innerHTML = html;
     }
 
     function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('active');
-      document.getElementById('modal-panel').classList.remove('active');
-      document.body.style.overflow = '';
+      const modal = document.getElementById('modal-overlay');
+      const panel = document.getElementById('modal-panel');
+      modal.classList.remove('active');
+      panel.classList.remove('active');
     }
 
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
-    function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
 </body>
-
 </html>
