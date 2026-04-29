@@ -312,11 +312,49 @@ a:hover {
 header {
   background: linear-gradient(to right, #ffffff, #f8fafc);
   border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-md);
+  padding: 16px var(--spacing-md);
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+header .logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+header .logo-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+header .logo-text h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+}
+
+header .logo-text p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dark header {
+  background: linear-gradient(to right, #1e293b, #0f172a);
 }
 
 header .container {
@@ -392,12 +430,17 @@ header .container {
 
 /* ── NAVIGATION ── */
 nav {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
-  backdrop-filter: blur(10px);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 60px;
+  position: relative;
   z-index: 99;
+  padding: 0 var(--spacing-md);
+}
+
+.dark nav {
+  background: linear-gradient(to right, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+  border-bottom-color: #334155;
 }
 
 nav .container > div {
@@ -946,6 +989,58 @@ nav a.active::after {
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #cbd5e1;
+  padding: var(--spacing-2xl) var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+}
+
+footer .container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+footer h3 {
+  color: #f8fafc;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+footer a:hover {
+  color: #667eea;
+}
+
+footer p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.footer-copyright {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(51, 65, 85, 0.5);
+  font-size: 12px;
+  color: #64748b;
 }
 
 .cta-banner::after {
