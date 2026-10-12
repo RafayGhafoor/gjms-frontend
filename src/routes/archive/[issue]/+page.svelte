@@ -2,13 +2,15 @@
   import { page } from '$app/state';
   import { archive } from '$lib/data/archive-index';
   import { sortIssues } from '$lib/data/archive';
-  import { issuePath } from '$lib/data/paths';
+  import { issuePath, paramId } from '$lib/data/paths';
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import IssueDetail from '$lib/components/archive/issue-detail.svelte';
   import { breadcrumbNode, publicationIssueNodes, scholarlyArticleNode } from '$lib/seo';
 
-  const issue = $derived(archive.issues.find((item) => item.id === page.params.issue));
+  /* params.issue is the raw URL segment, which carries the .html suffix. */
+  const issueId = $derived(paramId(page.params.issue));
+  const issue = $derived(archive.issues.find((item) => item.id === issueId));
   const ordered = $derived(sortIssues(archive.issues, -1));
   const position = $derived(issue ? ordered.findIndex((item) => item.id === issue.id) : -1);
   const newer = $derived(position > 0 ? ordered[position - 1] : null);
@@ -33,7 +35,7 @@
   />
   <IssueDetail {issue} {newer} {older} />
 {:else}
-  <Seo title="Issue not found" description="The requested issue is not part of the journal archive." path={issuePath(page.params.issue ?? '')} />
+  <Seo title="Issue not found" description="The requested issue is not part of the journal archive." path={issuePath(issueId)} />
   <section class="container-page py-20">
     <h1 class="text-3xl font-extrabold tracking-tight">Issue not found</h1>
     <p class="mt-3 max-w-[60ch] text-muted-foreground">

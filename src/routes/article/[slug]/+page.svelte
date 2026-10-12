@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { archive } from '$lib/data/archive-index';
-  import { articlePath } from '$lib/data/paths';
+  import { articlePath, paramId } from '$lib/data/paths';
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import ArticleDetail from '$lib/components/article/article-detail.svelte';
@@ -10,7 +10,9 @@
 
   let { data } = $props();
 
-  const article = $derived(archive.articles.find((item) => item.slug === page.params.slug));
+  /* params.slug is the raw URL segment, which carries the .html suffix. */
+  const slug = $derived(paramId(page.params.slug));
+  const article = $derived(archive.articles.find((item) => item.slug === slug));
   const issue = $derived(article ? (archive.issues.find((item) => item.id === article.issueId) ?? null) : null);
 
   /* The abstract comes from the server load (abstracts.json stays server-side). */
@@ -45,7 +47,7 @@
   <Seo
     title="Article not found"
     description="The requested article is not part of the journal archive."
-    path={articlePath(page.params.slug ?? '')}
+    path={articlePath(slug)}
   />
   <section class="container-page py-20">
     <h1 class="text-3xl font-extrabold tracking-tight">Article not found</h1>
