@@ -12,12 +12,29 @@
 
   /* Full issue view. This page is the crawlable home of every article record,
      so the article list is plain prerendered HTML. */
+  /* Listing links need only these fields; keeping the shape narrow is what stops
+     a page from carrying its sibling issues' articles. */
+  type IssueSummary = {
+    id: string;
+    title: string;
+    volumeLabel: string;
+    volumeNumber: number | null;
+    issueNumber: number | null;
+    isSpecial: boolean;
+    year: number;
+  };
+
   let {
     issue,
     newer = null,
     older = null,
     siblings = []
-  }: { issue: Issue; newer?: Issue | null; older?: Issue | null; siblings?: Issue[] } = $props();
+  }: {
+    issue: Issue;
+    newer?: IssueSummary | null;
+    older?: IssueSummary | null;
+    siblings?: IssueSummary[];
+  } = $props();
 
   /* Page range covered by the issue, derived from the article page ranges. */
   const pageRange = $derived.by(() => {
