@@ -2335,5 +2335,32 @@
         "pdf": "http://gjms.b-cdn.net/2026/Volume 12/Issue 1, 2026/Khuld research paper.pdf"
       }
     ]
+  },
+  {
+    "volume": "Vol 11",
+    "title": "Vol 11 - No. 4 (Oct - Dec, 2025)",
+    "articles": [
+      {
+        "num": 1,
+        "title": "Evaluating the Nexus Between Growth and Renewable Energy Consumption on CO2 Emissions: Evidence From Pakistan",
+        "authors": "Hannana Gohar, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "319-357",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume%2011/Issue%204,%202025/Hanana%20Gohar%20paper.pdf"
+      },
+      {
+        "num": 2,
+        "title": "Unpacking the Growth Puzzle in Pakistan: The Roles of Technology Exports, Renewable Energy, FDI, Inflation and Population Khadija Shaheen1. Prof. Dr. Abdul Ghafoor Awan2 1.Research Scholar, Department of Economics, University of Southern Punjab University, Multan, Pakistan.shaheenbhatti120@gmail.com ORCID: 0009-0000-1097-4245 2.Dean, Faculty of Management Sciences, University of Southern Punjab, Multan, Pakistan. ORCID: https://orcid.org/0000-0001-5767 6229",
+        "authors": "Khadija Shaheen Paper",
+        "pages": "390-421",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume%2011/Issue%204,%202025/Khadija%20Shaheen%20Paper.pdf"
+      },
+      {
+        "num": 3,
+        "title": "Internal Migration, Urban Population, GDP Growth and Environmental Degradation in Pakistan",
+        "authors": "Saima Musarat, Prof. Dr. Abdul Ghafoor Awan",
+        "pages": "358-389",
+        "pdf": "http://gjms.b-cdn.net/2025/Volume%2011/Issue%204,%202025/Saima%20Musarrat%20paper.pdf"
+      }
+    ]
   }
 ]
