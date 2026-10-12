@@ -43,7 +43,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'About' }]} />
-    <h1 class="display-1 font-bold">Vision and mission</h1>
+    <h1 class="display-1">Vision and mission</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       {SITE.fullName} — {SITE.tagline.toLowerCase()}, published since {SITE.startYear}. This is the journal's own
       statement of its purpose and principles.
@@ -57,7 +57,7 @@
       <p class="eyebrow flex items-center gap-2 text-subtle-foreground">
         <Quote class="size-3.5" aria-hidden="true" />Vision
       </p>
-      <h2 id="vision-heading" class="mt-2 text-2xl font-bold tracking-tight">Why the journal exists</h2>
+      <h2 id="vision-heading" class="mt-2 text-2xl tracking-tight">Why the journal exists</h2>
       <div class="mt-5 border-l-2 border-accent-border pl-6">
         <p class="reading max-w-[72ch] text-muted-foreground">{vision}</p>
       </div>
@@ -67,7 +67,7 @@
       <p class="eyebrow flex items-center gap-2 text-subtle-foreground">
         <ShieldCheck class="size-3.5" aria-hidden="true" />Mission
       </p>
-      <h2 id="mission-heading" class="mt-2 text-2xl font-bold tracking-tight">Core objectives</h2>
+      <h2 id="mission-heading" class="mt-2 text-2xl tracking-tight">Core objectives</h2>
       <p class="mt-4 max-w-[72ch] text-muted-foreground">{missionIntro}</p>
 
       <ol class="mt-6 grid gap-3">
@@ -86,7 +86,7 @@
     </section>
 
     <section class="rounded-2xl border border-border bg-surface-muted p-8" aria-labelledby="scope-heading">
-      <h2 id="scope-heading" class="text-xl font-bold tracking-tight">The journal in numbers</h2>
+      <h2 id="scope-heading" class="text-xl tracking-tight">The journal in numbers</h2>
       <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
         All figures below are counted from the journal's published article index.
       </p>

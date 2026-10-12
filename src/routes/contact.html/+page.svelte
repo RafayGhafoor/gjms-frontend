@@ -36,7 +36,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
-    <h1 class="display-1 font-bold">Contact</h1>
+    <h1 class="display-1">Contact</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">{content.contact.intro}</p>
   </div>
 </section>
@@ -44,7 +44,7 @@
 <div class="container-page grid gap-6 py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
   <div class="grid content-start gap-6">
     <Card padding="lg" variant="elevated">
-      <h2 class="text-xl font-bold tracking-tight">Editorial office</h2>
+      <h2 class="text-xl tracking-tight">Editorial office</h2>
       <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
         Manuscript submissions and editorial correspondence are handled by email. Please include the manuscript title and
         the names of all authors in your message.
@@ -79,7 +79,7 @@
     </Card>
 
     <Card padding="lg">
-      <h2 class="text-xl font-bold tracking-tight">Before you write</h2>
+      <h2 class="text-xl tracking-tight">Before you write</h2>
       <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
         Most questions are answered on the pages below — checking them first may save you time.
       </p>

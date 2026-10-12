@@ -58,7 +58,7 @@
       {#if issue.isSpecial}<Badge variant="gold">Special</Badge>{/if}
     </p>
 
-    <h1 class="mt-3 max-w-[46ch] display-1 font-bold text-hero-foreground lg:text-4xl">
+    <h1 class="mt-3 max-w-[46ch] display-1 text-hero-foreground">
       {issue.title}
     </h1>
 
@@ -99,7 +99,7 @@
 <div class="container-page grid gap-10 py-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
   <div>
     <div class="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
-      <h2 class="text-xl font-bold tracking-tight">Articles in this issue</h2>
+      <h2 class="text-xl tracking-tight">Articles in this issue</h2>
       <p class="text-xs text-subtle-foreground">
         Every record below comes from the journal's published archive index.
       </p>

@@ -36,7 +36,7 @@
 </script>
 
 <section aria-labelledby="citation-heading">
-  <h2 id="citation-heading" class="text-xl font-bold tracking-tight">Cite this article</h2>
+  <h2 id="citation-heading" class="text-xl tracking-tight">Cite this article</h2>
   <Card padding="lg" class="mt-4">
     <p class="max-w-[72ch] text-sm break-words text-muted-foreground select-all">{citation}</p>
     <div class="mt-4 flex flex-wrap items-center gap-3">

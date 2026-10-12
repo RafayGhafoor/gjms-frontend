@@ -57,6 +57,7 @@ Everything below was measured from a real browser, so keep the shape of it:
 | Brand images are generated per painted slot (`-1x` at 192/48 px, default at 2x) | A 1400 px master in a 192 px slot was the single heaviest request on the site (154 KB → 27 KB) |
 | `Open Sans` ships as one **variable** file (300–800) | Replaced four static files: 168 KB → 42 KB, same weights |
 | `font-display: swap` and no third-party font host | Text paints immediately in the fallback; nothing render-blocks on a CDN |
+| Headings render at the display weight set in `app.css` (600) | A `font-bold` utility on an `h1`–`h3` overrides it and defeats the display scale — leave the weight to the base layer |
 
 ### Which data module to import
 

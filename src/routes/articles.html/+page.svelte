@@ -122,7 +122,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Articles' }]} />
-    <h1 class="display-1 font-bold">Articles</h1>
+    <h1 class="display-1">Articles</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       Every article record published by GJMSSH — {formatCount(archive.stats.articles)} articles across{' '}
       {formatCount(archive.stats.issues)} issues and {formatCount(archive.stats.volumes)} volumes,
@@ -190,7 +190,7 @@
   {#if results.length === 0}
     <Card padding="lg" class="grid justify-items-center gap-3 text-center">
       <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-      <h2 class="text-lg font-bold">No articles match your search</h2>
+      <h2 class="text-lg">No articles match your search</h2>
       <p class="max-w-[46ch] text-sm text-muted-foreground">
         Try a shorter search term, a different year or volume — or reset the filters to list every published article.
       </p>
@@ -198,7 +198,7 @@
     </Card>
   {:else}
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <h2 class="text-xl font-bold tracking-tight">Article records</h2>
+      <h2 class="text-xl tracking-tight">Article records</h2>
       <p class="text-xs text-subtle-foreground">
         Showing {formatCount(visible.length)} of {formatCount(results.length)}
       </p>

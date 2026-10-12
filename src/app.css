@@ -243,7 +243,7 @@
   h5,
   h6 {
     font-family: var(--app-font-serif);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.01em;
     text-wrap: balance;

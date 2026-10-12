@@ -87,7 +87,7 @@
           <span class="brand-mark size-12 shrink-0" aria-hidden="true"></span>
           <p class="eyebrow text-hero-muted">{SITE.tagline}</p>
         </div>
-        <h1 class="mt-3 text-4xl font-bold tracking-tight text-hero-foreground lg:text-5xl">
+        <h1 class="mt-3 display-1 text-hero-foreground">
           {SITE.fullName}
         </h1>
         <p class="mt-5 text-base text-hero-muted">{lead}</p>
@@ -125,7 +125,7 @@
   <section class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" aria-labelledby="about-heading">
     <Card padding="lg">
       <p class="eyebrow text-subtle-foreground">About the journal</p>
-      <h2 id="about-heading" class="mt-2 text-2xl font-bold tracking-tight">A platform for management and social science research</h2>
+      <h2 id="about-heading" class="mt-2 text-2xl tracking-tight">A platform for management and social science research</h2>
       <p class="mt-4 text-muted-foreground">{about}</p>
       <div class="mt-5 flex flex-wrap gap-3">
         <Button variant="outline" href="/vision-mission.html">Vision &amp; mission</Button>
@@ -160,7 +160,7 @@
     <div class="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
       <div>
         <p class="eyebrow text-subtle-foreground">Latest records</p>
-        <h2 id="latest-heading" class="mt-1 text-2xl font-bold tracking-tight">Recently published articles</h2>
+        <h2 id="latest-heading" class="mt-1 text-2xl tracking-tight">Recently published articles</h2>
       </div>
       <Button variant="outline" size="sm" href="/articles.html">
         Search all {formatCount(archive.stats.articles)} articles
@@ -180,7 +180,7 @@
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p class="eyebrow text-subtle-foreground">Current issue</p>
-          <h2 id="current-heading" class="mt-1 text-2xl font-bold tracking-tight">{currentIssue.title}</h2>
+          <h2 id="current-heading" class="mt-1 text-2xl tracking-tight">{currentIssue.title}</h2>
           <p class="mt-2 text-sm text-muted-foreground">
             {currentIssueArticles.length} articles published in this issue.
           </p>
@@ -210,7 +210,7 @@
   <!-- Why publish here (existing published copy) -->
   <section aria-labelledby="features-heading">
     <p class="eyebrow text-subtle-foreground">For authors</p>
-    <h2 id="features-heading" class="mt-1 text-2xl font-bold tracking-tight">Publishing with GJMSSH</h2>
+    <h2 id="features-heading" class="mt-1 text-2xl tracking-tight">Publishing with GJMSSH</h2>
     <div class="mt-5 grid gap-4 md:grid-cols-3">
       {#each content.home.features as feature (feature.title)}
         {@const href =
@@ -240,7 +240,7 @@
   <section aria-labelledby="facts-heading">
     <div class="mb-4">
       <p class="eyebrow text-subtle-foreground">Journal facts</p>
-      <h2 id="facts-heading" class="mt-1 text-2xl font-bold tracking-tight">Figures published by the journal</h2>
+      <h2 id="facts-heading" class="mt-1 text-2xl tracking-tight">Figures published by the journal</h2>
       <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
         These are the journal's own published declarations. The archive figures above are counted directly from the
         journal's article index.
@@ -263,7 +263,7 @@
   <section aria-labelledby="explore-heading">
     <div class="mb-5 border-b border-border pb-3">
       <p class="eyebrow text-subtle-foreground">Information</p>
-      <h2 id="explore-heading" class="mt-1 text-2xl font-bold tracking-tight">Explore the journal</h2>
+      <h2 id="explore-heading" class="mt-1 text-2xl tracking-tight">Explore the journal</h2>
     </div>
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {#each [
@@ -291,7 +291,7 @@
   <!-- Submit CTA -->
   <section class="rounded-2xl border border-border bg-surface-muted p-8 text-center" aria-labelledby="submit-heading">
     <BookOpen class="mx-auto size-6 text-accent-foreground" aria-hidden="true" />
-    <h2 id="submit-heading" class="mt-3 text-2xl font-bold tracking-tight">Submit your manuscript</h2>
+    <h2 id="submit-heading" class="mt-3 text-2xl tracking-tight">Submit your manuscript</h2>
     <p class="mx-auto mt-2 max-w-[60ch] text-sm text-muted-foreground">
       Send your manuscript to the editorial office by email. Please read the author guidelines before submitting.
     </p>

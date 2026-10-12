@@ -61,7 +61,7 @@
         {#if abstract}<Badge variant="cyan">Abstract available</Badge>{/if}
       </p>
 
-      <h1 class="mt-4 max-w-[52ch] display-1 font-bold text-hero-foreground lg:text-4xl">
+      <h1 class="mt-4 max-w-[52ch] display-1 text-hero-foreground">
         {article.title}
       </h1>
 
@@ -125,7 +125,7 @@
         <section id="abstract" aria-labelledby="abstract-heading">
           <div class="flex items-center gap-3 border-b border-border pb-3">
             <Quote class="size-4 text-accent-foreground" aria-hidden="true" />
-            <h2 id="abstract-heading" class="text-xl font-bold tracking-tight">Abstract</h2>
+            <h2 id="abstract-heading" class="text-xl tracking-tight">Abstract</h2>
           </div>
           <div class="mt-5 max-w-[72ch]">
             {#each abstract.split(/\n{2,}/) as paragraph (paragraph)}
@@ -149,7 +149,7 @@
         <section id="abstract" aria-labelledby="no-abstract-heading">
           <div class="flex items-center gap-3 border-b border-border pb-3">
             <FileText class="size-4 text-subtle-foreground" aria-hidden="true" />
-            <h2 id="no-abstract-heading" class="text-xl font-bold tracking-tight">Full text</h2>
+            <h2 id="no-abstract-heading" class="text-xl tracking-tight">Full text</h2>
           </div>
           <p class="mt-5 max-w-[72ch] text-sm text-muted-foreground">
             No abstract is held for this record in the journal's archive. The published full text is available as a PDF.
@@ -168,7 +168,7 @@
 
       {#if issue}
         <section aria-labelledby="issue-heading">
-          <h2 id="issue-heading" class="text-xl font-bold tracking-tight">Published in</h2>
+          <h2 id="issue-heading" class="text-xl tracking-tight">Published in</h2>
           <Card padding="lg" class="mt-4">
             <p class="text-base font-semibold">{issue.title}</p>
             <p class="mt-1 text-sm text-muted-foreground">

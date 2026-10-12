@@ -78,7 +78,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Editorial board' }]} />
-    <h1 class="display-1 font-bold">Editorial board</h1>
+    <h1 class="display-1">Editorial board</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       GJMSSH is guided by an editor-in-chief and an international board of academics and professionals. The roster below
       is reproduced from the journal's published editorial board page — names and affiliations only.
@@ -102,7 +102,7 @@
 
 <div class="container-page grid gap-10 py-10">
   <section aria-labelledby="eic-heading">
-    <h2 id="eic-heading" class="text-xl font-bold tracking-tight">Editor-in-chief</h2>
+    <h2 id="eic-heading" class="text-xl tracking-tight">Editor-in-chief</h2>
     <Card padding="lg" variant="elevated" class="mt-4 flex flex-wrap items-center gap-5">
       <span
         class="grid size-16 shrink-0 place-items-center rounded-xl bg-[linear-gradient(140deg,var(--primary),#1e40af_55%,var(--cyan))] text-xl font-bold text-white"
@@ -129,7 +129,7 @@
   <section aria-labelledby="members-heading">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2 id="members-heading" class="text-xl font-bold tracking-tight">Editorial board members</h2>
+        <h2 id="members-heading" class="text-xl tracking-tight">Editorial board members</h2>
         <p aria-live="polite" aria-atomic="true" class="mt-1 text-sm text-muted-foreground">
           Showing <span class="font-semibold text-foreground">{formatCount(filtered.length)}</span> of
           {formatCount(members.length)} members
@@ -143,7 +143,7 @@
     {#if filtered.length === 0}
       <Card padding="lg" class="mt-5 grid justify-items-center gap-3 text-center">
         <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-        <h3 class="text-base font-bold">No member matches “{q}”</h3>
+        <h3 class="text-base">No member matches “{q}”</h3>
         <p class="text-sm text-muted-foreground">Try a shorter search term, or clear the filter.</p>
         <Button variant="outline" onclick={() => (q = '')}>Clear filter</Button>
       </Card>
@@ -171,7 +171,7 @@
 
   <section class="rounded-2xl border border-border bg-surface-muted p-8" aria-labelledby="board-cta">
     <Users class="size-6 text-accent-foreground" aria-hidden="true" />
-    <h2 id="board-cta" class="mt-3 text-xl font-bold tracking-tight">Publishing with GJMSSH</h2>
+    <h2 id="board-cta" class="mt-3 text-xl tracking-tight">Publishing with GJMSSH</h2>
     <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
       Submissions are assessed through the journal's blind peer review process. Read the author guidelines for the
       manuscript requirements, or contact the editorial office with any question about the process.
