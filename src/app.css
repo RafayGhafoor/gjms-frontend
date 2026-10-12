@@ -1,9 +1,9 @@
 @import 'tailwindcss' source(none);
 
-/* Only the SvelteKit sources define utilities — the legacy/ HTML files keep their
-   old Tailwind-CDN class soup and must never leak into the generated stylesheet. */
-@source './**/*.{svelte,ts}';
-@source './**/*.svelte';
+/* Scan the whole SvelteKit source tree as ONE directory source. The old site in
+   legacy/ keeps its Tailwind-CDN class soup and must never leak in here, so
+   automatic detection stays off. */
+@source '../src';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -280,6 +280,13 @@
   max-width: 78rem;
   margin-inline: auto;
   padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+@utility container-wide {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
 }
 
 @utility container-narrow {
