@@ -15,3 +15,22 @@ export function summariseForMeta(text: string, limit = 158): string {
   const wordEnd = window.lastIndexOf(' ');
   return `${(wordEnd > 0 ? window.slice(0, wordEnd) : window).trim()}…`;
 }
+
+/** Split a published author line into individual names (comma or "and"). */
+export function splitAuthors(authors: string): string[] {
+  return String(authors ?? '')
+    .split(/,\s*|\s+and\s+/i)
+    .map((name) => name.trim())
+    .filter(Boolean);
+}
+
+/** "319-357" → { first: '319', last: '357' }; "97" → { first: '97' }. */
+export function parsePageRange(pages: string): { first?: string; last?: string } {
+  const value = String(pages ?? '').trim();
+  if (!value) return {};
+  const [from, to] = value.split('-');
+  const clean = (part: string) => part.replace(/^0+(?=\d)/, '').trim();
+  if (!from) return {};
+  if (!to) return { first: clean(from) };
+  return { first: clean(from), last: clean(to) };
+}

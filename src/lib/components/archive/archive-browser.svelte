@@ -469,7 +469,9 @@
                       </span>
                     </div>
                   {/if}
-                  <div class="grid gap-4 xl:grid-cols-2">
+                  <!-- One issue per row: titles get the full width and an expanded
+                       issue list spreads out instead of squeezing into a column. -->
+                  <div class="grid gap-4">
                     {#each list as item (item.id)}
                       <IssueCard
                         issue={item}

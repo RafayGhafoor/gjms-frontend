@@ -26,7 +26,7 @@
     if (!starts.length || !ends.length) return '';
     const from = Math.min(...starts);
     const to = Math.max(...ends);
-    return from === to ? formatPages(String(from)) : `pp. ${from}–${to}`;
+    return from === to ? formatPages(String(from)) : `Pages ${from}–${to}`;
   });
 
   const inVolume = $derived(archive.issues.filter((item) => item.volumeLabel === issue.volumeLabel).slice().sort((a, b) => (a.issueNumber ?? 0) - (b.issueNumber ?? 0)));

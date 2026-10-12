@@ -2,7 +2,7 @@
   import type { Article, Issue } from '$lib/data/types';
   import { SITE } from '$lib/config/site';
   import { articlePath, issuePath } from '$lib/data/paths';
-  import { formatPages } from '$lib/utils';
+  import { formatPages, pageRangeValue } from '$lib/utils';
   import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import Card from '$lib/components/ui/card.svelte';
@@ -113,7 +113,7 @@
           <dt class="eyebrow flex items-center gap-1.5 text-hero-muted">
             <FileText class="size-3.5" aria-hidden="true" />Pages
           </dt>
-          <dd class="mt-1 text-sm font-semibold text-hero-foreground">{article.pages ? formatPages(article.pages) : '—'}</dd>
+          <dd class="mt-1 text-sm font-semibold text-hero-foreground">{article.pages ? pageRangeValue(article.pages) : '—'}</dd>
         </div>
       </dl>
     </div>
@@ -215,7 +215,7 @@
           {#if article.pages}
             <div class="flex items-start justify-between gap-3">
               <dt class="text-muted-foreground">Pages</dt>
-              <dd class="font-medium">{formatPages(article.pages)}</dd>
+              <dd class="font-medium">{pageRangeValue(article.pages)}</dd>
             </div>
           {/if}
           {#if article.num}

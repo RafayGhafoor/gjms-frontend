@@ -3,12 +3,15 @@
   import { issueLabel } from '$lib/data/archive';
   import { articlePath } from '$lib/data/paths';
   import { formatPages, highlight } from '$lib/utils';
+  import { loadAbstract } from '$lib/client/abstracts';
   import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';
-    import Download from '@lucide/svelte/icons/download';
+  import ChevronDown from '@lucide/svelte/icons/chevron-down';
+  import Download from '@lucide/svelte/icons/download';
 
   /* Article card — shows only fields that exist in archive-data.json.
-     No abstract, keywords, DOI or category is ever invented. */
+     Abstracts are not inlined here: the card body stays light and the abstract
+     is fetched from abstracts.json the first time a reader asks for one. */
   let {
     article,
     query = '',
@@ -24,6 +27,23 @@
   } = $props();
 
   const Heading = $derived((['h3', 'h4', 'h5'] as const)[heading - 3]);
+  const panelId = $derived(`abstract-${article.issueId}-${article.num}`);
+
+  let open = $state(false);
+  let loading = $state(false);
+  let abstract = $state('');
+
+  async function toggle() {
+    if (open) {
+      open = false;
+      return;
+    }
+    open = true;
+    if (abstract || !article.hasPdf) return;
+    loading = true;
+    abstract = await loadAbstract(article.pdf);
+    loading = false;
+  }
 </script>
 
 <li
@@ -39,7 +59,7 @@
   <div class="grid min-w-0 gap-1">
     <svelte:element this={Heading} class="paper-title text-[1.0625rem] text-foreground">
       {#if article.slug}
-        <!-- The title links to the article's own page, which carries its abstract. -->
+        <!-- The title links to the article's own page, which carries its abstract inline. -->
         <a class="text-foreground no-underline hover:text-accent-foreground hover:underline" href={articlePath(article.slug)}>
           {@html highlight(article.title, query)}
         </a>
@@ -47,9 +67,11 @@
         {@html highlight(article.title, query)}
       {/if}
     </svelte:element>
+
     {#if article.authors}
       <p class="text-sm text-muted-foreground">{@html highlight(article.authors, query)}</p>
     {/if}
+
     <div class="mt-0.5 flex flex-wrap items-center gap-2">
       {#if showIssue}
         <Badge variant="accent">{issueLabel(article)}</Badge>
@@ -58,6 +80,47 @@
         <Badge>{formatPages(article.pages)}</Badge>
       {/if}
     </div>
+
+    {#if article.hasPdf}
+      <div class="mt-1.5">
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded text-xs font-semibold text-accent-foreground transition-colors hover:underline"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onclick={toggle}
+        >
+          {open ? 'Hide abstract' : 'Show abstract'}
+          <ChevronDown class="size-3.5 transition-transform duration-300 {open ? 'rotate-180' : ''}" aria-hidden="true" />
+        </button>
+      </div>
+    {/if}
+
+    {#if open}
+      <div id={panelId} class="mt-2 rounded-md border border-border bg-surface-muted p-4">
+        {#if loading}
+          <p class="text-sm text-subtle-foreground">Loading the abstract…</p>
+        {:else if abstract}
+          {#each abstract.split(/\n{2,}/) as paragraph (paragraph)}
+            <p class="max-w-[72ch] text-sm leading-relaxed text-muted-foreground first:mt-0 [&:not(:first-child)]:mt-3">
+              {paragraph}
+            </p>
+          {/each}
+          <p class="mt-3 text-xs text-subtle-foreground">
+            Abstract reproduced from the published article.
+            {#if article.slug}
+              <a class="font-semibold text-accent-foreground no-underline hover:underline" href={articlePath(article.slug)}>
+                Open the article page
+              </a>
+            {/if}
+          </p>
+        {:else}
+          <p class="text-sm text-muted-foreground">
+            No abstract is held for this record in the journal's archive. The published full text is available as a PDF.
+          </p>
+        {/if}
+      </div>
+    {/if}
   </div>
 
   <div class="flex items-start sm:justify-end">

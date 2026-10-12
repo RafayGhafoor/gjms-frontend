@@ -22,3 +22,6 @@ __pycache__/
 # the publication-ethics PDF) alongside the HTML pages, and an ignored PDF cannot
 # be committed or deployed. Research articles stay on the Bunny CDN and are
 # referenced by URL, so they are never copied into this repository.
+
+# Generated from abstracts.json by the vite plugin (single source of truth stays at the root)
+/static/abstracts.json

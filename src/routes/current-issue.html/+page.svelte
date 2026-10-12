@@ -62,7 +62,7 @@
     if (!starts.length || !ends.length) return '';
     const from = Math.min(...starts);
     const to = Math.max(...ends);
-    return from === to ? formatPages(String(from)) : `pp. ${from}–${to}`;
+    return from === to ? formatPages(String(from)) : `Pages ${from}–${to}`;
   });
 
   /* The four most recent earlier issues, newest first. */
