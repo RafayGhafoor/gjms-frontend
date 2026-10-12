@@ -1,244 +1,339 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>Archive — All Volumes &amp; Issues | GJMSSH</title>
+  <meta name="description" content="Browse the complete archive of the Global Journal of Management, Social Sciences and Humanities (GJMSSH): every volume, issue and open-access article, filterable by year, volume and issue, with direct PDF access." />
+  <link rel="canonical" href="https://gjmsweb.com/archive.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Global Journal of Management, Social Sciences and Humanities" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="GJMSSH" />
+  <meta property="og:title" content="Archive — All Volumes &amp; Issues | GJMSSH" />
+  <meta property="og:description" content="Every volume, issue and open-access article published by the Global Journal of Management, Social Sciences and Humanities, filterable by year, volume and issue." />
+  <meta property="og:url" content="https://gjmsweb.com/archive.html" />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Archive — All Volumes &amp; Issues | GJMSSH" />
+  <meta name="twitter:description" content="Every volume, issue and open-access article published by GJMSSH, filterable by year, volume and issue." />
+
+  <!-- Apply the stored theme before first paint (no flash of the wrong theme) -->
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            navy: { 50:'#f0f4fa', 100:'#dce4f5', 200:'#b8c9eb', 300:'#8aa6d9', 400:'#5c82c7', 500:'#3d66b5', 600:'#2d4f96', 700:'#1e3a6e', 800:'#152a52', 900:'#0f2557', 950:'#060d1b' },
-            gold: { 400:'#d4af37', 500:'#c8a94e', 600:'#b8962e' }
-          }
-        }
-      }
-    }
+    (function () {
+      try {
+        var pref = localStorage.getItem('theme') || 'system';
+        var dark = pref === 'dark' || (pref !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.dataset.themeSource = pref;
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch (e) { /* storage unavailable */ }
+    })();
   </script>
-  <script src="theme.js"></script>
-  <title>Archive - Global Journal of Management, Social Sciences and Humanities</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" /></noscript>
+  <link rel="stylesheet" href="assets/css/nexus.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Periodical",
+        "@id": "https://gjmsweb.com/#journal",
+        "name": "Global Journal of Management, Social Sciences and Humanities",
+        "alternateName": "GJMSSH",
+        "url": "https://gjmsweb.com/",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Global Journal of Management, Social Sciences and Humanities",
+          "url": "https://gjmsweb.com/",
+          "email": "gjmsweb@proton.me"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://gjmsweb.com/#website",
+        "url": "https://gjmsweb.com/",
+        "name": "GJMSSH — Global Journal of Management, Social Sciences and Humanities",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://gjmsweb.com/#journal" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://gjmsweb.com/archive.html?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://gjmsweb.com/archive.html",
+        "url": "https://gjmsweb.com/archive.html",
+        "name": "Journal Archive — all volumes and issues",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://gjmsweb.com/#journal" },
+        "about": { "@id": "https://gjmsweb.com/#journal" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://gjmsweb.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Archive", "item": "https://gjmsweb.com/archive.html" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="bg-white dark:bg-navy-950 shadow-sm border-b border-gray-100 dark:border-navy-800">
-    <div class="container mx-auto flex flex-wrap px-6 py-4 items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 text-navy-900 dark:text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-navy-800 dark:bg-gold-500 rounded-lg"
-          viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg>
-        <div>
-          <span class="text-lg md:text-xl font-heading font-bold leading-tight">GJMSSH</span>
-          <span class="hidden sm:block text-xs text-gray-500 dark:text-gray-400">Global Journal of Management, Social Sciences &amp; Humanities</span>
-        </div>
+<body>
+  <a class="skip-link" href="#main">Skip to the archive</a>
+
+  <header class="site-header">
+    <div class="container site-header__bar">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__title">GJMSSH</span>
+          <span class="brand__sub">Global Journal of Management, Social Sciences &amp; Humanities</span>
+        </span>
       </a>
-      <button onclick="toggleTheme()" class="theme-toggle text-gray-600 dark:text-gray-300" aria-label="Toggle theme">
-        <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
-        <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav-panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+        Menu
       </button>
-    </div>
-    <nav class="bg-navy-900 dark:bg-navy-950">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="relative flex h-14 items-center justify-between text-sm text-navy-200 overflow-x-auto gap-1">
-          <a href="index.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Home</a>
-          <a href="impact-factor.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Impact Factor</a>
-          <a href="editorial-board.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Editorial Board</a>
-          <a href="author-guideline.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Author's Guide</a>
-          <a href="Publication Ethics.pdf" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Publication Ethics</a>
-          <a href="vision-mission.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Vision/Mission</a>
-          <a href="archive.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md bg-white/10 text-white font-medium">Archive</a>
-          <a href="current-issue.html" class="px-3 py-1.5 hover:text-white whitespace-nowrap rounded-md">Current Issue</a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <div class="site-nav__panel" id="site-nav-panel" data-nav-panel hidden>
+          <ul class="site-nav__list">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="archive.html?view=articles">Articles</a></li>
+            <li><a class="nav-link" href="current-issue.html">Current Issue</a></li>
+            <li><a class="nav-link" href="archive.html" aria-current="page">Archives</a></li>
+            <li><a class="nav-link" href="editorial-board.html">Editorial Board</a></li>
+            <li><a class="nav-link" href="author-guideline.html">For Authors</a></li>
+            <li><a class="nav-link" href="vision-mission.html">About</a></li>
+            <li><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn--ghost btn--icon" href="#archive-search" aria-label="Search the archive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" />
+          </svg>
+        </a>
+        <a class="btn btn--primary btn--sm btn--submit" href="mailto:gjmsweb@proton.me?subject=Manuscript%20submission%20to%20GJMSSH">Submit manuscript</a>
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button class="theme-switch__btn" type="button" data-theme-set="light" aria-pressed="false" aria-label="Light theme" title="Light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" /><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6l1.4 1.4m10 10l1.4 1.4m0-12.8l-1.4 1.4m-10 10L5.6 18.4" />
+            </svg>
+          </button>
+          <button class="theme-switch__btn" type="button" data-theme-set="system" aria-pressed="true" aria-label="Match system theme" title="Match system theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" />
+            </svg>
+          </button>
+          <button class="theme-switch__btn" type="button" data-theme-set="dark" aria-pressed="false" aria-label="Dark theme" title="Dark theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <path d="M21 12.8A8.5 8.5 0 1111.2 3a7 7 0 009.8 9.8z" />
+            </svg>
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- Page Header -->
-  <section class="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white py-14 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
-    <div class="container mx-auto px-6 text-center relative z-10">
-      <h1 class="text-3xl md:text-5xl font-heading font-bold mb-3 hero-fade-in">Archive</h1>
-      <p class="text-navy-300 text-lg hero-fade-in-delay">Browse all volumes and issues (2015 &ndash; 2024)</p>
-    </div>
-  </section>
+  <main class="page-main" id="main" tabindex="-1">
+    <nav class="breadcrumbs container" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list">
+        <li><a href="index.html">Home</a></li>
+        <li><span aria-current="page">Archive</span></li>
+      </ol>
+    </nav>
 
-  <!-- Archive Browser -->
-  <section class="py-10 flex-1">
-    <div class="container mx-auto px-6 max-w-6xl">
-      <!-- Volume Pills -->
-      <div class="animate-on-scroll mb-8">
-        <p class="text-base font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Select Volume</p>
-        <div id="volume-pills" class="flex flex-wrap gap-2"></div>
-      </div>
-
-      <!-- Issue Buttons -->
-      <div id="issue-section" class="mb-8 hidden">
-        <p class="text-base font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Select Issue</p>
-        <div id="issue-buttons" class="flex flex-wrap gap-3"></div>
-      </div>
-
-      <!-- Placeholder -->
-      <div id="summary-section">
-        <p class="text-gray-400 dark:text-gray-500 text-center py-16 text-lg">Select a volume above to browse issues and articles.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide-out Modal Panel -->
-  <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
-  <div id="modal-panel" class="modal-panel bg-white dark:bg-gray-900 shadow-2xl border-l border-gray-200 dark:border-gray-700">
-    <div class="sticky top-0 bg-navy-900 dark:bg-navy-950 text-white px-6 py-4 flex items-center justify-between z-10">
-      <div>
-        <h2 id="modal-title" class="font-heading text-xl font-bold"></h2>
-        <p id="modal-subtitle" class="text-navy-300 text-sm"></p>
-      </div>
-      <button onclick="closeModal()" class="p-2 hover:bg-white/10 rounded-lg transition" aria-label="Close">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-      </button>
-    </div>
-    <div id="modal-content" class="p-6"></div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-navy-950 text-gray-400 mt-auto">
-    <div class="container mx-auto px-6 py-12">
-      <div class="grid md:grid-cols-3 gap-8">
-        <div>
-          <div class="flex items-center gap-2 mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-              stroke-linejoin="round" stroke-width="2" class="w-8 h-8 text-white p-1.5 bg-navy-800 rounded-lg"
-              viewBox="0 0 24 24">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-            <span class="text-white font-heading font-bold">GJMSSH</span>
+    <section class="hero">
+      <div class="hero__pattern" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <div class="hero__text reveal is-visible">
+          <p class="eyebrow hero__eyebrow">Global Journal of Management, Social Sciences &amp; Humanities</p>
+          <h1 class="hero__title">Journal Archive</h1>
+          <p class="hero__lead">
+            Every volume, issue and open-access article published by GJMSSH. Browse by year, volume or issue, or search
+            titles and authors directly. Each record shows the information held in the journal's own archive — title,
+            author, page range and the full PDF.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--gold" href="mailto:gjmsweb@proton.me?subject=Manuscript%20submission%20to%20GJMSSH">Submit manuscript</a>
+            <a class="btn btn--light" href="current-issue.html">Current issue</a>
+            <a class="btn btn--light" href="#archive-search">Search the archive</a>
           </div>
-          <p class="text-sm">A blind peer-reviewed quarterly journal since 2015.</p>
         </div>
-        <div>
-          <h3 class="text-white font-semibold mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-sm">
-            <li><a href="current-issue.html" class="hover:text-gold-500 transition">Current Issue</a></li>
-            <li><a href="archive.html" class="hover:text-gold-500 transition">Archive</a></li>
-            <li><a href="author-guideline.html" class="hover:text-gold-500 transition">Author's Guide</a></li>
-            <li><a href="editorial-board.html" class="hover:text-gold-500 transition">Editorial Board</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="text-white font-semibold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm">
-            <li>Email: gjmsweb@proton.me</li>
-            <li>Website: gjmsweb.com</li>
-          </ul>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat__value" data-stat="articles">—</span>
+            <span class="stat__label">Articles</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" data-stat="issues">—</span>
+            <span class="stat__label">Issues</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" data-stat="volumes">—</span>
+            <span class="stat__label">Volumes</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" data-year-range>—</span>
+            <span class="stat__label">Coverage</span>
+          </div>
         </div>
       </div>
-      <div class="border-t border-navy-800 mt-8 pt-8 text-center text-sm text-gray-500">
-        &copy; 2026 Global Journal of Management, Social Sciences and Humanities. All rights reserved.
+    </section>
+
+    <div class="toolbar" id="archive-top">
+      <div class="container toolbar__inner">
+        <form class="toolbar__row" role="search" id="archive-filters" action="archive.html" method="get">
+          <div class="field field--search">
+            <label class="field__label" for="archive-search">Search articles</label>
+            <div class="search-field">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" />
+              </svg>
+              <input class="input" id="archive-search" name="q" type="search" placeholder="Title, author or page range" autocomplete="off" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="filter-volume">Volume</label>
+            <select class="select" id="filter-volume" name="volume">
+              <option value="all">All volumes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="filter-issue">Issue</label>
+            <select class="select" id="filter-issue" name="issue">
+              <option value="all">All issues</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="filter-sort">Sort</label>
+            <select class="select" id="filter-sort" name="sort">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="title">Title A–Z</option>
+            </select>
+          </div>
+          <button class="btn btn--outline" type="button" data-reset>Reset</button>
+        </form>
+
+        <div class="year-rail" id="year-rail" role="group" aria-label="Filter by year"></div>
+
+        <div class="toolbar__meta">
+          <div class="tabbar" role="group" aria-label="Archive view">
+            <button type="button" data-view="archive" aria-pressed="true">Browse by issue</button>
+            <button type="button" data-view="articles" aria-pressed="false">All articles</button>
+          </div>
+          <div id="result-count" aria-live="polite" aria-atomic="true">Loading the archive…</div>
+          <div id="filter-summary"></div>
+        </div>
       </div>
+    </div>
+
+    <section class="section section--tight" aria-labelledby="results-heading">
+      <div class="container">
+        <h2 class="visually-hidden" id="results-heading">Archive results</h2>
+        <div id="results" aria-busy="true">
+          <p class="pager__info">Loading the article index…</p>
+        </div>
+      </div>
+    </section>
+
+    <noscript>
+      <div class="container section">
+        <div class="empty-state">
+          <h2>JavaScript is required to browse the archive</h2>
+          <p>
+            The archive is generated from the journal's published index. You can open the raw index
+            <a href="archive-data.json">archive-data.json</a>, or contact the editorial office at
+            <a href="mailto:gjmsweb@proton.me">gjmsweb@proton.me</a> for a specific article.
+          </p>
+        </div>
+      </div>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </span>
+          <span class="brand__text"><span class="brand__title">GJMSSH</span></span>
+        </a>
+        <p class="footer-note">
+          Global Journal of Management, Social Sciences and Humanities — a blind peer-reviewed quarterly journal.
+          Published articles are open access and hosted on the journal's content delivery network.
+        </p>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <ul class="footer-list">
+          <li><a href="archive.html">Archive</a></li>
+          <li><a href="current-issue.html">Current issue</a></li>
+          <li><a href="archive.html?view=articles">All articles</a></li>
+          <li><a href="impact-factor.html">Indexing &amp; impact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>For authors</h2>
+        <ul class="footer-list">
+          <li><a href="author-guideline.html">Author guidelines</a></li>
+          <li><a href="author-guideline.html">Submission process</a></li>
+          <li><a href="mailto:gjmsweb@proton.me?subject=Manuscript%20submission%20to%20GJMSSH">Submit a manuscript</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul class="footer-list">
+          <li><a href="mailto:gjmsweb@proton.me">gjmsweb@proton.me</a></li>
+          <li><a href="contact.html">Contact page</a></li>
+          <li><a href="editorial-board.html">Editorial board</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container site-footer__bottom">
+      <span>&copy; <span data-current-year>2026</span> Global Journal of Management, Social Sciences and Humanities. All rights reserved.</span>
+      <span>Article metadata is reproduced from the journal's published archive.</span>
     </div>
   </footer>
 
-  <script>
-    var ARCHIVE_DATA = null;
+  <button class="to-top" type="button" data-to-top hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M12 19V5m0 0l-6 6m6-6l6 6" />
+    </svg>
+    <span>Top</span>
+  </button>
 
-    fetch('archive-data.json').then(function(r){ return r.json(); }).then(function(data){
-      ARCHIVE_DATA = data;
-      buildVolumePills();
-    }).catch(function(err) {
-      console.error('Failed to load archive-data.json:', err);
-    });
-
-    function buildVolumePills() {
-      var volumes = [];
-      var seen = {};
-      ARCHIVE_DATA.forEach(function(issue) {
-        if (!seen[issue.volume]) { seen[issue.volume] = true; volumes.push(issue.volume); }
-      });
-      volumes.sort(function(a, b) {
-        var na = parseInt((a.match(/\d+/) || [0])[0]);
-        var nb = parseInt((b.match(/\d+/) || [0])[0]);
-        if (a === 'Special') return 1;
-        if (b === 'Special') return -1;
-        return na - nb;
-      });
-
-      var container = document.getElementById('volume-pills');
-      volumes.forEach(function(vol) {
-        var btn = document.createElement('button');
-        btn.className = 'vol-pill px-6 py-3 rounded-full text-base font-semibold border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-navy-400 dark:hover:border-gold-500 hover:shadow-md transition cursor-pointer';
-        btn.textContent = vol;
-        btn.onclick = function() { selectVolume(vol); };
-        container.appendChild(btn);
-      });
-    }
-
-    function selectVolume(vol) {
-      document.querySelectorAll('.vol-pill').forEach(function(p) {
-        p.classList.toggle('active', p.textContent === vol);
-      });
-
-      var issues = ARCHIVE_DATA.filter(function(i) { return i.volume === vol; });
-      var container = document.getElementById('issue-buttons');
-      container.innerHTML = '';
-
-      issues.forEach(function(issue) {
-        var btn = document.createElement('button');
-        btn.className = 'issue-btn px-6 py-4 rounded-xl text-base border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-lg hover:border-navy-300 dark:hover:border-gold-500 transition cursor-pointer text-left card-hover';
-        btn.innerHTML = '<span class="block font-semibold text-navy-800 dark:text-white font-heading text-base">' + escapeHtml(issue.title) + '</span><span class="text-sm text-gray-500 dark:text-gray-400 mt-1 block">' + issue.articles.length + ' articles</span>';
-        btn.onclick = function() { openIssue(issue, btn); };
-        container.appendChild(btn);
-      });
-
-      document.getElementById('issue-section').classList.remove('hidden');
-      document.getElementById('summary-section').innerHTML = '<p class="text-gray-400 dark:text-gray-500 text-center py-8">Select an issue to view its articles.</p>';
-    }
-
-    function openIssue(issue, btn) {
-      document.querySelectorAll('.issue-btn').forEach(function(b){ b.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
-
-      document.getElementById('modal-title').textContent = issue.title;
-      document.getElementById('modal-subtitle').textContent = issue.articles.length + ' articles';
-
-      var html = '<div class="space-y-3">';
-      issue.articles.forEach(function(a) {
-        html += '<div class="article-row flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-navy-50 dark:hover:bg-gray-700/70 border border-transparent hover:border-navy-200 dark:hover:border-gray-600 transition group">';
-        html += '<span class="flex-shrink-0 w-9 h-9 rounded-lg bg-navy-100 dark:bg-navy-900 text-navy-700 dark:text-navy-300 flex items-center justify-center text-sm font-bold mt-0.5">' + a.num + '</span>';
-        html += '<div class="flex-1 min-w-0">';
-        html += '<p class="text-base font-medium text-gray-900 dark:text-white leading-snug">' + escapeHtml(a.title) + '</p>';
-        if (a.pages) html += '<p class="text-sm text-gray-400 mt-1">Pages ' + escapeHtml(a.pages) + '</p>';
-        html += '</div>';
-        if (a.pdf) {
-          html += '<a href="' + a.pdf + '" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-navy-800 dark:bg-gold-500 text-white dark:text-navy-950 text-sm font-semibold hover:bg-navy-700 dark:hover:bg-gold-400 transition mt-0.5 shadow-sm">';
-          html += '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>';
-          html += 'PDF</a>';
-        }
-        html += '</div>';
-      });
-      html += '</div>';
-
-      document.getElementById('modal-content').innerHTML = html;
-      document.getElementById('modal-overlay').classList.add('active');
-      document.getElementById('modal-panel').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('active');
-      document.getElementById('modal-panel').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-
-    function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
-  </script>
+  <script type="module" src="assets/js/nexus-archive.js"></script>
 </body>
-
 </html>
