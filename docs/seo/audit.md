@@ -1,6 +1,6 @@
 # Technical SEO audit — GJMSSH
 
-Generated from `build/` by `scripts/seo-audit.mjs` — 408 HTML files, 407 indexable.
+Generated from `build/` by `scripts/seo-audit.mjs` — 408 HTML files, 401 indexable.
 
 ## Per page type
 
@@ -15,7 +15,7 @@ Generated from `build/` by `scripts/seo-audit.mjs` — 408 HTML files, 407 index
 ## Findings
 
 - **Orphan pages** (no inbound internal link): 0
-- **Click depth > 3 from home**: 6
+- **Click depth > 3 from home**: 0
 - **Meta descriptions under 50 chars**: 0
 - **Meta descriptions over 160 chars**: 11
 - **Duplicate titles**: 0
