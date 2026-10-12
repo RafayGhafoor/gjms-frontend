@@ -3,12 +3,50 @@ import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
+/* Search engines and answer engines are deliberately both welcome.
+ *
+ * GJMSSH is an open-access journal: its value to its authors comes from being
+ * read and cited, so blocking model crawlers would work against the journal's
+ * own interest. The named blocks document that decision explicitly (the
+ * wildcard group already allows them), which makes the policy reviewable rather
+ * than accidental.
+ *
+ * The two Disallow rules keep crawlers out of filtered views — `/archive.html?year=`
+ * and `?open=` are the same document as the canonical page and add nothing but
+ * duplicate URLs. Search-result-style query strings stay excluded. */
+const AI_AND_ANSWER_ENGINE_CRAWLERS = [
+  'GPTBot', // OpenAI training
+  'OAI-SearchBot', // OpenAI search index
+  'ChatGPT-User', // user-initiated fetches
+  'ClaudeBot', // Anthropic
+  'Claude-User',
+  'Claude-SearchBot',
+  'PerplexityBot',
+  'Google-Extended', // Gemini grounding/training (does not affect Search)
+  'Applebot-Extended',
+  'Bingbot',
+  'CCBot' // Common Crawl
+];
+
 export const GET: RequestHandler = () => {
   const body = [
+    '# Global Journal of Management, Social Sciences and Humanities (GJMSSH)',
+    '# Open-access journal: crawlers, including AI/answer engines, are welcome.',
+    '',
     'User-agent: *',
     'Allow: /',
     'Disallow: /*?q=',
     'Disallow: /*?open=',
+    'Disallow: /404.html',
+    '',
+    '# Answer engines and AI crawlers — explicitly allowed',
+    ...AI_AND_ANSWER_ENGINE_CRAWLERS.map((bot) => `User-agent: ${bot}`),
+    'Allow: /',
+    'Disallow: /*?q=',
+    'Disallow: /*?open=',
+    '',
+    '# A plain-text summary for language models (llmstxt.org)',
+    `# ${SITE.origin}/llms.txt`,
     '',
     `Sitemap: ${SITE.origin}/sitemap.xml`,
     ''

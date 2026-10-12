@@ -13,6 +13,13 @@ export function organizationNode() {
     alternateName: SITE.name,
     url: `${SITE.origin}/`,
     email: SITE.email,
+    foundingDate: String(SITE.startYear),
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'editorial office',
+      email: SITE.email,
+      availableLanguage: 'en'
+    },
     logo: {
       '@type': 'ImageObject',
       url: absoluteUrl('/icon-512.png'),
@@ -123,6 +130,10 @@ export function scholarlyArticleNode(article: Article, issueUrl?: string) {
     pagination: article.pages || undefined,
     url,
     sameAs: article.hasPdf ? article.pdf : undefined,
+    /* The full text is a public PDF on the journal's CDN — no registration,
+       no paywall — which is exactly what these two properties describe. */
+    isAccessibleForFree: article.hasPdf ? true : undefined,
+    datePublished: article.year ? String(article.year) : undefined,
     author: authors.length ? authors.map((name) => ({ '@type': 'Person', name })) : undefined,
     isPartOf: clean({
       '@type': 'PublicationIssue',

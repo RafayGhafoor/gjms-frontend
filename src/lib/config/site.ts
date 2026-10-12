@@ -83,15 +83,21 @@ export function absoluteUrl(path: string): string {
   return `${SITE.origin}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
-/** Marked up in /sitemap.xml. Keep in step with the pages that actually exist. */
-export const SITEMAP_PAGES: { path: string; priority: string; changefreq: string }[] = [
-  { path: '/', priority: '1.0', changefreq: 'weekly' },
-  { path: '/current-issue.html', priority: '0.9', changefreq: 'monthly' },
-  { path: '/archive.html', priority: '0.9', changefreq: 'monthly' },
-  { path: '/articles.html', priority: '0.8', changefreq: 'weekly' },
-  { path: '/editorial-board.html', priority: '0.7', changefreq: 'yearly' },
-  { path: '/author-guideline.html', priority: '0.7', changefreq: 'yearly' },
-  { path: '/vision-mission.html', priority: '0.6', changefreq: 'yearly' },
-  { path: '/impact-factor.html', priority: '0.6', changefreq: 'yearly' },
-  { path: '/contact.html', priority: '0.5', changefreq: 'yearly' }
+/** Marked up in /sitemap.xml. Keep in step with the pages that actually exist.
+ *
+ * `lastmod` is only declared for pages whose content is regenerated from the
+ * archive on every build. Issue and article pages deliberately carry none: the
+ * journal's records contain a year, not a publication day, and a fabricated
+ * date is worse than no date — an unreliable lastmod can make a crawler ignore
+ * the field for the whole sitemap. */
+export const SITEMAP_PAGES: { path: string; priority: string; lastmod: 'build' | 'none' }[] = [
+  { path: '/', priority: '1.0', lastmod: 'build' },
+  { path: '/current-issue.html', priority: '0.9', lastmod: 'build' },
+  { path: '/archive.html', priority: '0.9', lastmod: 'build' },
+  { path: '/articles.html', priority: '0.8', lastmod: 'build' },
+  { path: '/editorial-board.html', priority: '0.7', lastmod: 'none' },
+  { path: '/author-guideline.html', priority: '0.7', lastmod: 'none' },
+  { path: '/vision-mission.html', priority: '0.6', lastmod: 'none' },
+  { path: '/impact-factor.html', priority: '0.6', lastmod: 'none' },
+  { path: '/contact.html', priority: '0.5', lastmod: 'none' }
 ];

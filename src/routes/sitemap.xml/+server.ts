@@ -5,24 +5,37 @@ import type { RequestHandler } from './$types';
 
 export const prerender = true;
 
+/* Every indexable URL the site publishes: the nine pages, 50 issues and 342
+   articles. Filtered views (`?year=`, `?q=`) are deliberately absent — they are
+   the same document with a canonical pointing at the unfiltered page.
+
+   `lastmod` is emitted only where the date is real: the listing pages are
+   regenerated from the archive on every build, while an issue or article page
+   is fixed at publication and the records hold a year, not a day. `changefreq`
+   and `priority` are omitted because Google ignores them. */
 export const GET: RequestHandler = () => {
-  const today = new Date().toISOString().slice(0, 10);
-  const url = (loc: string, priority: string, changefreq: string, lastmod = today) =>
-    ['  <url>', `    <loc>${loc}</loc>`, `    <lastmod>${lastmod}</lastmod>`, `    <changefreq>${changefreq}</changefreq>`, `    <priority>${priority}</priority>`, '  </url>'].join('\n');
+  const builtOn = new Date().toISOString().slice(0, 10);
 
-  const staticEntries = SITEMAP_PAGES.map((page) => url(absoluteUrl(page.path), page.priority, page.changefreq));
+  const entry = (loc: string, lastmod?: string) =>
+    ['  <url>', `    <loc>${loc}</loc>`, lastmod ? `    <lastmod>${lastmod}</lastmod>` : undefined, '  </url>']
+      .filter(Boolean)
+      .join('\n');
 
-  // One URL per published issue, built from the journal's own archive index.
-  const issueEntries = archive.issues.map((issue) =>
-    url(absoluteUrl(issuePath(issue.id)), '0.7', 'yearly', `${issue.year}-01-01`)
+  const staticEntries = SITEMAP_PAGES.map((page) =>
+    entry(absoluteUrl(page.path), page.lastmod === 'build' ? builtOn : undefined)
   );
 
-  // One URL per article that has a slug.
+  const issueEntries = archive.issues.map((issue) => entry(absoluteUrl(issuePath(issue.id))));
+
   const articleEntries = archive.articles
     .filter((article) => article.slug)
-    .map((article) => url(absoluteUrl(articlePath(article.slug)), '0.6', 'yearly', `${article.year}-01-01`));
+    .map((article) => entry(absoluteUrl(articlePath(article.slug))));
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...staticEntries, ...issueEntries, ...articleEntries].join('\n')}\n</urlset>\n`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[
+    ...staticEntries,
+    ...issueEntries,
+    ...articleEntries
+  ].join('\n')}\n</urlset>\n`;
 
   return new Response(xml, {
     headers: { 'content-type': 'application/xml; charset=utf-8' }

@@ -15,6 +15,7 @@
     imageHeight = 630,
     jsonLd = [],
     includeSiteGraph = true,
+    noindex = false,
     publishedTime,
     modifiedTime
   }: {
@@ -28,6 +29,7 @@
     imageHeight?: number;
     jsonLd?: (Record<string, unknown> | null | undefined)[];
     includeSiteGraph?: boolean;
+    noindex?: boolean;
     publishedTime?: string;
     modifiedTime?: string;
   } = $props();
@@ -41,8 +43,8 @@
 <svelte:head>
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
+  {#if !noindex}<link rel="canonical" href={canonical} />{/if}
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
   <meta name="author" content={SITE.fullName} />
   <meta name="publisher" content={SITE.fullName} />
 
