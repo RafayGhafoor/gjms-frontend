@@ -9,18 +9,11 @@
 <footer class="mt-auto border-t border-border bg-surface-muted no-print">
   <div class="container-page grid gap-8 py-12 lg:grid-cols-[1.4fr_repeat(3,minmax(0,1fr))]">
     <div>
-      <a class="flex items-center gap-3 no-underline" href="/">
-        <span
-          class="grid size-9 place-items-center rounded-lg bg-[linear-gradient(140deg,var(--primary),#1e40af_55%,var(--cyan))] text-white"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg>
-        </span>
-        <span class="text-base font-extrabold tracking-tight text-foreground">{SITE.name}</span>
+      <a class="flex items-center no-underline" href="/">
+        <span class="sr-only">{SITE.name} — {SITE.fullName}</span>
+        <span class="brand-lockup" aria-hidden="true"></span>
       </a>
-      <p class="mt-4 max-w-[46ch] text-sm text-muted-foreground">
+      <p class="mt-5 max-w-[46ch] text-sm text-muted-foreground">
         {SITE.fullName} — {SITE.tagline.toLowerCase()}, published since {SITE.startYear}. Articles are open access and
         hosted on the journal's content delivery network.
       </p>

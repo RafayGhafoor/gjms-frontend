@@ -33,19 +33,14 @@
   </div>
 
   <div class="container-wide flex min-h-16 items-center gap-3 py-2">
-    <a class="flex shrink-0 items-center gap-3 no-underline" href="/" aria-label="{SITE.name} home">
-      <span
-        class="grid size-10 shrink-0 place-items-center rounded-lg bg-[linear-gradient(140deg,var(--primary),#1e40af_55%,var(--cyan))] text-white shadow-sm"
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
-      </span>
-      <span class="flex flex-col leading-tight">
-        <span class="text-[1.0625rem] font-extrabold tracking-tight text-foreground">{SITE.name}</span>
-        <span class="hidden max-w-[30ch] truncate text-[0.6875rem] text-subtle-foreground xl:block">{SITE.fullName}</span>
-      </span>
+    <a class="flex shrink-0 items-center no-underline" href="/">
+      <!-- The full lockup from small screens up, the icon alone on the narrowest
+           viewports. The artwork itself is decorative here: the accessible name
+           comes from the hidden text below, so screen readers and crawlers get
+           the journal's name in words. -->
+      <span class="sr-only">{SITE.name} — {SITE.fullName}</span>
+      <span class="brand-lockup hidden sm:block" aria-hidden="true"></span>
+      <span class="brand-mark sm:hidden" aria-hidden="true"></span>
     </a>
 
     <nav class="mx-auto hidden min-w-0 xl:block" aria-label="Primary">

@@ -28,6 +28,9 @@ archive-data.json      journal article archive — WRITTEN BY gjms-automation, n
 content.json           the journal's published page copy (site, stats, board, guidelines, contact)
 src/app.css            Academic Nexus design tokens (light + AMOLED dark) and Tailwind theme
 src/lib/config/site.ts navigation, footer links, canonical URLs, sitemap list
+static/                brand artwork and icons copied verbatim into build/
+docs/brand/            the original logo sources + how the web assets are generated
+scripts/brand/         build-brand-assets.py — regenerates static/brand and the favicons
 src/lib/data/          types, archive normalisation/derivation, journal.ts entry point
 src/lib/components/    ui/ (shadcn-style primitives) · site/ (header, footer, Seo, breadcrumbs)
                        charts/ · archive/ (article card, issue card, year timeline, browser)
@@ -48,6 +51,31 @@ docs/REDESIGN-CONVENTIONS.md   the design-system + conventions contract (read be
 4. `npm run check` and `npm run build` must both pass; the prerenderer fails the build on broken
    internal links or missing `#anchors`, so keep links honest.
 5. Import Lucide icons per icon (`@lucide/svelte/icons/search`), never from the barrel export.
+
+## Brand assets
+
+The GJMSSH logo exists in two forms, both kept in `docs/brand/`:
+
+- `gjms-icon-source.png` — the square icon mark (globe on an open book)
+- `gjms-lockup-source.png` — the horizontal icon + wordmark lockup
+
+Both sources are artwork on a white background, so `scripts/brand/build-brand-assets.py` crops the
+margin, converts white to alpha (with an un-premultiply pass so edges carry no white fringe) and emits
+a **dark-UI variant** where the navy ink becomes light slate while the cyan swoosh and gold dot stay.
+Run it after replacing a source:
+
+```bash
+python3 scripts/brand/build-brand-assets.py   # needs pillow + numpy; cwebp for the .webp variants
+```
+
+It writes `static/brand/gjms-{mark,lockup}{,-dark}.{png,webp}`, `static/icon-192.png`,
+`static/icon-512.png`, `static/apple-touch-icon.png`, `static/favicon-32{,-dark}.png`,
+`static/favicon.ico` and `static/og-image.jpg` (the 1200×630 social card).
+
+The pages never choose a variant with `<picture>`: because the theme is a class on `<html>` rather than
+the OS preference, the light/dark artwork is declared as CSS `background-image` on `.brand-lockup` and
+`.brand-mark` (see `src/app.css`), so exactly one image is downloaded for the active theme. Use those
+classes — not bare `<img>` tags — when a page needs the logo.
 
 ## Content workflow when a new issue is published
 

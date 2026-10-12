@@ -11,7 +11,13 @@ export function organizationNode() {
     name: SITE.fullName,
     alternateName: SITE.name,
     url: `${SITE.origin}/`,
-    email: SITE.email
+    email: SITE.email,
+    logo: {
+      '@type': 'ImageObject',
+      url: absoluteUrl('/icon-512.png'),
+      width: 512,
+      height: 351
+    }
   };
 }
 
@@ -24,6 +30,7 @@ export function periodicalNode() {
     url: `${SITE.origin}/`,
     inLanguage: 'en',
     publisher: { '@id': `${SITE.origin}/#organization` },
+    image: absoluteUrl('/og-image.jpg'),
     issn: undefined
   };
 }
@@ -147,4 +154,20 @@ export function graph(nodes: (Record<string, unknown> | null | undefined)[]) {
     '@context': 'https://schema.org',
     '@graph': nodes.filter(Boolean)
   };
+}
+
+/**
+ * Serialise structured data into a ready-to-inject <script> tag.
+ *
+ * Svelte treats a `<script>` element written in a template as raw text, so
+ * expressions inside it are never evaluated — the tag has to be built as a
+ * string and rendered with `{@html}`. `<`, `>` and `&` are escaped as JSON
+ * unicode escapes (still valid JSON) so the payload can never close the tag.
+ */
+export function jsonLdScript(data: unknown): string {
+  const json = JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+  return `<script type="application/ld+json">${json}</script>`;
 }

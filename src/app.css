@@ -375,6 +375,47 @@
   .fade-up {
     animation: nexus-fade-up 0.6s var(--ease-nexus) both;
   }
+
+  /* Brand artwork. The light/dark variants are declared as background images so
+     the browser only downloads the one the active theme needs (a <picture> swap
+     would fetch both, because the theme is class-based, not OS-based). */
+  .brand-lockup,
+  .brand-mark {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: contain;
+  }
+
+  .brand-lockup {
+    width: 12rem;
+    height: 2.75rem;
+    background-image: image-set(
+      url('/brand/gjms-lockup.webp') type('image/webp'),
+      url('/brand/gjms-lockup.png') type('image/png')
+    );
+  }
+
+  .dark .brand-lockup {
+    background-image: image-set(
+      url('/brand/gjms-lockup-dark.webp') type('image/webp'),
+      url('/brand/gjms-lockup-dark.png') type('image/png')
+    );
+  }
+
+  .brand-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-position: center;
+    background-image: image-set(
+      url('/brand/gjms-mark.webp') type('image/webp'),
+      url('/brand/gjms-mark.png') type('image/png')
+    );
+  }
+
+  .dark .brand-mark {
+    background-image: image-set(url('/brand/gjms-mark-dark.webp') type('image/webp'), url('/brand/gjms-mark-dark.png') type('image/png'));
+  }
 }
 
 @keyframes nexus-shimmer {

@@ -128,6 +128,10 @@ Use semantic tokens only — no raw hex/`gray-*` classes:
 - Brand: `bg-primary text-primary-foreground`, `bg-accent text-accent-foreground`, `border-accent-border`
 - Accents: `bg-gold text-gold-foreground`, `bg-cyan-soft text-cyan-foreground`
 - Hero: `hero-surface`, `hero-grid`, `text-hero-foreground`, `text-hero-muted`
+- Brand artwork: `brand-lockup` (horizontal icon + wordmark) and `brand-mark` (icon only). They are
+  CSS backgrounds that swap light/dark variants automatically, so always use these spans — never a
+  bare `<img>` — and give the surrounding link an `sr-only` name, with the artwork marked
+  `aria-hidden="true"`. See `CLAUDE.md` → Brand assets for the regeneration script.
 - Helpers: `container-page`, `container-narrow`, `eyebrow`, `paper-title` (serif article titles),
   `glass`, `reveal`, `shimmer`, `mark`, `no-scrollbar`, `sr-only`, `no-print`
 

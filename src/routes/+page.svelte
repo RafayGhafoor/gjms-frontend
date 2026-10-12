@@ -78,7 +78,10 @@
   <div class="container-page relative py-12 lg:py-16">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center">
       <div class="max-w-[62ch]">
-        <p class="eyebrow text-hero-muted">{SITE.tagline}</p>
+        <div class="flex items-center gap-3">
+          <span class="brand-mark size-12 shrink-0" aria-hidden="true"></span>
+          <p class="eyebrow text-hero-muted">{SITE.tagline}</p>
+        </div>
         <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-hero-foreground lg:text-5xl">
           {SITE.fullName}
         </h1>
