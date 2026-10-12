@@ -211,11 +211,24 @@
         html += '<div class="article-row flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-navy-50 dark:hover:bg-gray-700/70 border border-transparent hover:border-navy-200 dark:hover:border-gray-600 transition group">';
         html += '<span class="flex-shrink-0 w-9 h-9 rounded-lg bg-navy-100 dark:bg-navy-900 text-navy-700 dark:text-navy-300 flex items-center justify-center text-sm font-bold mt-0.5">' + a.num + '</span>';
         html += '<div class="flex-1 min-w-0">';
-        html += '<p class="text-base font-medium text-gray-900 dark:text-white leading-snug">' + escapeHtml(a.title) + '</p>';
-        if (a.pages) html += '<p class="text-sm text-gray-400 mt-1">Pages ' + escapeHtml(a.pages) + '</p>';
+        var articleUrl = a.slug ? 'article/' + encodeURIComponent(a.slug) + '.html' : null;
+        if (articleUrl) {
+          html += '<a href="' + escapeAttr(articleUrl) + '" class="block text-base font-medium text-gray-900 dark:text-white leading-snug hover:text-navy-700 dark:hover:text-gold-400 transition">' + escapeHtml(a.title) + '</a>';
+        } else {
+          html += '<p class="text-base font-medium text-gray-900 dark:text-white leading-snug">' + escapeHtml(a.title) + '</p>';
+        }
+        if (a.authors) html += '<p class="text-sm text-gray-600 dark:text-gray-400 mt-1">' + escapeHtml(a.authors) + '</p>';
+        if (a.pages) html += '<p class="text-sm text-gray-400 mt-0.5">Pages ' + escapeHtml(String(a.pages)) + '</p>';
+        if (a.pdf) {
+          // Abstracts are lazily fetched from abstracts.json on first expand to
+          // keep this page light. The static article pages carry them in HTML
+          // for search engines.
+          html += '<button type="button" class="abstract-toggle mt-2 text-sm font-semibold text-navy-700 dark:text-gold-400 hover:underline" data-pdf="' + escapeAttr(a.pdf) + '" onclick="toggleAbstract(this)">Show abstract</button>';
+          html += '<div class="abstract-box hidden mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed text-justify"></div>';
+        }
         html += '</div>';
         if (a.pdf) {
-          html += '<a href="' + a.pdf + '" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-navy-800 dark:bg-gold-500 text-white dark:text-navy-950 text-sm font-semibold hover:bg-navy-700 dark:hover:bg-gold-400 transition mt-0.5 shadow-sm">';
+          html += '<a href="' + escapeAttr(a.pdf) + '" target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-navy-800 dark:bg-gold-500 text-white dark:text-navy-950 text-sm font-semibold hover:bg-navy-700 dark:hover:bg-gold-400 transition mt-0.5 shadow-sm">';
           html += '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>';
           html += 'PDF</a>';
         }
@@ -238,6 +251,46 @@
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
     function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+    // escapeHtml() leaves quotes intact (fine for text, unsafe inside an
+    // attribute), so attribute values get their own escaper.
+    function escapeAttr(t) {
+      return String(t === null || t === undefined ? '' : t)
+        .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var ABSTRACTS = null;
+
+    function loadAbstracts() {
+      if (!ABSTRACTS) {
+        ABSTRACTS = fetch('abstracts.json')
+          .then(function(r){ return r.ok ? r.json() : {}; })
+          .catch(function(err){ console.error('Failed to load abstracts.json:', err); return {}; });
+      }
+      return ABSTRACTS;
+    }
+
+    function toggleAbstract(btn) {
+      var box = btn.parentNode.querySelector('.abstract-box');
+      if (!box) return;
+      if (box.dataset.loaded === '1') {
+        var nowHidden = !box.classList.contains('hidden');
+        box.classList.toggle('hidden', nowHidden);
+        btn.textContent = nowHidden ? 'Show abstract' : 'Hide abstract';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Loading abstract...';
+      loadAbstracts().then(function(map) {
+        var text = map[btn.getAttribute('data-pdf')];
+        box.textContent = text || 'Abstract not available for this article.';
+        box.dataset.loaded = '1';
+        box.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Hide abstract';
+      });
+    }
   </script>
 </body>
 
