@@ -8,6 +8,8 @@ export type RawArticle = {
   authors?: string;
   pages?: string;
   pdf?: string;
+  /** Stable, URL-safe id written by the automation (one per article). */
+  slug?: string;
 };
 
 export type RawIssue = {
@@ -24,6 +26,10 @@ export type Article = {
   pages: string;
   pdf: string;
   hasPdf: boolean;
+  /** Used for the article page URL: /article/<slug>.html */
+  slug: string;
+  /** Filled from abstracts.json on the server; '' when no abstract was extracted. */
+  abstract: string;
   year: number;
   volumeLabel: string;
   volumeNumber: number | null;
@@ -31,7 +37,6 @@ export type Article = {
   issueNumber: number | null;
   issueTitle: string;
   issueId: string;
-  search: string;
 };
 
 export type Issue = {

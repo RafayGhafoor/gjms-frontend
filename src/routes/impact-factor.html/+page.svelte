@@ -6,7 +6,11 @@
   import Badge from '$lib/components/ui/badge.svelte';
   import AreaChart from '$lib/components/charts/area-chart.svelte';
   import StatCard from '$lib/components/ui/stat-card.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { content } from '$lib/data/content';
+  import type { PageProps } from './$types';
+
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
   import { breadcrumbNode, webPageNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
   import Info from '@lucide/svelte/icons/info';
@@ -132,13 +136,13 @@
       </Card>
       <Card padding="lg">
         <p class="eyebrow text-subtle-foreground">Articles published</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{formatCount(archive.stats.articles)}</p>
+        <p class="mt-2 text-2xl font-bold tabular-nums">{formatCount(stats.articles)}</p>
         <p class="mt-1 text-xs text-subtle-foreground">Counted from the journal's article index.</p>
       </Card>
       <Card padding="lg">
         <p class="eyebrow text-subtle-foreground">Issues published</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{formatCount(archive.stats.issues)}</p>
-        <p class="mt-1 text-xs text-subtle-foreground">Including {formatCount(archive.stats.specialEditions)} special editions.</p>
+        <p class="mt-2 text-2xl font-bold tabular-nums">{formatCount(stats.issues)}</p>
+        <p class="mt-1 text-xs text-subtle-foreground">Including {formatCount(stats.specialEditions)} special editions.</p>
       </Card>
     </div>
   </section>

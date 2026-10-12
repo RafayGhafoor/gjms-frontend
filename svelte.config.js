@@ -29,6 +29,7 @@ const config = {
       // The journal's data files stay at the repository root (the automation
       // writes archive-data.json there), so alias them for clean imports.
       $archive: 'archive-data.json',
+      $abstracts: 'abstracts.json',
       $content: 'content.json'
     }
   }

@@ -61,13 +61,16 @@ Existing URLs must stay byte-identical. Routes are folders named after the URL, 
 ## 4. Data layer
 
 ```ts
-import { archive, content } from '$lib/data/journal';
-// archive.issues  : Issue[]   (normalised, sorted helpers available)
-// archive.articles: Article[]
-// archive.stats   : counts, years, and chart-ready series
+import { archive } from '$lib/data/archive-index';   // article + issue records (large)
+import { content } from '$lib/data/content';         // the journal's page copy (small)
+// archive.issues / archive.articles / archive.stats
 // content.site | stats | home | impactFactor | currentIssue
 //         | editorialBoard | authorGuidelines | visionMission | contact
 ```
+
+Do not import `$lib/data/journal` from a page — it re-exports both files for build-time scripts and
+would pull the whole archive index into that page's client bundle. Content-only pages take their
+figures from a `+page.server.ts` load built on `$lib/server/stats`.
 
 Types live in `$lib/data/types.ts`. Helpers:
 
@@ -82,8 +85,13 @@ import { cn, formatCount, formatPages, formatDateRange, highlight } from '$lib/u
 counts, ready for `<BarChart>` / `<AreaChart>`.
 
 `Article` fields: `num, title, authors ('' when the record has none), pages, pdf, hasPdf, year,
-volumeLabel, volumeNumber, isSpecial, issueNumber, issueTitle, issueId, search`.
-**Always check `article.authors` before rendering a byline** — 12 of 342 records have one.
+volumeLabel, volumeNumber, isSpecial, issueNumber, issueTitle, issueId, slug, abstract`.
+**Always check `article.authors` before rendering a byline.**
+
+`slug` is the stable id used for the article URL (`articlePath(slug)` → `/article/<slug>.html`) and
+comes from the automation — never derive or edit it. `abstract` is populated **only** on article
+pages, from the server-only `$lib/server/abstracts` lookup; on the index pages it is `''`, so check
+before rendering and never invent one.
 
 ## 5. Components you must reuse (do not edit them)
 

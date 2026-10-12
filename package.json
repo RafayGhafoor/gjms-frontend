@@ -23,9 +23,7 @@
     "vite": "^7.1.0"
   },
   "dependencies": {
-    "@internationalized/date": "^3.12.4",
     "@lucide/svelte": "^1.55.0",
-    "bits-ui": "^2.19.5",
     "clsx": "^2.1.1",
     "mode-watcher": "^1.1.0",
     "tailwind-merge": "^3.7.0",

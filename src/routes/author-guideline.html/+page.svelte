@@ -4,7 +4,7 @@
   import Card from '$lib/components/ui/card.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import Badge from '$lib/components/ui/badge.svelte';
-  import { content } from '$lib/data/journal';
+  import { content } from '$lib/data/content';
   import { SITE } from '$lib/config/site';
   import { breadcrumbNode, webPageNode } from '$lib/seo';
   import Mail from '@lucide/svelte/icons/mail';

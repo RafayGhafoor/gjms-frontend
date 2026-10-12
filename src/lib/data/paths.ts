@@ -5,3 +5,12 @@
 export function issuePath(issueId: string): string {
   return `/archive/${issueId}.html`;
 }
+
+/**
+ * /article/<slug>.html — one prerendered page per article.
+ * The slug comes from archive-data.json and matches the URLs the journal's
+ * earlier static build published, so existing links keep working.
+ */
+export function articlePath(slug: string): string {
+  return `/article/${slug}.html`;
+}

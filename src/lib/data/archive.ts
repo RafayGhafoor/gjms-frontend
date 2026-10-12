@@ -65,16 +65,15 @@ function normaliseArticle(raw: RawArticle, issue: Omit<Issue, 'articles'>): Arti
     pages: raw.pages && raw.pages !== '#' ? String(raw.pages).trim() : '',
     pdf,
     hasPdf: Boolean(pdf) && pdf !== '#',
+    slug: String(raw.slug ?? '').trim(),
+    abstract: '',
     year: issue.year,
     volumeLabel: issue.volumeLabel,
     volumeNumber: issue.volumeNumber,
     isSpecial: issue.isSpecial,
     issueNumber: issue.issueNumber,
     issueTitle: issue.title,
-    issueId: issue.id,
-    search: [title, raw.authors ?? '', raw.pages ?? '', issue.title, issue.volumeLabel, issue.year]
-      .join(' ')
-      .toLowerCase()
+    issueId: issue.id
   };
 }
 
@@ -240,11 +239,20 @@ export function filterIssues(issues: Issue[], filter: ArchiveFilter): Issue[] {
   return issues.filter((issue) => matchesIssue(issue, filter));
 }
 
+/**
+ * The search haystack is assembled on demand rather than stored on every
+ * record: keeping it in the data would add tens of kilobytes to the payload
+ * every visitor downloads just to search a list they may never filter.
+ */
+function haystack(article: Article): string {
+  return `${article.title} ${article.authors} ${article.pages} ${article.issueTitle} ${article.volumeLabel} ${article.year}`.toLowerCase();
+}
+
 export function filterArticles(articles: Article[], filter: ArchiveFilter): Article[] {
   const term = (filter.q ?? '').trim().toLowerCase();
+  if (term.length < SEARCH_MIN_LENGTH) return articles.filter((article) => matchesIssue({ ...article, id: article.issueId, articles: [] }, filter));
   return articles.filter((article) => {
     if (!matchesIssue({ ...article, id: article.issueId, articles: [] }, filter)) return false;
-    if (term.length < SEARCH_MIN_LENGTH) return true;
-    return article.search.includes(term);
+    return haystack(article).includes(term);
   });
 }

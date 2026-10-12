@@ -6,7 +6,7 @@
   import ArchiveBrowser from '$lib/components/archive/archive-browser.svelte';
   import { SUBMIT_HREF } from '$lib/config/site';
   import { breadcrumbNode, collectionPageNode, publicationIssueNodes } from '$lib/seo';
-  import { archive } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
     import CalendarDays from '@lucide/svelte/icons/calendar-days';
   import FileText from '@lucide/svelte/icons/file-text';
   import LayoutGrid from '@lucide/svelte/icons/layout-grid';

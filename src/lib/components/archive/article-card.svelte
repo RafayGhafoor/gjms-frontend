@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Article } from '$lib/data/types';
   import { issueLabel } from '$lib/data/archive';
+  import { articlePath } from '$lib/data/paths';
   import { formatPages, highlight } from '$lib/utils';
   import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';
@@ -37,7 +38,14 @@
 
   <div class="grid min-w-0 gap-1">
     <svelte:element this={Heading} class="paper-title text-[1.0625rem] text-foreground">
-      {@html highlight(article.title, query)}
+      {#if article.slug}
+        <!-- The title links to the article's own page, which carries its abstract. -->
+        <a class="text-foreground no-underline hover:text-accent-foreground hover:underline" href={articlePath(article.slug)}>
+          {@html highlight(article.title, query)}
+        </a>
+      {:else}
+        {@html highlight(article.title, query)}
+      {/if}
     </svelte:element>
     {#if article.authors}
       <p class="text-sm text-muted-foreground">{@html highlight(article.authors, query)}</p>

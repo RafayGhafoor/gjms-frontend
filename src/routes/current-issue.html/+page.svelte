@@ -4,7 +4,8 @@
   import Card from '$lib/components/ui/card.svelte';
   import Badge from '$lib/components/ui/badge.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
+  import { content } from '$lib/data/content';
   import { issuePath } from '$lib/data/paths';
   import { normalisePdfUrl, sortIssues } from '$lib/data/archive';
   import { breadcrumbNode, publicationIssueNodes, scholarlyArticleNode, webPageNode } from '$lib/seo';

@@ -3,7 +3,11 @@
   import Breadcrumbs from '$lib/components/site/breadcrumbs.svelte';
   import Card from '$lib/components/ui/card.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { content } from '$lib/data/content';
+  import type { PageProps } from './$types';
+
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
   import { SITE } from '$lib/config/site';
   import { breadcrumbNode, webPageNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
@@ -89,19 +93,19 @@
       <dl class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div>
           <dt class="eyebrow text-subtle-foreground">Articles</dt>
-          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(archive.stats.articles)}</dd>
+          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(stats.articles)}</dd>
         </div>
         <div>
           <dt class="eyebrow text-subtle-foreground">Issues</dt>
-          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(archive.stats.issues)}</dd>
+          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(stats.issues)}</dd>
         </div>
         <div>
           <dt class="eyebrow text-subtle-foreground">Volumes</dt>
-          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(archive.stats.volumes)}</dd>
+          <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(stats.volumes)}</dd>
         </div>
         <div>
           <dt class="eyebrow text-subtle-foreground">Published since</dt>
-          <dd class="mt-1 text-2xl font-bold tabular-nums">{archive.stats.firstYear}</dd>
+          <dd class="mt-1 text-2xl font-bold tabular-nums">{stats.firstYear}</dd>
         </div>
       </dl>
       <div class="mt-6 flex flex-wrap gap-3">
@@ -136,8 +140,8 @@
       <ul class="mt-3 grid gap-2 text-sm text-muted-foreground">
         <li>{SITE.name} — {SITE.tagline}</li>
         <li>Published since {SITE.startYear}</li>
-        <li>{formatCount(archive.stats.articles)} articles, {formatCount(archive.stats.issues)} issues</li>
-        <li>{formatCount(archive.stats.specialEditions)} special editions</li>
+        <li>{formatCount(stats.articles)} articles, {formatCount(stats.issues)} issues</li>
+        <li>{formatCount(stats.specialEditions)} special editions</li>
       </ul>
       <div class="mt-4">
         <Button variant="outline" size="sm" href="/contact.html">Contact the journal</Button>

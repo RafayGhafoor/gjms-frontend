@@ -7,7 +7,8 @@
   import BarChart from '$lib/components/charts/bar-chart.svelte';
   import AreaChart from '$lib/components/charts/area-chart.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
+  import { content } from '$lib/data/content';
   import { normalisePdfUrl, sortArticles } from '$lib/data/archive';
   import { SITE, SUBMIT_HREF } from '$lib/config/site';
   import { collectionPageNode, scholarlyArticleNode, webPageNode } from '$lib/seo';

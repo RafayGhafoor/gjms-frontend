@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import type { Issue } from '$lib/data/types';
-  import { archive } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
   import { formatPages } from '$lib/utils';
   import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';

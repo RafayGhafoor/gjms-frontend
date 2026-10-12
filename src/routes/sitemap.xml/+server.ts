@@ -1,6 +1,6 @@
 import { SITEMAP_PAGES, absoluteUrl } from '$lib/config/site';
-import { archive } from '$lib/data/journal';
-import { issuePath } from '$lib/data/paths';
+import { archive } from '$lib/data/archive-index';
+import { articlePath, issuePath } from '$lib/data/paths';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
@@ -17,7 +17,12 @@ export const GET: RequestHandler = () => {
     url(absoluteUrl(issuePath(issue.id)), '0.7', 'yearly', `${issue.year}-01-01`)
   );
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...staticEntries, ...issueEntries].join('\n')}\n</urlset>\n`;
+  // One URL per article that has a slug.
+  const articleEntries = archive.articles
+    .filter((article) => article.slug)
+    .map((article) => url(absoluteUrl(articlePath(article.slug)), '0.6', 'yearly', `${article.year}-01-01`));
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...staticEntries, ...issueEntries, ...articleEntries].join('\n')}\n</urlset>\n`;
 
   return new Response(xml, {
     headers: { 'content-type': 'application/xml; charset=utf-8' }

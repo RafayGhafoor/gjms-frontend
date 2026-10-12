@@ -25,19 +25,41 @@ push to `main` and publishes `build/` to GitHub Pages.
 
 ```
 archive-data.json      journal article archive — WRITTEN BY gjms-automation, never edit by hand
+                       (num, title, authors, pages, pdf, slug per article)
+abstracts.json         extracted abstracts keyed by PDF URL — also written by the automation
 content.json           the journal's published page copy (site, stats, board, guidelines, contact)
 src/app.css            Academic Nexus design tokens (light + AMOLED dark) and Tailwind theme
 src/lib/config/site.ts navigation, footer links, canonical URLs, sitemap list
 static/                brand artwork and icons copied verbatim into build/
 docs/brand/            the original logo sources + how the web assets are generated
 scripts/brand/         build-brand-assets.py — regenerates static/brand and the favicons
-src/lib/data/          types, archive normalisation/derivation, journal.ts entry point
+src/lib/data/          types · archive.ts (pure helpers) · archive-index.ts (records)
+                       · content.ts (page copy) · text.ts · paths.ts — see “Which data module”
+src/lib/server/        build-time only: abstracts.ts (abstract lookup) · stats.ts (counts)
 src/lib/components/    ui/ (shadcn-style primitives) · site/ (header, footer, Seo, breadcrumbs)
                        charts/ · archive/ (article card, issue card, year timeline, browser)
+                       · article/ (article detail, citation card)
 src/routes/<name>.html/+page.svelte   one folder per published URL (dots included on purpose)
+src/routes/archive/[issue]/           one prerendered page per issue  → /archive/<issue>.html
+src/routes/article/[slug]/             one prerendered page per article → /article/<slug>.html
 legacy/                the previous static site and the first design pilot — reference only
 docs/REDESIGN-CONVENTIONS.md   the design-system + conventions contract (read before editing pages)
 ```
+
+### Which data module to import
+
+`archive-data.json` is large (all 342 records), so the data layer is split. Importing the wrong module
+ships the whole archive to the browser on pages that do not need it:
+
+| Need | Import |
+| --- | --- |
+| Article/issue records (archive, articles, home, current issue, issue and article pages) | `$lib/data/archive-index` |
+| The journal's page copy only (guidelines, contact, editorial board, impact, vision) | `$lib/data/content` |
+| Derived counts on a content page | a `+page.server.ts` load using `$lib/server/stats` |
+| One article's abstract | `$lib/server/abstracts` (server-only — never import from client code) |
+
+`$lib/data/journal` re-exports both data files for build-time scripts; importing it from a page pulls
+the archive index into that page's bundle, which is why the content pages avoid it.
 
 ## Non-negotiable rules
 
@@ -79,10 +101,13 @@ classes — not bare `<img>` tags — when a page needs the logo.
 
 ## Content workflow when a new issue is published
 
-1. `gjms-automation` extracts metadata, uploads PDFs to `gjms.b-cdn.net` and appends the issue to
+1. `gjms-automation` extracts metadata, uploads PDFs to `gjms.b-cdn.net`, appends the issue to
    `archive-data.json` (top-level array, shape `{ volume, title, articles: [{ num, title, authors,
-   pages, pdf }] }`).
-2. Commit and push; the workflow rebuilds the site. The archive page, charts, timeline, sitemap and
-   issue pages all pick the new issue up automatically at build time.
+   pages, pdf, slug }] }`) and writes the extracted text to `abstracts.json` (keyed by PDF URL).
+2. Commit and push; the workflow rebuilds the site. The archive page, charts, timeline, sitemap,
+   issue pages and article pages all pick the new issue up automatically at build time.
 3. `current-issue.html` and the "Current issue" block on the home page read `content.json`, which is
    still edited by hand.
+
+Article page URLs come from the automation's `slug` field. Never hand-write or renumber a slug —
+existing `/article/<slug>.html` links depend on it.

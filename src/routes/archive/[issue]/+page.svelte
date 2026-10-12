@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { archive } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
   import { sortIssues } from '$lib/data/archive';
   import { issuePath } from '$lib/data/paths';
   import Seo from '$lib/components/site/seo.svelte';

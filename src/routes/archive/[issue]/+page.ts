@@ -1,4 +1,4 @@
-import { archive } from '$lib/data/journal';
+import { archive } from '$lib/data/archive-index';
 
 /* One prerendered page per published issue: /archive/<issueId>.html
    The sitemap lists these URLs, so `entries` must cover every issue. */

@@ -7,7 +7,7 @@
   import Input from '$lib/components/ui/input.svelte';
   import Select from '$lib/components/ui/select.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
-  import { archive } from '$lib/data/journal';
+  import { archive } from '$lib/data/archive-index';
   import { SEARCH_MIN_LENGTH, filterArticles, sortArticles, type ArchiveFilter } from '$lib/data/archive';
   import { breadcrumbNode, collectionPageNode, scholarlyArticleNode, webPageNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';

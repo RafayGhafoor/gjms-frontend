@@ -2,6 +2,7 @@
    emitted — no invented ISSNs, metrics, DOIs or abstracts. */
 
 import { SITE, absoluteUrl } from '$lib/config/site';
+import { articlePath } from '$lib/data/paths';
 import type { Article, Issue } from '$lib/data/types';
 
 export function organizationNode() {
@@ -96,7 +97,7 @@ function clean<T extends Record<string, unknown>>(node: T): T {
 }
 
 /** ScholarlyArticle for records that really exist in archive-data.json. */
-export function scholarlyArticleNode(article: Article, issuePath?: string) {
+export function scholarlyArticleNode(article: Article, issueUrl?: string) {
   const authors = article.authors
     ? article.authors
         .split(/,\s*|\s+and\s+/i)
@@ -104,12 +105,24 @@ export function scholarlyArticleNode(article: Article, issuePath?: string) {
         .filter(Boolean)
     : [];
 
+  /* Prefer the article's own page as the canonical URL; the PDF is the same
+     content in another form. */
+  const url = article.slug
+    ? absoluteUrl(articlePath(article.slug))
+    : article.hasPdf
+      ? article.pdf
+      : issueUrl
+        ? absoluteUrl(issueUrl)
+        : undefined;
+
   return clean({
     '@type': 'ScholarlyArticle',
     headline: article.title,
+    abstract: article.abstract || undefined,
     inLanguage: 'en',
     pagination: article.pages || undefined,
-    url: article.hasPdf ? article.pdf : issuePath ? absoluteUrl(issuePath) : undefined,
+    url,
+    sameAs: article.hasPdf ? article.pdf : undefined,
     author: authors.length ? authors.map((name) => ({ '@type': 'Person', name })) : undefined,
     isPartOf: clean({
       '@type': 'PublicationIssue',

@@ -3,7 +3,11 @@
   import Breadcrumbs from '$lib/components/site/breadcrumbs.svelte';
   import Card from '$lib/components/ui/card.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { content } from '$lib/data/content';
+  import type { PageProps } from './$types';
+
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
   import { SITE } from '$lib/config/site';
   import { breadcrumbNode, webPageNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
@@ -102,8 +106,8 @@
       <dl class="mt-3 grid gap-2 text-sm">
         <div><dt class="text-subtle-foreground">Name</dt><dd class="font-semibold">{SITE.fullName}</dd></div>
         <div><dt class="text-subtle-foreground">Published since</dt><dd class="font-semibold">{SITE.startYear}</dd></div>
-        <div><dt class="text-subtle-foreground">Issues</dt><dd class="font-semibold tabular-nums">{formatCount(archive.stats.issues)}</dd></div>
-        <div><dt class="text-subtle-foreground">Articles</dt><dd class="font-semibold tabular-nums">{formatCount(archive.stats.articles)}</dd></div>
+        <div><dt class="text-subtle-foreground">Issues</dt><dd class="font-semibold tabular-nums">{formatCount(stats.issues)}</dd></div>
+        <div><dt class="text-subtle-foreground">Articles</dt><dd class="font-semibold tabular-nums">{formatCount(stats.articles)}</dd></div>
       </dl>
       <div class="mt-4">
         <Button variant="outline" size="sm" href="/current-issue.html">Current issue</Button>

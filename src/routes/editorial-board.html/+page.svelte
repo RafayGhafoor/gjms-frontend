@@ -5,7 +5,11 @@
   import Input from '$lib/components/ui/input.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import Badge from '$lib/components/ui/badge.svelte';
-  import { archive, content } from '$lib/data/journal';
+  import { content } from '$lib/data/content';
+  import type { PageProps } from './$types';
+
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
   import { breadcrumbNode, collectionPageNode, personNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
   import Mail from '@lucide/svelte/icons/mail';
@@ -90,7 +94,7 @@
       </div>
       <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
         <dt class="eyebrow text-subtle-foreground">Issues published</dt>
-        <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(archive.stats.issues)}</dd>
+        <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(stats.issues)}</dd>
       </div>
     </dl>
   </div>
@@ -110,7 +114,7 @@
         <p class="text-lg font-bold">{content.editorialBoard.editorInChief}</p>
         <p class="mt-1 flex flex-wrap items-center gap-2">
           <Badge variant="accent">Editor-in-chief</Badge>
-          <Badge variant="outline">{archive.stats.firstYear}–{archive.stats.lastYear}</Badge>
+          <Badge variant="outline">{stats.firstYear}–{stats.lastYear}</Badge>
         </p>
       </div>
       <div class="ml-auto">
