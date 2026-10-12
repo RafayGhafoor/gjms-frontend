@@ -74,6 +74,19 @@ the archive index into that page's bundle, which is why the content pages avoid 
    internal links or missing `#anchors`, so keep links honest.
 5. Import Lucide icons per icon (`@lucide/svelte/icons/search`), never from the barrel export.
 
+## Fonts
+
+Webfonts are **self-hosted**, not loaded from Google's CDN: fonts are always fetched with CORS, and
+if that response is blocked (proxies, locked-down networks, some automation browsers) `@font-face`
+silently fails and every visitor gets the fallback stack. Serving them from our own origin removes the
+third-party request, the extra DNS lookup and the privacy dependency.
+
+`scripts/fetch-fonts.mjs` downloads the latin subset of the families under evaluation and regenerates
+`static/fonts/font-faces.css` (declaring `@font-face` only, so a family is fetched solely when a page
+uses it). `src/app.html` links that sheet. When adding a family: add it to `FAMILIES` in that script,
+re-run it, and name the family in `src/app.css` (`--app-font-sans` / `--app-font-serif`). Never add a
+`fonts.googleapis.com` link — it reintroduces the failure mode above.
+
 ## Brand assets
 
 The GJMSSH logo exists in two forms, both kept in `docs/brand/`:

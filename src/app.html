@@ -11,6 +11,11 @@
     <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
     <link rel="manifest" href="%sveltekit.assets%/site.webmanifest" />
 
+    <!-- Self-hosted webfonts. Generating them is scripts/fetch-fonts.mjs; the
+         sheet only declares @font-face, so a family is downloaded only when a
+         page actually uses it. No third-party request, no CORS dependency. -->
+    <link rel="stylesheet" href="%sveltekit.assets%/fonts/font-faces.css" />
+
     <script>
       // Applies the stored colour scheme before first paint (mode-watcher key).
       (function () {

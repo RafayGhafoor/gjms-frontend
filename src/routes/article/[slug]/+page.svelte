@@ -35,11 +35,20 @@
       ? summariseForMeta(abstract)
       : `${article?.title ?? 'Article'} — open-access article published in the Global Journal of Management, Social Sciences and Humanities (GJMSSH).`
   );
+
+  /* A handful of records share a title across issues (the "Author's Guideline"
+     front-matter entries). Appending the issue keeps their SEO titles unique
+     without altering the published title shown on the page. */
+  const seoTitle = $derived.by(() => {
+    if (!article) return 'Article';
+    const duplicated = archive.articles.filter((item) => item.title === article.title).length > 1;
+    return duplicated && issue ? `${article.title} — ${issue.title}` : article.title;
+  });
 </script>
 
 {#if article}
   <Seo
-    title={article.title}
+    title={seoTitle}
     {description}
     path={articlePath(article.slug)}
     type="article"

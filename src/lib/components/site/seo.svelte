@@ -1,6 +1,7 @@
 <script lang="ts">
   import { SITE, absoluteUrl } from '$lib/config/site';
   import { graph, jsonLdScript, organizationNode, periodicalNode, websiteNode } from '$lib/seo';
+  import { summariseForMeta } from '$lib/data/text';
 
   /* One place for every <head> tag: title, description, canonical, social cards
      and JSON-LD. Pages pass their own title/description and any extra schema. */
@@ -35,6 +36,10 @@
   } = $props();
 
   const fullTitle = $derived(appendSiteName && !title.includes(SITE.name) ? `${title} | ${SITE.name}` : title);
+  /* Search engines display roughly 155–160 characters. Trimming here rather
+     than at each call site means no page can ship an over-long description,
+     and the cut lands on a sentence or word boundary instead of mid-word. */
+  const metaDescription = $derived(summariseForMeta(description, 158));
   const canonical = $derived(absoluteUrl(path));
   const imageUrl = $derived(absoluteUrl(image));
   const nodes = $derived(includeSiteGraph ? [organizationNode(), periodicalNode(), websiteNode(), ...jsonLd] : jsonLd);
@@ -42,7 +47,7 @@
 
 <svelte:head>
   <title>{fullTitle}</title>
-  <meta name="description" content={description} />
+  <meta name="description" content={metaDescription} />
   {#if !noindex}<link rel="canonical" href={canonical} />{/if}
   <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
   <meta name="author" content={SITE.fullName} />
@@ -51,7 +56,7 @@
   <meta property="og:type" content={type} />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:description" content={metaDescription} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={imageUrl} />
   <meta property="og:image:width" content={String(imageWidth)} />
@@ -63,7 +68,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
+  <meta name="twitter:description" content={metaDescription} />
   <meta name="twitter:image" content={imageUrl} />
   <meta name="twitter:image:alt" content={`${SITE.name} — ${SITE.fullName}`} />
 
