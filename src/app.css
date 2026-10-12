@@ -1,0 +1,542 @@
+@import 'tailwindcss' source(none);
+
+/* Scan the whole SvelteKit source tree as ONE directory source. The old site in
+   legacy/ keeps its Tailwind-CDN class soup and must never leak in here, so
+   automatic detection stays off. */
+@source '../src';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   Academic Nexus — design tokens
+   Light mode first, then the AMOLED dark palette. Component code only ever
+   references semantic names (background, card, border, primary, gold, …).
+   ========================================================================== */
+
+:root {
+  /* Type system: Crimson Text for headings and article titles (the academic
+     signal, and what the journal's own print-era register reads like), Open Sans
+     for UI, tables and body copy. Both are self-hosted — see
+     scripts/fetch-fonts.mjs — with latin-ext so accented author names render in
+     the brand face rather than dropping to a fallback mid-title. */
+  --app-font-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: 'Crimson Text', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+
+  --radius: 0.75rem;
+
+  --background: #ffffff;
+  --foreground: #111827;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-strong: #f1f5f9;
+  --card: #f8fafc;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1f2937;
+  --muted: #f1f5f9;
+  --muted-foreground: #4b5563;
+  --subtle-foreground: #6b7280;
+
+  --accent: #eff6ff;
+  --accent-foreground: #1d4ed8;
+  --accent-border: #bfdbfe;
+
+  --cyan: #06b6d4;
+  --cyan-foreground: #0e7490;
+  --cyan-soft: #ecfeff;
+
+  --gold: #f59e0b;
+  --gold-hover: #d97706;
+  --gold-foreground: #b45309;
+  --gold-soft: #fffbeb;
+  --gold-border: #fde68a;
+
+  --success: #059669;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --input: #d1d5db;
+  --ring: #2563eb;
+
+  --glass: rgb(255 255 255 / 0.78);
+  --glass-border: rgb(229 231 235 / 0.9);
+  --overlay: rgb(15 23 42 / 0.45);
+
+  --hero-1: #0b1b3a;
+  --hero-2: #12304f;
+  --hero-3: #0b1b3a;
+  --hero-foreground: #f8fafc;
+  --hero-muted: #b8c9eb;
+
+  --chart-1: #2563eb;
+  --chart-2: #06b6d4;
+  --chart-3: #f59e0b;
+  --chart-4: #6366f1;
+  --chart-5: #0ea5e9;
+
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.05);
+  --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.08), 0 2px 6px -2px rgb(15 23 42 / 0.05);
+  --shadow-lg: 0 18px 40px -18px rgb(15 23 42 / 0.22), 0 4px 12px -6px rgb(15 23 42 / 0.08);
+
+  --ease-nexus: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #f9fafb;
+  --surface: #0b0f14;
+  --surface-muted: #0b0f14;
+  --surface-strong: #0f1720;
+  --card: #111827;
+  --card-foreground: #f9fafb;
+  --popover: #0b0f14;
+  --popover-foreground: #f9fafb;
+
+  --primary: #2563eb;
+  --primary-hover: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #0f1720;
+  --secondary-foreground: #f9fafb;
+  --muted: #0f1720;
+  --muted-foreground: #94a3b8;
+  --subtle-foreground: #7d8798;
+
+  --accent: rgb(37 99 235 / 0.14);
+  --accent-foreground: #60a5fa;
+  --accent-border: rgb(37 99 235 / 0.42);
+
+  --cyan: #06b6d4;
+  --cyan-foreground: #22d3ee;
+  --cyan-soft: rgb(6 182 212 / 0.14);
+
+  --gold: #f59e0b;
+  --gold-hover: #fbbf24;
+  --gold-foreground: #fbbf24;
+  --gold-soft: rgb(245 158 11 / 0.13);
+  --gold-border: rgb(245 158 11 / 0.4);
+
+  --success: #34d399;
+  --destructive: #f87171;
+  --destructive-foreground: #0b0f14;
+
+  --border: #1f2937;
+  --border-strong: #374151;
+  --input: #374151;
+  --ring: #60a5fa;
+
+  --glass: rgb(0 0 0 / 0.72);
+  --glass-border: rgb(31 41 55 / 0.9);
+  --overlay: rgb(0 0 0 / 0.7);
+
+  --hero-1: #000000;
+  --hero-2: #050b18;
+  --hero-3: #000000;
+  --hero-foreground: #f9fafb;
+  --hero-muted: #94a3b8;
+
+  --chart-1: #3b82f6;
+  --chart-2: #22d3ee;
+  --chart-3: #fbbf24;
+  --chart-4: #818cf8;
+  --chart-5: #38bdf8;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.6);
+  --shadow-md: 0 6px 18px -6px rgb(0 0 0 / 0.8);
+  --shadow-lg: 0 22px 48px -22px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(37 99 235 / 0.12);
+}
+
+/* Map the tokens onto Tailwind's theme so `bg-card`, `text-muted-foreground`,
+   `border-border`, `bg-gold`, `font-serif`, `rounded-lg` … all just work. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-strong: var(--surface-strong);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-border: var(--accent-border);
+  --color-cyan: var(--cyan);
+  --color-cyan-foreground: var(--cyan-foreground);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-gold: var(--gold);
+  --color-gold-hover: var(--gold-hover);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-border: var(--gold-border);
+  --color-success: var(--success);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-hero-muted: var(--hero-muted);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+
+  --ease-nexus: var(--ease-nexus);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Keeps anchored issues clear of the sticky header + toolbar. */
+    scroll-padding-top: 9rem;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--app-font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings are set in the display serif. Crimson Text has a smaller x-height
+     than the sans, so the display sizes below run a step larger than a sans
+     scale would, and weight stops at 700 (the heaviest weight shipped). */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--app-font-serif);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--foreground);
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  .dark ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  .dark ::-webkit-scrollbar-track {
+    background: #0b0f14;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 999px;
+    border: 3px solid #0b0f14;
+  }
+}
+
+/* ------------------------------------------------------------ utilities */
+
+@utility container-page {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+@utility container-wide {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+@utility glass {
+  background-color: var(--glass);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  backdrop-filter: saturate(1.6) blur(14px);
+  border-color: var(--glass-border);
+}
+
+/* Display sizes for page titles. Crimson Text sets noticeably smaller than a
+   grotesque at the same px, so these are the sizes that read as "48–56px" in a
+   sans. */
+@utility display-1 {
+  font-family: var(--app-font-serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 1.9rem + 2vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+@utility display-2 {
+  font-family: var(--app-font-serif);
+  font-weight: 600;
+  font-size: clamp(1.55rem, 1.35rem + 0.9vw, 2.1rem);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+}
+
+/* Long-form reading: abstracts and policy prose. 19px at 1.75 with a ~70ch
+   measure is the setting the journal's own abstracts were proofed at. */
+@utility reading {
+  font-size: 1.1875rem;
+  line-height: 1.75;
+}
+
+@utility paper-title {
+  font-family: var(--app-font-serif);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------- components */
+
+@layer components {
+  .hero-surface {
+    background:
+      radial-gradient(120% 140% at 12% 0%, color-mix(in srgb, var(--primary) 26%, transparent) 0%, transparent 60%),
+      linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 48%, var(--hero-3) 100%);
+    color: var(--hero-foreground);
+  }
+
+  .hero-grid {
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: color-mix(in srgb, var(--hero-foreground) 22%, transparent);
+    mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.6), transparent 78%);
+    -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.6), transparent 78%);
+  }
+
+  .mark {
+    background: var(--gold-soft);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 0.15em;
+    box-shadow: inset 0 -0.4em 0 var(--gold-soft);
+  }
+
+  .shimmer {
+    background: linear-gradient(100deg, var(--muted) 30%, var(--card) 50%, var(--muted) 70%);
+    background-size: 220% 100%;
+    animation: nexus-shimmer 1.4s linear infinite;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.6s var(--ease-nexus),
+      transform 0.6s var(--ease-nexus);
+  }
+
+  .count-pop {
+    animation: nexus-count-pop 0.35s var(--ease-nexus);
+  }
+
+  .fade-up {
+    animation: nexus-fade-up 0.6s var(--ease-nexus) both;
+  }
+
+  /* Brand artwork. The light/dark variants are declared as background images so
+     the browser only downloads the one the active theme needs (a <picture> swap
+     would fetch both, because the theme is class-based, not OS-based). */
+  .brand-lockup,
+  .brand-mark {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: contain;
+  }
+
+
+
+  /* One file per density, sized to the painted slot (192 px / 48 px), instead of
+     the 1400 px masters these replaced — the header logo was the heaviest
+     request on the site. WebP only: the app already requires a modern browser. */
+  .brand-lockup {
+    width: 12rem;
+    height: 2.75rem;
+    background-image: image-set(
+      url('/brand/gjms-lockup-1x.webp') 1x,
+      url('/brand/gjms-lockup.webp') 2x
+    );
+  }
+
+  .dark .brand-lockup {
+    background-image: image-set(
+      url('/brand/gjms-lockup-dark-1x.webp') 1x,
+      url('/brand/gjms-lockup-dark.webp') 2x
+    );
+  }
+
+  .brand-mark {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-position: center;
+    background-image: image-set(
+      url('/brand/gjms-mark-1x.webp') 1x,
+      url('/brand/gjms-mark.webp') 2x
+    );
+  }
+
+  .dark .brand-mark {
+    background-image: image-set(
+      url('/brand/gjms-mark-dark-1x.webp') 1x,
+      url('/brand/gjms-mark-dark.webp') 2x
+    );
+  }
+
+  .count-pop {
+    animation: nexus-count-pop 0.35s var(--ease-nexus);
+  }
+
+  .fade-up {
+    animation: nexus-fade-up 0.6s var(--ease-nexus) both;
+  }
+
+}
+
+@keyframes nexus-shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes nexus-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nexus-count-pop {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1.06);
+    filter: brightness(1.35);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes nexus-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

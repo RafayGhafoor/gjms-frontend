@@ -1,0 +1,78 @@
+<script lang="ts">
+  import { SITE, absoluteUrl } from '$lib/config/site';
+  import { graph, jsonLdScript, organizationNode, periodicalNode, websiteNode } from '$lib/seo';
+  import { summariseForMeta } from '$lib/data/text';
+
+  /* One place for every <head> tag: title, description, canonical, social cards
+     and JSON-LD. Pages pass their own title/description and any extra schema. */
+  let {
+    title,
+    description,
+    path,
+    appendSiteName = true,
+    type = 'website',
+    image = '/og-image.jpg',
+    imageWidth = 1200,
+    imageHeight = 630,
+    jsonLd = [],
+    includeSiteGraph = true,
+    noindex = false,
+    publishedTime,
+    modifiedTime
+  }: {
+    title: string;
+    description: string;
+    path: string;
+    appendSiteName?: boolean;
+    type?: 'website' | 'article' | 'profile';
+    image?: string;
+    imageWidth?: number;
+    imageHeight?: number;
+    jsonLd?: (Record<string, unknown> | null | undefined)[];
+    includeSiteGraph?: boolean;
+    noindex?: boolean;
+    publishedTime?: string;
+    modifiedTime?: string;
+  } = $props();
+
+  const fullTitle = $derived(appendSiteName && !title.includes(SITE.name) ? `${title} | ${SITE.name}` : title);
+  /* Search engines display roughly 155–160 characters. Trimming here rather
+     than at each call site means no page can ship an over-long description,
+     and the cut lands on a sentence or word boundary instead of mid-word. */
+  const metaDescription = $derived(summariseForMeta(description, 158));
+  const canonical = $derived(absoluteUrl(path));
+  const imageUrl = $derived(absoluteUrl(image));
+  const nodes = $derived(includeSiteGraph ? [organizationNode(), periodicalNode(), websiteNode(), ...jsonLd] : jsonLd);
+</script>
+
+<svelte:head>
+  <title>{fullTitle}</title>
+  <meta name="description" content={metaDescription} />
+  {#if !noindex}<link rel="canonical" href={canonical} />{/if}
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+  <meta name="author" content={SITE.fullName} />
+  <meta name="publisher" content={SITE.fullName} />
+
+  <meta property="og:type" content={type} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={imageUrl} />
+  <meta property="og:image:width" content={String(imageWidth)} />
+  <meta property="og:image:height" content={String(imageHeight)} />
+  <meta property="og:image:alt" content={`${SITE.name} — ${SITE.fullName}`} />
+  <meta property="og:locale" content="en" />
+  {#if publishedTime}<meta property="article:published_time" content={publishedTime} />{/if}
+  {#if modifiedTime}<meta property="article:modified_time" content={modifiedTime} />{/if}
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={metaDescription} />
+  <meta name="twitter:image" content={imageUrl} />
+  <meta name="twitter:image:alt" content={`${SITE.name} — ${SITE.fullName}`} />
+
+  <link rel="alternate" hreflang="en" href={canonical} />
+
+  {@html jsonLdScript(graph(nodes))}
+</svelte:head>
