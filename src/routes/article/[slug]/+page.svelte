@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { page } from '$app/state';
-  import { archive } from '$lib/data/archive-index';
-  import { articlePath, paramId } from '$lib/data/paths';
+  import { articlePath } from '$lib/data/paths';
   import { SITE } from '$lib/config/site';
+  import type { PageProps } from './$types';
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import ArticleDetail from '$lib/components/article/article-detail.svelte';
@@ -10,15 +9,14 @@
   import { summariseForMeta } from '$lib/data/text';
   import { collectCitationMeta } from '$lib/data/citation';
 
-  let { data } = $props();
+  let { data }: PageProps = $props();
 
-  /* params.slug is the raw URL segment, which carries the .html suffix. */
-  const slug = $derived(paramId(page.params.slug));
-  const article = $derived(archive.articles.find((item) => item.slug === slug));
-  const issue = $derived(article ? (archive.issues.find((item) => item.id === article.issueId) ?? null) : null);
-
-  /* The abstract comes from the server load (abstracts.json stays server-side). */
-  const abstract = $derived(data?.abstract ?? '');
+  /* Resolved in the server load at build time: the archive index is ~30 KB
+     gzipped and this page needs exactly one record plus its issue. */
+  const article = $derived(data.article);
+  const issue = $derived(data.issue);
+  const slug = $derived(data.slug);
+  const abstract = $derived(article?.abstract ?? '');
 
   /* Highwire Press metadata — what Google Scholar reads to index an article
      landing page. Only fields that exist in the journal's records are emitted
@@ -41,8 +39,7 @@
      without altering the published title shown on the page. */
   const seoTitle = $derived.by(() => {
     if (!article) return 'Article';
-    const duplicated = archive.articles.filter((item) => item.title === article.title).length > 1;
-    return duplicated && issue ? `${article.title} — ${issue.title}` : article.title;
+    return data.titleIsShared && issue ? `${article.title} — ${issue.title}` : article.title;
   });
 </script>
 

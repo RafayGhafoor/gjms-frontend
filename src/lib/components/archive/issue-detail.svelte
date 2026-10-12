@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
   import type { Issue } from '$lib/data/types';
-  import { archive } from '$lib/data/archive-index';
   import { formatPages } from '$lib/utils';
   import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';
@@ -13,7 +12,12 @@
 
   /* Full issue view. This page is the crawlable home of every article record,
      so the article list is plain prerendered HTML. */
-  let { issue, newer = null, older = null }: { issue: Issue; newer?: Issue | null; older?: Issue | null } = $props();
+  let {
+    issue,
+    newer = null,
+    older = null,
+    siblings = []
+  }: { issue: Issue; newer?: Issue | null; older?: Issue | null; siblings?: Issue[] } = $props();
 
   /* Page range covered by the issue, derived from the article page ranges. */
   const pageRange = $derived.by(() => {
@@ -29,10 +33,9 @@
     return from === to ? formatPages(String(from)) : `Pages ${from}–${to}`;
   });
 
-  const inVolume = $derived(archive.issues.filter((item) => item.volumeLabel === issue.volumeLabel).slice().sort((a, b) => (a.issueNumber ?? 0) - (b.issueNumber ?? 0)));
-  const inYear = $derived(
-    archive.issues.filter((item) => item.year === issue.year && item.volumeLabel !== issue.volumeLabel)
-  );
+  /* Passed in from the page's server load. */
+  const inVolume = $derived(siblings.filter((item) => item.volumeLabel === issue.volumeLabel));
+  const inYear = $derived(siblings.filter((item) => item.volumeLabel !== issue.volumeLabel));
 </script>
 
 <section class="hero-surface relative overflow-hidden">

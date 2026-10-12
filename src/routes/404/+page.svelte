@@ -2,11 +2,13 @@
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import Card from '$lib/components/ui/card.svelte';
-  import { archive } from '$lib/data/archive-index';
+  import type { PageProps } from './$types';
   import { formatCount } from '$lib/utils';
   import FileText from '@lucide/svelte/icons/file-text';
   import Library from '@lucide/svelte/icons/library';
   import SearchX from '@lucide/svelte/icons/search-x';
+
+  let { data }: PageProps = $props();
 
   /* This route is built to 404.html, which is the file GitHub Pages serves for
      any unmatched path. It is noindex, so it can never compete with real pages. */
@@ -27,8 +29,8 @@
     <h1 class="mt-2 display-1 font-bold">We could not find that page</h1>
     <p class="mt-4 text-muted-foreground">
       The link may be out of date, or the address may contain a typo. Everything the journal publishes is still
-      reachable from the archive and the article index — {formatCount(archive.stats.articles)} article records across
-      {formatCount(archive.stats.issues)} issues.
+      reachable from the archive and the article index — {formatCount(data.stats.articles)} article records across
+      {formatCount(data.stats.issues)} issues.
     </p>
     <div class="mt-7 flex flex-wrap justify-center gap-3">
       <Button href="/">Journal home</Button>

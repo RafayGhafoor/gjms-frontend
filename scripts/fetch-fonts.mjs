@@ -25,7 +25,9 @@ import { join } from 'node:path';
    for the comparison harness. */
 const SHIPPED = {
   'Crimson Text': { weights: [400, 600, 700], subsets: ['latin', 'latin-ext'] },
-  'Open Sans': { weights: [400, 500, 600, 700], subsets: ['latin', 'latin-ext'] }
+  /* A variable request: one file covers 300–800, replacing four static files
+     (168 KB → ~50 KB for the same weights). */
+  'Open Sans': { weights: ['300..800'], subsets: ['latin', 'latin-ext'] }
 };
 
 const HARNESS = {
@@ -64,7 +66,8 @@ function facesFor(css, subset) {
     if (blocks[i] !== subset) continue;
     const block = blocks[i + 1];
     const family = block.match(/font-family:\s*'([^']+)'/)?.[1];
-    const weight = block.match(/font-weight:\s*(\d+)/)?.[1];
+    // A variable face declares a range: "font-weight: 300 800"
+    const weight = block.match(/font-weight:\s*([\d ]+);/)?.[1]?.trim().replace(/\s+/g, '-');
     const style = block.match(/font-style:\s*(\w+)/)?.[1] ?? 'normal';
     const src = block.match(/url\((https:[^)]+\.woff2)\)/)?.[1];
     const range = block.match(/unicode-range:\s*([^;]+);/)?.[1]?.trim();

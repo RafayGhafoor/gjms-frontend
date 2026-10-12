@@ -7,9 +7,9 @@
   import BarChart from '$lib/components/charts/bar-chart.svelte';
   import AreaChart from '$lib/components/charts/area-chart.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
-  import { archive } from '$lib/data/archive-index';
   import { content } from '$lib/data/content';
-  import { normalisePdfUrl, sortArticles } from '$lib/data/archive';
+  import type { PageProps } from './$types';
+  import { normalisePdfUrl } from '$lib/data/archive';
   import { SITE, SUBMIT_HREF } from '$lib/config/site';
   import { collectionPageNode, scholarlyArticleNode, webPageNode } from '$lib/seo';
   import { formatCount, formatPages } from '$lib/utils';
@@ -26,10 +26,14 @@
   import Sparkles from '@lucide/svelte/icons/sparkles';
   import Users from '@lucide/svelte/icons/users';
 
-  /* Home page. Every figure is derived from archive-data.json / content.json at
-     build time; no summary, metric or claim is invented. */
+  let { data }: PageProps = $props();
 
-  const latest = $derived(sortArticles(archive.articles, -1).slice(0, 8));
+  /* Home page. Every figure is derived from archive-data.json / content.json at
+     build time; no summary, metric or claim is invented. The records and the
+     figures come from the server load, so the archive index stays out of the
+     browser. */
+  const latest = $derived(data.latest);
+  const archive = $derived({ stats: data.stats });
   const currentIssue = $derived(content.currentIssue);
   /* content.json records are untyped JSON — normalise once here. */
   const currentIssueArticles = $derived(

@@ -422,19 +422,24 @@
     background-size: contain;
   }
 
+
+
+  /* One file per density, sized to the painted slot (192 px / 48 px), instead of
+     the 1400 px masters these replaced — the header logo was the heaviest
+     request on the site. WebP only: the app already requires a modern browser. */
   .brand-lockup {
     width: 12rem;
     height: 2.75rem;
     background-image: image-set(
-      url('/brand/gjms-lockup.webp') type('image/webp'),
-      url('/brand/gjms-lockup.png') type('image/png')
+      url('/brand/gjms-lockup-1x.webp') 1x,
+      url('/brand/gjms-lockup.webp') 2x
     );
   }
 
   .dark .brand-lockup {
     background-image: image-set(
-      url('/brand/gjms-lockup-dark.webp') type('image/webp'),
-      url('/brand/gjms-lockup-dark.png') type('image/png')
+      url('/brand/gjms-lockup-dark-1x.webp') 1x,
+      url('/brand/gjms-lockup-dark.webp') 2x
     );
   }
 
@@ -443,14 +448,26 @@
     height: 2.5rem;
     background-position: center;
     background-image: image-set(
-      url('/brand/gjms-mark.webp') type('image/webp'),
-      url('/brand/gjms-mark.png') type('image/png')
+      url('/brand/gjms-mark-1x.webp') 1x,
+      url('/brand/gjms-mark.webp') 2x
     );
   }
 
   .dark .brand-mark {
-    background-image: image-set(url('/brand/gjms-mark-dark.webp') type('image/webp'), url('/brand/gjms-mark-dark.png') type('image/png'));
+    background-image: image-set(
+      url('/brand/gjms-mark-dark-1x.webp') 1x,
+      url('/brand/gjms-mark-dark.webp') 2x
+    );
   }
+
+  .count-pop {
+    animation: nexus-count-pop 0.35s var(--ease-nexus);
+  }
+
+  .fade-up {
+    animation: nexus-fade-up 0.6s var(--ease-nexus) both;
+  }
+
 }
 
 @keyframes nexus-shimmer {

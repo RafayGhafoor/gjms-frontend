@@ -46,6 +46,18 @@ legacy/                the previous static site and the first design pilot — r
 docs/REDESIGN-CONVENTIONS.md   the design-system + conventions contract (read before editing pages)
 ```
 
+### First-paint budget
+
+Everything below was measured from a real browser, so keep the shape of it:
+
+| Rule | Why |
+| --- | --- |
+| Only `archive.html` and `articles.html` may import `$lib/data/archive-index` from a **page component** | It is ~30 KB gzipped. Every other page gets exactly what it renders from a `+page.server.ts` load — home, current issue, issue pages and all 342 article pages were rewritten that way, which cut ~30 KB gz from each |
+| Never import the index from a universal `+page.ts` | A universal module ships to the browser even when only `entries()` needs it. Put `entries` in `+page.server.ts` |
+| Brand images are generated per painted slot (`-1x` at 192/48 px, default at 2x) | A 1400 px master in a 192 px slot was the single heaviest request on the site (154 KB → 27 KB) |
+| `Open Sans` ships as one **variable** file (300–800) | Replaced four static files: 168 KB → 42 KB, same weights |
+| `font-display: swap` and no third-party font host | Text paints immediately in the fallback; nothing render-blocks on a CDN |
+
 ### Which data module to import
 
 `archive-data.json` is large (all 342 records), so the data layer is split. Importing the wrong module

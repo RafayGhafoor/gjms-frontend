@@ -103,16 +103,24 @@ print('Brand assets')
 # --- icon mark ---------------------------------------------------------------
 icon = white_to_alpha(crop_margin(Image.open(SRC / 'gjms-icon-source.png')))
 icon_dark = to_dark_variant(icon)
+# Painted at 40–48 px, so 48/96 px files (the 512 px master is kept only for the
+# schema.org logo and the app icons below).
+for suffix, box in (('-1x', 48), ('', 96)):
+    save(fit_box(icon, box), BRAND / f'gjms-mark{suffix}.png')
+    save(fit_box(icon_dark, box), BRAND / f'gjms-mark-dark{suffix}.png')
 mark = fit_box(icon, 512)
 mark_dark = fit_box(icon_dark, 512)
-save(mark, BRAND / 'gjms-mark.png')
-save(mark_dark, BRAND / 'gjms-mark-dark.png')
 
 # --- horizontal lockup -------------------------------------------------------
 lockup = white_to_alpha(crop_margin(Image.open(SRC / 'gjms-lockup-source.png')))
 lockup_dark = to_dark_variant(lockup)
-save(fit_width(lockup, 1400), BRAND / 'gjms-lockup.png')
-save(fit_width(lockup_dark, 1400), BRAND / 'gjms-lockup-dark.png')
+
+# Emitted at the sizes the pages actually paint (192 px slot → 192/384 px files)
+# instead of one 1400 px master: the header logo is on every page's critical
+# path, and a 7x oversized file was the single heaviest request on the site.
+for suffix, width in (('-1x', 192), ('', 384)):
+    save(fit_width(lockup, width), BRAND / f'gjms-lockup{suffix}.png')
+    save(fit_width(lockup_dark, width), BRAND / f'gjms-lockup-dark{suffix}.png')
 
 # --- icons -------------------------------------------------------------------
 save(fit_box(icon, 512), STATIC / 'icon-512.png')

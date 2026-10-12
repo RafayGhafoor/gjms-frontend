@@ -1,20 +1,18 @@
 <script lang="ts">
-  import { page } from '$app/state';
-  import { archive } from '$lib/data/archive-index';
-  import { sortIssues } from '$lib/data/archive';
-  import { issuePath, paramId } from '$lib/data/paths';
+  import { issuePath } from '$lib/data/paths';
+  import type { PageProps } from './$types';
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import IssueDetail from '$lib/components/archive/issue-detail.svelte';
   import { breadcrumbNode, publicationIssueNodes, scholarlyArticleNode } from '$lib/seo';
 
-  /* params.issue is the raw URL segment, which carries the .html suffix. */
-  const issueId = $derived(paramId(page.params.issue));
-  const issue = $derived(archive.issues.find((item) => item.id === issueId));
-  const ordered = $derived(sortIssues(archive.issues, -1));
-  const position = $derived(issue ? ordered.findIndex((item) => item.id === issue.id) : -1);
-  const newer = $derived(position > 0 ? ordered[position - 1] : null);
-  const older = $derived(position >= 0 && position < ordered.length - 1 ? ordered[position + 1] : null);
+  let { data }: PageProps = $props();
+
+  /* Resolved in the server load at build time. */
+  const issue = $derived(data.issue);
+  const issueId = $derived(data.issueId);
+  const newer = $derived(data.newer);
+  const older = $derived(data.older);
 </script>
 
 {#if issue}
@@ -33,7 +31,7 @@
       ...issue.articles.map((article) => scholarlyArticleNode(article, issuePath(issue.id)))
     ]}
   />
-  <IssueDetail {issue} {newer} {older} />
+  <IssueDetail {issue} {newer} {older} siblings={data.siblings} />
 {:else}
   <Seo title="Issue not found" description="The requested issue is not part of the journal archive." path={issuePath(issueId)} />
   <section class="container-page py-20">

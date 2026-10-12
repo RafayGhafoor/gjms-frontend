@@ -4,8 +4,8 @@
   import Card from '$lib/components/ui/card.svelte';
   import Badge from '$lib/components/ui/badge.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
-  import { archive } from '$lib/data/archive-index';
   import { content } from '$lib/data/content';
+  import type { PageProps } from './$types';
   import { issuePath } from '$lib/data/paths';
   import { normalisePdfUrl, sortIssues } from '$lib/data/archive';
   import { breadcrumbNode, publicationIssueNodes, scholarlyArticleNode, webPageNode } from '$lib/seo';
@@ -20,24 +20,9 @@
      archive index we use that record (one source of truth per article). The
      volume/issue/year numbers come from the journal's own published title. */
 
-  function matchIssue(title: string): Issue | null {
-    const volume = Number(title.match(/vol(?:ume)?\.?\s*(\d+)/i)?.[1] ?? NaN);
-    const issueNumber = Number(title.match(/no\.?\s*(\d+)/i)?.[1] ?? NaN);
-    const year = Number(title.match(/\b(19|20)\d{2}\b/)?.[0] ?? NaN);
-    if (!Number.isFinite(volume)) return null;
-    const candidates = archive.issues.filter((item) => item.volumeNumber === volume);
-    return (
-      candidates.find(
-        (item) =>
-          Number.isFinite(issueNumber) && item.issueNumber === issueNumber && (!Number.isFinite(year) || item.year === year)
-      ) ??
-      candidates.find((item) => Number.isFinite(year) && item.year === year) ??
-      null
-    );
-  }
-
   const title = $derived(content.currentIssue.title);
-  const matched = $derived(matchIssue(title));
+  let { data }: PageProps = $props();
+  const matched = $derived(data.matched);
 
   const fallbackArticles = $derived(
     content.currentIssue.articles.map((article) => ({
@@ -66,12 +51,8 @@
   });
 
   /* The four most recent earlier issues, newest first. */
-  const previousIssues = $derived(
-    sortIssues(
-      archive.issues.filter((item) => item.id !== matched?.id && item.year <= (matched?.year ?? archive.stats.lastYear)),
-      -1
-    ).slice(0, 4)
-  );
+  const previousIssues = $derived(data.previousIssues);
+  const stats = $derived(data.stats);
 
   const description = $derived(
     `Current issue ${title} — the current issue of the Global Journal of Management, Social Sciences and Humanities (GJMSSH), with ${articleCount} open-access articles and full text PDFs.`
@@ -206,7 +187,7 @@
         {/if}
         <div class="flex items-center justify-between gap-3">
           <dt class="text-muted-foreground">Journal</dt>
-          <dd class="font-semibold">{archive.stats.issues} issues published</dd>
+          <dd class="font-semibold">{stats.issues} issues published</dd>
         </div>
       </dl>
       <div class="mt-4">
