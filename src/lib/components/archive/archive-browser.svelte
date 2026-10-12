@@ -402,7 +402,7 @@
     {#if matchedArticleCount === 0}
       <Card padding="lg" class="grid justify-items-center gap-3 text-center">
         <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-        <h2 class="text-lg font-bold">No articles match these filters</h2>
+        <h2 class="text-lg">No articles match these filters</h2>
         <p class="max-w-[46ch] text-sm text-muted-foreground">
           Try a different year, volume, issue or search term — or reset the filters to browse the complete archive.
         </p>
@@ -445,7 +445,7 @@
           {@const totals = yearTotals(yearGroup.volumes)}
           <section id="year-{yearGroup.year}" class="scroll-mt-44" aria-labelledby="year-{yearGroup.year}-heading">
             <div class="mb-5 flex flex-wrap items-baseline gap-3 border-b border-border pb-3">
-              <h3 id="year-{yearGroup.year}-heading" class="display-1 font-bold tabular-nums">
+              <h3 id="year-{yearGroup.year}-heading" class="display-1 tabular-nums">
                 {yearGroup.year}
               </h3>
               <span class="text-sm text-subtle-foreground">

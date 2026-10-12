@@ -50,7 +50,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Indexing and impact' }]} />
-    <h1 class="display-1 font-bold">Indexing and impact</h1>
+    <h1 class="display-1">Indexing and impact</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">
       The figures on this page are the journal's own published declarations. They are shown exactly as published, and
       the underlying values are listed in the table below the chart.
@@ -60,7 +60,7 @@
 
 <div class="container-page grid gap-10 py-10">
   <section aria-labelledby="headline-heading">
-    <h2 id="headline-heading" class="text-xl font-bold tracking-tight">Published figures</h2>
+    <h2 id="headline-heading" class="text-xl tracking-tight">Published figures</h2>
     <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard value={Number(latest?.value ?? 0)} decimals={2} label="Latest SJIF" hint="Year {latest?.year ?? '—'}" tone="gold">
         {#snippet icon()}<TrendingUp class="size-4" aria-hidden="true" />{/snippet}
@@ -81,7 +81,7 @@
     <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
       <div>
         <p class="eyebrow text-subtle-foreground">SJIF series</p>
-        <h2 id="series-heading" class="mt-1 text-xl font-bold tracking-tight">
+        <h2 id="series-heading" class="mt-1 text-xl tracking-tight">
           {sjif.length} years of published SJIF values
         </h2>
       </div>
@@ -127,7 +127,7 @@
   </section>
 
   <section aria-labelledby="publishing-heading">
-    <h2 id="publishing-heading" class="text-xl font-bold tracking-tight">Publishing facts</h2>
+    <h2 id="publishing-heading" class="text-xl tracking-tight">Publishing facts</h2>
     <div class="mt-4 grid gap-4 sm:grid-cols-3">
       <Card padding="lg">
         <p class="eyebrow text-subtle-foreground">Publication fee</p>
@@ -152,7 +152,7 @@
       <p class="eyebrow flex items-center gap-2 text-subtle-foreground">
         <Info class="size-3.5" aria-hidden="true" />About these numbers
       </p>
-      <h2 id="caveat-heading" class="mt-2 text-base font-bold">The journal's own declarations</h2>
+      <h2 id="caveat-heading" class="mt-2 text-base">The journal's own declarations</h2>
       <p class="mt-2 max-w-[72ch] text-sm text-muted-foreground">
         Every value on this page is reproduced from the journal's published records (its impact-factor page and author
         guidelines). The website adds no estimates, projections or third-party comparisons. For

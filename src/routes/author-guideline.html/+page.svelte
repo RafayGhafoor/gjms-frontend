@@ -46,7 +46,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'For authors' }]} />
-    <h1 class="display-1 font-bold">Author guidelines</h1>
+    <h1 class="display-1">Author guidelines</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">{guidelines.intro}</p>
     <div class="mt-6 flex flex-wrap gap-3">
       <Button variant="gold" href={`mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`}>
@@ -82,7 +82,7 @@
   <div class="grid gap-10">
     <!-- Key facts authors need first -->
     <section aria-labelledby="key-facts">
-      <h2 id="key-facts" class="text-xl font-bold tracking-tight">Before you submit</h2>
+      <h2 id="key-facts" class="text-xl tracking-tight">Before you submit</h2>
       <div class="mt-4 grid gap-4 sm:grid-cols-2">
         {#each highlights as highlight (highlight.title)}
           <Card padding="lg" class="border-gold-border bg-gold-soft">
@@ -120,7 +120,7 @@
         <p class="eyebrow flex items-center gap-2 text-subtle-foreground">
           <ClipboardList class="size-3.5" aria-hidden="true" />Manuscript requirements
         </p>
-        <h2 id="requirements-heading" class="mt-1 text-2xl font-bold tracking-tight">
+        <h2 id="requirements-heading" class="mt-1 text-2xl tracking-tight">
           {sections.length} requirements of a GJMSSH manuscript
         </h2>
       </div>
@@ -132,7 +132,7 @@
               <span class="text-xs font-bold text-subtle-foreground tabular-nums" aria-hidden="true">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <h3 class="text-lg font-bold tracking-tight">{section.title}</h3>
+              <h3 class="text-lg tracking-tight">{section.title}</h3>
             </div>
             {#each section.text.split(/\n{2,}/) as paragraph (paragraph)}
               <p class="mt-3 max-w-[72ch] text-[0.9375rem] leading-relaxed text-muted-foreground">{paragraph}</p>
@@ -148,7 +148,7 @@
         <p class="eyebrow flex items-center gap-2 text-accent-foreground">
           <Info class="size-3.5" aria-hidden="true" />Integrity
         </p>
-        <h2 id="ethics-heading" class="mt-2 text-xl font-bold tracking-tight">Plagiarism and publication integrity</h2>
+        <h2 id="ethics-heading" class="mt-2 text-xl tracking-tight">Plagiarism and publication integrity</h2>
         {#each (sections.find((section) => section.id === 'plagiarism')?.text ?? '').split(/\n{2,}/) as paragraph (paragraph)}
           <p class="mt-3 max-w-[72ch] text-sm text-muted-foreground">{paragraph}</p>
         {/each}
@@ -175,7 +175,7 @@
     <!-- Submit -->
     <section class="rounded-2xl border border-border bg-surface-muted p-8 text-center" aria-labelledby="submit-heading">
       <Badge variant="outline">{SITE.tagline}</Badge>
-      <h2 id="submit-heading" class="mt-3 text-2xl font-bold tracking-tight">Ready to submit?</h2>
+      <h2 id="submit-heading" class="mt-3 text-2xl tracking-tight">Ready to submit?</h2>
       <p class="mx-auto mt-2 max-w-[60ch] text-sm text-muted-foreground">
         Send your manuscript to the editorial office by email. Submissions are reviewed through the journal's blind peer
         review process.
