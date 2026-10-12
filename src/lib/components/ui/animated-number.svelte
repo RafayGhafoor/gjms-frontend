@@ -41,6 +41,13 @@
     }
     animated = start;
     pulsing = true;
+    /* If the tab is backgrounded mid-count, requestAnimationFrame stops and the
+       number would sit at a partial value; this guarantees it lands on the
+       published figure regardless. */
+    window.setTimeout(() => {
+      animated = null;
+      pulsing = false;
+    }, duration + 300);
     const t0 = performance.now();
     const step = (now: number) => {
       const p = Math.min(1, (now - t0) / duration);

@@ -19,9 +19,16 @@
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-/* Only the weights each pairing actually uses, latin subset only, so the
-   comparison stays light. Production would add latin-ext for author names. */
-const FAMILIES = {
+/* The shipped pairing is Crimson Text (headings) + Open Sans (UI/body); both
+   get the latin-ext subset as well, because author and place names carry
+   accents and a fallback serif mid-title looks broken. The rest stay latin-only
+   for the comparison harness. */
+const SHIPPED = {
+  'Crimson Text': { weights: [400, 600, 700], subsets: ['latin', 'latin-ext'] },
+  'Open Sans': { weights: [400, 500, 600, 700], subsets: ['latin', 'latin-ext'] }
+};
+
+const HARNESS = {
   'Merriweather': [400, 700, 900],
   'Inter': [400, 500, 600, 700],
   'Libre Baskerville': [400, 700],
@@ -29,12 +36,13 @@ const FAMILIES = {
   'DM Serif Display': [400],
   'Playfair Display': [400, 600, 700],
   'Source Sans 3': [400, 600],
-  'Crimson Text': [400, 600, 700],
-  'Open Sans': [400, 500, 600],
   'Poppins': [400, 500, 600, 700, 800]
 };
 
-const SUBSET = 'latin';
+const FAMILIES = {
+  ...SHIPPED,
+  ...Object.fromEntries(Object.entries(HARNESS).map(([family, weights]) => [family, { weights, subsets: ['latin'] }]))
+};
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
 const OUT = 'static/fonts';
@@ -69,29 +77,32 @@ const faces = [];
 let downloaded = 0;
 let skipped = 0;
 
-for (const [family, weights] of Object.entries(FAMILIES)) {
+for (const [family, spec] of Object.entries(FAMILIES)) {
+  const { weights, subsets } = spec;
   const css = await cssFor(family, weights);
-  const blocks = facesFor(css, SUBSET);
-  if (!blocks.length) {
-    console.warn(`  ! ${family}: no ${SUBSET} subset returned`);
-    continue;
-  }
   const dir = join(OUT, slug(family));
   mkdirSync(dir, { recursive: true });
 
-  for (const face of blocks) {
-    const file = `${SUBSET}-${face.weight}${face.style === 'italic' ? '-italic' : ''}.woff2`;
-    const path = join(dir, file);
-    if (!existsSync(path)) {
-      const binary = await fetch(face.src, { headers: { 'user-agent': UA } });
-      if (!binary.ok) throw new Error(`${family} ${face.weight}: font download failed (${binary.status})`);
-      writeFileSync(path, Buffer.from(await binary.arrayBuffer()));
-      downloaded++;
-    } else {
-      skipped++;
+  for (const subset of subsets) {
+    const blocks = facesFor(css, subset);
+    if (!blocks.length) {
+      console.warn(`  ! ${family}: no ${subset} subset returned`);
+      continue;
     }
-    faces.push({ ...face, local: `/fonts/${slug(family)}/${file}` });
-    console.log(`  ${family.padEnd(18)} ${face.weight}  ${SUBSET}  ${face.local}`);
+    for (const face of blocks) {
+      const file = `${subset}-${face.weight}${face.style === 'italic' ? '-italic' : ''}.woff2`;
+      const path = join(dir, file);
+      if (!existsSync(path)) {
+        const binary = await fetch(face.src, { headers: { 'user-agent': UA } });
+        if (!binary.ok) throw new Error(`${family} ${face.weight} ${subset}: download failed (${binary.status})`);
+        writeFileSync(path, Buffer.from(await binary.arrayBuffer()));
+        downloaded++;
+      } else {
+        skipped++;
+      }
+      faces.push({ ...face, local: `/fonts/${slug(family)}/${file}` });
+      console.log(`  ${family.padEnd(18)} ${String(face.weight).padEnd(3)} ${subset.padEnd(9)} ${file}`);
+    }
   }
 }
 

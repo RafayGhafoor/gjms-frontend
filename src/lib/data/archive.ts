@@ -160,6 +160,7 @@ function summarise(issues: Issue[], articles: Article[]): ArchiveStats {
     const issueCount = issues.filter((issue) => issue.year === year).length;
     return {
       label: String(year),
+      short: String(year).slice(-2),
       value: inYear.length,
       hint: `${issueCount} ${issueCount === 1 ? 'issue' : 'issues'}`,
       href: `archive.html?year=${year}`
@@ -168,6 +169,7 @@ function summarise(issues: Issue[], articles: Article[]): ArchiveStats {
 
   const issuesByYear: ChartPoint[] = years.map((year) => ({
     label: String(year),
+    short: String(year).slice(-2),
     value: issues.filter((issue) => issue.year === year).length,
     href: `archive.html?year=${year}`
   }));
@@ -179,6 +181,7 @@ function summarise(issues: Issue[], articles: Article[]): ArchiveStats {
     const lastYear = inVolume.length ? Math.max(...inVolume.map((i) => i.year)) : 0;
     return {
       label: `Vol ${volume}`,
+      short: String(volume),
       value: count,
       hint: firstYear && lastYear ? (firstYear === lastYear ? String(firstYear) : `${firstYear}–${lastYear}`) : '',
       href: `archive.html?volume=${volume}`

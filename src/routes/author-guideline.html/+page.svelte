@@ -46,7 +46,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'For authors' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Author guidelines</h1>
+    <h1 class="display-1 font-bold">Author guidelines</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">{guidelines.intro}</p>
     <div class="mt-6 flex flex-wrap gap-3">
       <Button variant="gold" href={`mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`}>

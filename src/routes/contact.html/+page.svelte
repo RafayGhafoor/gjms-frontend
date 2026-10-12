@@ -36,7 +36,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Contact</h1>
+    <h1 class="display-1 font-bold">Contact</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">{content.contact.intro}</p>
   </div>
 </section>

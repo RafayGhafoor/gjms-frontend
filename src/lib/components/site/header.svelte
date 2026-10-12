@@ -51,7 +51,7 @@
               href={item.href}
               aria-current={isCurrent(item.href) ? 'page' : undefined}
               class={cn(
-                'block rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-muted-foreground no-underline transition-colors duration-200 hover:bg-muted hover:text-foreground',
+                'block rounded-md px-2.5 py-2 text-sm font-medium whitespace-nowrap text-muted-foreground no-underline transition-colors duration-200 hover:bg-muted hover:text-foreground',
                 isCurrent(item.href) && 'bg-accent font-semibold text-accent-foreground'
               )}
             >

@@ -156,7 +156,10 @@ const summary = Object.fromEntries(
   })
 );
 
-const indexable = pages.filter((p) => p.type !== '404');
+/* noindex pages (the typography harness, the 404) are excluded from indexability
+   metrics — counting them as "deep" would understate the score for pages that
+   are deliberately not part of the site graph. */
+const indexable = pages.filter((p) => p.type !== '404' && !p.robots.includes('noindex'));
 const orphans = indexable.filter((p) => (inbound.get(p.rel) ?? 0) === 0);
 const deep = indexable.filter((p) => (depth.get(p.rel) ?? 99) > 3);
 const missingDescription = indexable.filter((p) => p.description.length < 50);

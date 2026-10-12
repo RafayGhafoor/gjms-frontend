@@ -71,6 +71,9 @@ export type ArchiveStats = {
 
 export type ChartPoint = {
   label: string;
+  /** Compact form for the axis on narrow cards ("15" for 2015, "V3" for Vol 3).
+   *  The full label stays in the tooltip and the accessible description. */
+  short?: string;
   value: number;
   /** Optional secondary line for tooltips, e.g. "12 issues". */
   hint?: string;

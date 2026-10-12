@@ -44,7 +44,7 @@
     <div class="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end">
       <div class="max-w-[62ch]">
         <p class="eyebrow text-hero-muted">Global Journal of Management, Social Sciences &amp; Humanities</p>
-        <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-hero-foreground lg:text-5xl">Journal archive</h1>
+        <h1 class="mt-3 text-4xl font-bold tracking-tight text-hero-foreground lg:text-5xl">Journal archive</h1>
         <p class="mt-4 text-base text-hero-muted">
           Every volume and issue published since {archive.stats.firstYear}, with direct access to the full text of each
           article. Filter the archive by year, volume, issue, title or author. Records show the information the journal

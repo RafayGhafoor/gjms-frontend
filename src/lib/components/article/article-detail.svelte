@@ -61,7 +61,7 @@
         {#if abstract}<Badge variant="cyan">Abstract available</Badge>{/if}
       </p>
 
-      <h1 class="mt-4 max-w-[52ch] text-3xl leading-tight font-extrabold tracking-tight text-hero-foreground lg:text-4xl">
+      <h1 class="mt-4 max-w-[52ch] display-1 font-bold text-hero-foreground lg:text-4xl">
         {article.title}
       </h1>
 
@@ -129,7 +129,7 @@
           </div>
           <div class="mt-5 max-w-[72ch]">
             {#each abstract.split(/\n{2,}/) as paragraph (paragraph)}
-              <p class="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground first:mt-0">{paragraph}</p>
+              <p class="reading mt-4 text-muted-foreground first:mt-0">{paragraph}</p>
             {/each}
           </div>
           <p class="mt-5 max-w-[72ch] text-xs text-subtle-foreground">

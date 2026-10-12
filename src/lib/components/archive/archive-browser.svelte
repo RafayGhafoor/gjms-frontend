@@ -244,7 +244,7 @@
   <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
     <div>
       <p class="eyebrow text-subtle-foreground">From the published record</p>
-      <h2 id="glance-heading" class="mt-1 text-xl font-bold tracking-tight">The archive at a glance</h2>
+      <h2 id="glance-heading" class="mt-1 display-2">The archive at a glance</h2>
     </div>
     <p class="max-w-[46ch] text-xs text-subtle-foreground">
       Counts are calculated directly from the journal's own archive index — no estimates, no target figures. Select any
@@ -410,7 +410,7 @@
       </Card>
     {:else if showAllArticles}
       <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-xl font-bold tracking-tight">Articles</h2>
+        <h2 class="display-2 mb-1">Articles</h2>
         <p class="text-xs text-subtle-foreground">
           Showing {formatCount(visibleArticles.length)} of {formatCount(filteredArticles.length)}
         </p>
@@ -433,7 +433,7 @@
       {/if}
     {:else}
       <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="text-xl font-bold tracking-tight">Browse by year, volume and issue</h2>
+        <h2 class="display-2 mb-1">Browse by year, volume and issue</h2>
         <div class="flex gap-2">
           <Button variant="ghost" size="sm" onclick={expandAll}>Expand all</Button>
           <Button variant="ghost" size="sm" onclick={collapseAll}>Collapse all</Button>
@@ -445,7 +445,7 @@
           {@const totals = yearTotals(yearGroup.volumes)}
           <section id="year-{yearGroup.year}" class="scroll-mt-44" aria-labelledby="year-{yearGroup.year}-heading">
             <div class="mb-5 flex flex-wrap items-baseline gap-3 border-b border-border pb-3">
-              <h3 id="year-{yearGroup.year}-heading" class="text-3xl font-extrabold tracking-tight tabular-nums">
+              <h3 id="year-{yearGroup.year}-heading" class="display-1 font-bold tabular-nums">
                 {yearGroup.year}
               </h3>
               <span class="text-sm text-subtle-foreground">

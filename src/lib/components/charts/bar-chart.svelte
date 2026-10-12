@@ -102,8 +102,8 @@
 
   <div class="mt-2 flex gap-1.5 border-t border-border pt-2 sm:gap-2">
     {#each points as point (point.label)}
-      <span class="min-w-0 flex-1 truncate text-center text-[0.625rem] font-medium text-subtle-foreground">
-        {point.label}
+      <span class="min-w-0 flex-1 truncate text-center text-[0.6875rem] font-medium text-subtle-foreground">
+        {point.short ?? point.label}
       </span>
     {/each}
   </div>

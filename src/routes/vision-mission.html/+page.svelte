@@ -43,7 +43,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'About' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Vision and mission</h1>
+    <h1 class="display-1 font-bold">Vision and mission</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       {SITE.fullName} — {SITE.tagline.toLowerCase()}, published since {SITE.startYear}. This is the journal's own
       statement of its purpose and principles.
@@ -59,7 +59,7 @@
       </p>
       <h2 id="vision-heading" class="mt-2 text-2xl font-bold tracking-tight">Why the journal exists</h2>
       <div class="mt-5 border-l-2 border-accent-border pl-6">
-        <p class="max-w-[72ch] text-[1.0625rem] leading-relaxed text-muted-foreground">{vision}</p>
+        <p class="reading max-w-[72ch] text-muted-foreground">{vision}</p>
       </div>
     </section>
 

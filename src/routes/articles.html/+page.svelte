@@ -122,7 +122,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Articles' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Articles</h1>
+    <h1 class="display-1 font-bold">Articles</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       Every article record published by GJMSSH — {formatCount(archive.stats.articles)} articles across{' '}
       {formatCount(archive.stats.issues)} issues and {formatCount(archive.stats.volumes)} volumes,

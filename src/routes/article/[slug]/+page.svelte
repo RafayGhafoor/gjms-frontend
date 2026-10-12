@@ -73,7 +73,7 @@
     path={articlePath(slug)}
   />
   <section class="container-page py-20">
-    <h1 class="text-3xl font-extrabold tracking-tight">Article not found</h1>
+    <h1 class="display-1 font-bold">Article not found</h1>
     <p class="mt-3 max-w-[60ch] text-muted-foreground">
       This article id is not present in the journal's published archive index.
     </p>

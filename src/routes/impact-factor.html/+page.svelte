@@ -50,7 +50,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Indexing and impact' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Indexing and impact</h1>
+    <h1 class="display-1 font-bold">Indexing and impact</h1>
     <p class="mt-3 max-w-[72ch] text-muted-foreground">
       The figures on this page are the journal's own published declarations. They are shown exactly as published, and
       the underlying values are listed in the table below the chart.

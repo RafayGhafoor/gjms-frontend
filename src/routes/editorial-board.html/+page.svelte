@@ -78,7 +78,7 @@
 <section class="border-b border-border bg-surface-muted">
   <div class="container-page py-10">
     <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Editorial board' }]} />
-    <h1 class="text-3xl font-extrabold tracking-tight lg:text-4xl">Editorial board</h1>
+    <h1 class="display-1 font-bold">Editorial board</h1>
     <p class="mt-3 max-w-[70ch] text-muted-foreground">
       GJMSSH is guided by an editor-in-chief and an international board of academics and professionals. The roster below
       is reproduced from the journal's published editorial board page — names and affiliations only.

@@ -24,7 +24,7 @@
   <div class="mx-auto max-w-[60ch] text-center">
     <SearchX class="mx-auto size-8 text-subtle-foreground" aria-hidden="true" />
     <p class="eyebrow mt-4 text-subtle-foreground">Error 404</p>
-    <h1 class="mt-2 text-3xl font-extrabold tracking-tight lg:text-4xl">We could not find that page</h1>
+    <h1 class="mt-2 display-1 font-bold">We could not find that page</h1>
     <p class="mt-4 text-muted-foreground">
       The link may be out of date, or the address may contain a typo. Everything the journal publishes is still
       reachable from the archive and the article index — {formatCount(archive.stats.articles)} article records across

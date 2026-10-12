@@ -14,8 +14,13 @@
    ========================================================================== */
 
 :root {
-  --app-font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --app-font-serif: ui-serif, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  /* Type system: Crimson Text for headings and article titles (the academic
+     signal, and what the journal's own print-era register reads like), Open Sans
+     for UI, tables and body copy. Both are self-hosted — see
+     scripts/fetch-fonts.mjs — with latin-ext so accented author names render in
+     the brand face rather than dropping to a fallback mid-title. */
+  --app-font-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: 'Crimson Text', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
 
   --radius: 0.75rem;
 
@@ -228,15 +233,19 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Headings are set in the display serif. Crimson Text has a smaller x-height
+     than the sans, so the display sizes below run a step larger than a sans
+     scale would, and weight stops at 700 (the heaviest weight shipped). */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
+    font-family: var(--app-font-serif);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     text-wrap: balance;
   }
 
@@ -301,6 +310,32 @@
   -webkit-backdrop-filter: saturate(1.6) blur(14px);
   backdrop-filter: saturate(1.6) blur(14px);
   border-color: var(--glass-border);
+}
+
+/* Display sizes for page titles. Crimson Text sets noticeably smaller than a
+   grotesque at the same px, so these are the sizes that read as "48–56px" in a
+   sans. */
+@utility display-1 {
+  font-family: var(--app-font-serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 1.9rem + 2vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+@utility display-2 {
+  font-family: var(--app-font-serif);
+  font-weight: 600;
+  font-size: clamp(1.55rem, 1.35rem + 0.9vw, 2.1rem);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+}
+
+/* Long-form reading: abstracts and policy prose. 19px at 1.75 with a ~70ch
+   measure is the setting the journal's own abstracts were proofed at. */
+@utility reading {
+  font-size: 1.1875rem;
+  line-height: 1.75;
 }
 
 @utility paper-title {

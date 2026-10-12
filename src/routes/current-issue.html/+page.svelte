@@ -110,7 +110,7 @@
       {#if matched?.issueNumber}<Badge>Issue {matched.issueNumber}</Badge>{/if}
     </p>
 
-    <h1 class="mt-3 max-w-[46ch] text-3xl font-extrabold tracking-tight text-hero-foreground lg:text-4xl">
+    <h1 class="mt-3 max-w-[46ch] display-1 font-bold text-hero-foreground lg:text-4xl">
       {title}
     </h1>
     <p class="mt-4 max-w-[60ch] text-base text-hero-muted">

@@ -83,7 +83,7 @@
           <span class="brand-mark size-12 shrink-0" aria-hidden="true"></span>
           <p class="eyebrow text-hero-muted">{SITE.tagline}</p>
         </div>
-        <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-hero-foreground lg:text-5xl">
+        <h1 class="mt-3 text-4xl font-bold tracking-tight text-hero-foreground lg:text-5xl">
           {SITE.fullName}
         </h1>
         <p class="mt-5 text-base text-hero-muted">{lead}</p>
