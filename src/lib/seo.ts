@@ -1,5 +1,7 @@
 /* Structured data builders. Only facts that exist in the journal's own data are
-   emitted — no invented ISSNs, metrics, DOIs or abstracts. */
+   emitted — no invented metrics, DOIs or abstracts. The ISSN pair is the
+   journal's registered identity (SITE.issn), so it is asserted rather than
+   inferred. */
 
 import { SITE, absoluteUrl } from '$lib/config/site';
 import { articlePath } from '$lib/data/paths';
@@ -39,7 +41,10 @@ export function periodicalNode() {
     inLanguage: 'en',
     publisher: { '@id': `${SITE.origin}/#organization` },
     image: absoluteUrl('/og-image.jpg'),
-    issn: undefined
+    /* schema.org wants an ISSN per format, and the print number doubles as the
+       linking ISSN (ISSN-L) — which is exactly what these two registrations
+       are, so both are published. */
+    issn: [SITE.issn.print, SITE.issn.online]
   };
 }
 

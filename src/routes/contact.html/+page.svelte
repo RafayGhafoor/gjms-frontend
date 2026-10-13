@@ -105,6 +105,10 @@
       <h2 class="eyebrow text-subtle-foreground">Journal</h2>
       <dl class="mt-3 grid gap-2 text-sm">
         <div><dt class="text-subtle-foreground">Name</dt><dd class="font-semibold">{SITE.fullName}</dd></div>
+        <div>
+          <dt class="text-subtle-foreground">ISSN</dt>
+          <dd class="font-semibold tabular-nums">{SITE.issn.print} <span class="font-normal text-muted-foreground">(print)</span><br />{SITE.issn.online} <span class="font-normal text-muted-foreground">(online)</span></dd>
+        </div>
         <div><dt class="text-subtle-foreground">Published since</dt><dd class="font-semibold">{SITE.startYear}</dd></div>
         <div><dt class="text-subtle-foreground">Issues</dt><dd class="font-semibold tabular-nums">{formatCount(stats.issues)}</dd></div>
         <div><dt class="text-subtle-foreground">Articles</dt><dd class="font-semibold tabular-nums">{formatCount(stats.articles)}</dd></div>

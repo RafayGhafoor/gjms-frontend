@@ -196,6 +196,13 @@
             <dt class="text-muted-foreground">Journal</dt>
             <dd class="text-right font-medium">{SITE.name}</dd>
           </div>
+          <div class="flex items-start justify-between gap-3">
+            <dt class="text-muted-foreground">ISSN</dt>
+            <dd class="text-right font-medium tabular-nums">
+              {SITE.issn.print} <span class="font-normal text-muted-foreground">(print)</span><br />
+              {SITE.issn.online} <span class="font-normal text-muted-foreground">(online)</span>
+            </dd>
+          </div>
           {#if article.volumeNumber}
             <div class="flex items-start justify-between gap-3">
               <dt class="text-muted-foreground">Volume</dt>

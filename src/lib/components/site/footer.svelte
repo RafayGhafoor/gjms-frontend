@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { FOOTER_GROUPS, SITE } from '$lib/config/site';
+  import { FOOTER_GROUPS, ISSN_LABEL, SITE } from '$lib/config/site';
     import Mail from '@lucide/svelte/icons/mail';
   import Globe from '@lucide/svelte/icons/globe';
+  import Hash from '@lucide/svelte/icons/hash';
 
   const year = new Date().getFullYear();
 </script>
@@ -27,6 +28,9 @@
           <a class="inline-flex items-center gap-2 text-muted-foreground no-underline hover:text-accent-foreground" href={`https://${SITE.website}`} rel="noopener">
             <Globe class="size-3.5" aria-hidden="true" />{SITE.website}
           </a>
+        </li>
+        <li class="inline-flex items-center gap-2 text-muted-foreground">
+          <Hash class="size-3.5 shrink-0" aria-hidden="true" />{ISSN_LABEL}
         </li>
       </ul>
     </div>

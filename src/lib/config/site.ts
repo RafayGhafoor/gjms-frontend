@@ -10,9 +10,24 @@ export const SITE = {
   website: 'gjmsweb.com',
   origin: 'https://gjmsweb.com',
   startYear: 2015,
+  /** Registered with the ISSN International Centre and printed on the masthead
+   *  of every published issue. The print number is also the linking ISSN
+   *  (ISSN-L) for the online number, so the two are always published together.
+   *  Unlike the figures elsewhere in the repository this cannot be derived from
+   *  the archive, so it is recorded here with its provenance: read off the
+   *  journal's own published PDFs and confirmed against the ISSN register
+   *  (portal.issn.org/resource/ISSN/2520-7113 and /2520-7121). */
+  issn: {
+    print: '2520-7113',
+    online: '2520-7121'
+  },
   /** Every article on the CDN is reachable over https; links are normalised to it. */
   cdn: 'https://gjms.b-cdn.net'
 } as const;
+
+/** The pair as the journal prints it on its masthead, for the footer and the
+ *  plain-text surfaces that repeat the journal's identity. */
+export const ISSN_LABEL = `ISSN ${SITE.issn.print} (print), ISSN ${SITE.issn.online} (online)`;
 
 export type NavItem = {
   label: string;

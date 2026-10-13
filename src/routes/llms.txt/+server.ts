@@ -41,6 +41,7 @@ export const GET: RequestHandler = () => {
     '',
     '## Publication facts (as published by the journal)',
     `- Journal: ${SITE.fullName} (${SITE.name})`,
+    `- ISSN: ${SITE.issn.print} (print), ${SITE.issn.online} (online)`,
     `- Established: ${SITE.startYear}`,
     `- Description: ${SITE.tagline}`,
     `- Peer review: blind peer review`,

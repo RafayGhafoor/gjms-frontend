@@ -20,7 +20,7 @@
 
   /* Highwire Press metadata — what Google Scholar reads to index an article
      landing page. Only fields that exist in the journal's records are emitted
-     (there is no ISSN, DOI or keyword data to publish). */
+     (there is no DOI or keyword data to publish). */
   const citationMeta = $derived.by(() => {
     const entries: { name: string; content: string }[] = [];
     if (!article) return entries;

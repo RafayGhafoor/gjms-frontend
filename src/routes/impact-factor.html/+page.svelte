@@ -7,6 +7,7 @@
   import AreaChart from '$lib/components/charts/area-chart.svelte';
   import StatCard from '$lib/components/ui/stat-card.svelte';
   import { content } from '$lib/data/content';
+  import { SITE } from '$lib/config/site';
   import type { PageProps } from './$types';
 
   let { data }: PageProps = $props();
@@ -128,7 +129,14 @@
 
   <section aria-labelledby="publishing-heading">
     <h2 id="publishing-heading" class="text-xl tracking-tight">Publishing facts</h2>
-    <div class="mt-4 grid gap-4 sm:grid-cols-3">
+    <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Card padding="lg">
+        <p class="eyebrow text-subtle-foreground">ISSN</p>
+        <p class="mt-2 text-2xl font-bold tabular-nums">{SITE.issn.print}</p>
+        <p class="mt-1 text-xs text-subtle-foreground">
+          Print, and the linking ISSN (ISSN-L). Online: {SITE.issn.online}.
+        </p>
+      </Card>
       <Card padding="lg">
         <p class="eyebrow text-subtle-foreground">Publication fee</p>
         <p class="mt-2 text-2xl font-bold">{content.stats.publicationFee}</p>
@@ -154,8 +162,8 @@
       </p>
       <h2 id="caveat-heading" class="mt-2 text-base">The journal's own declarations</h2>
       <p class="mt-2 max-w-[72ch] text-sm text-muted-foreground">
-        Every value on this page is reproduced from the journal's published records (its impact-factor page and author
-        guidelines). The website adds no estimates, projections or third-party comparisons. For
+        Every value on this page is reproduced from the journal's published records (its impact-factor page, author
+        guidelines and registered ISSNs). The website adds no estimates, projections or third-party comparisons. For
         verification or clarification, contact the editorial office.
       </p>
       <div class="mt-4 flex flex-wrap gap-3">
