@@ -7,6 +7,7 @@
   import ArticleDetail from '$lib/components/article/article-detail.svelte';
   import { breadcrumbNode, scholarlyArticleNode, publicationIssueNodes } from '$lib/seo';
   import { summariseForMeta } from '$lib/data/text';
+  import { pageRangeValue } from '$lib/utils';
   import { collectCitationMeta } from '$lib/data/citation';
 
   let { data }: PageProps = $props();
@@ -28,10 +29,22 @@
     return entries;
   });
 
+  /* The no-abstract fallback names the issue it appeared in: a handful of
+     records share a title across issues (the "Author's Guideline" front
+     matter), so a title-only description would collide and give two pages the
+     same snippet in a result list. */
   const description = $derived(
     abstract
       ? summariseForMeta(abstract)
-      : `${article?.title ?? 'Article'} — open-access article published in the Global Journal of Management, Social Sciences and Humanities (GJMSSH).`
+      : [
+          article?.title ?? 'Article',
+          issue ? `published in ${issue.title}` : null,
+          `${SITE.fullName} (GJMSSH)`,
+          article?.pages ? `pages ${pageRangeValue(article.pages)}` : null,
+          'Open-access article with full text PDF.'
+        ]
+          .filter(Boolean)
+          .join(' — ')
   );
 
   /* A handful of records share a title across issues (the "Author's Guideline"
