@@ -36,13 +36,7 @@
   });
 
   const max = $derived(Math.max(1, ...points.map((p) => p.value)));
-  const barTone = $derived(
-    tone === 'gold'
-      ? 'bg-gold'
-      : tone === 'cyan'
-        ? 'bg-cyan'
-        : 'bg-[linear-gradient(180deg,var(--chart-2),var(--chart-1))]'
-  );
+  const barTone = $derived(tone === 'gold' ? 'bg-gold' : tone === 'cyan' ? 'bg-cyan' : 'bg-primary');
 
   const barClass = $derived(
     cn(

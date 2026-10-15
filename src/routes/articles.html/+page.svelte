@@ -3,7 +3,6 @@
   import Seo from '$lib/components/site/seo.svelte';
   import Breadcrumbs from '$lib/components/site/breadcrumbs.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Card from '$lib/components/ui/card.svelte';
   import Input from '$lib/components/ui/input.svelte';
   import Select from '$lib/components/ui/select.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
@@ -120,21 +119,22 @@
 />
 
 <section class="border-b border-border bg-surface-muted">
-  <div class="container-page py-10">
-    <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Articles' }]} />
-    <h1 class="display-1">Articles</h1>
-    <p class="mt-3 max-w-[70ch] text-muted-foreground">
+  <div class="container-page pt-10 pb-12 lg:pt-14 lg:pb-16">
+    <Breadcrumbs class="mb-6" items={[{ name: 'Home', href: '/' }, { name: 'Articles' }]} />
+    <p class="eyebrow text-accent-foreground">Article index</p>
+    <h1 class="display-1 mt-3">Articles</h1>
+    <p class="measure mt-4 text-muted-foreground">
       Every article record published by GJMSSH — {formatCount(archive.stats.articles)} articles across{' '}
       {formatCount(archive.stats.issues)} issues and {formatCount(archive.stats.volumes)} volumes,
       {archive.stats.firstYear}–{archive.stats.lastYear}. Search by title, author or page range, or narrow the list by
-      year and volume. To browse by issue, use the <a href="/archive.html">archive</a>.
+      year and volume. To browse by issue, use the <a class="text-accent-foreground no-underline hover:underline" href="/archive.html">archive</a>.
     </p>
   </div>
 </section>
 
-<div class="sticky top-17 z-40 border-b border-glass-border glass lg:top-[6.5rem]">
+<div class="sticky top-[5.0625rem] z-40 border-b border-border bg-background">
   <div class="container-page grid gap-3 py-4">
-    <div class="grid gap-3 lg:grid-cols-[minmax(14rem,1.6fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.8fr)_auto] lg:items-end">
+    <div class="grid gap-3 grid-cols-1 lg:grid-cols-[minmax(14rem,1.6fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.8fr)_auto] lg:items-end">
       <Input
         label="Search articles"
         name="article-search"
@@ -179,44 +179,48 @@
             {[year !== 'all' ? String(year) : null, volume !== 'all' ? `volume ${volume}` : null].filter(Boolean).join(' · ') ||
               'search'}
           </span>
-          <button type="button" class="font-semibold text-accent-foreground hover:underline" onclick={reset}>Clear</button>
+          <button type="button" class="py-0.5 font-semibold text-accent-foreground hover:underline" onclick={reset}>Clear</button>
         </p>
       {/if}
     </div>
   </div>
 </div>
 
-<div class="container-page py-10">
+<div class="container-page py-12">
   {#if results.length === 0}
-    <Card padding="lg" class="grid justify-items-center gap-3 text-center">
-      <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-      <h2 class="text-lg">No articles match your search</h2>
-      <p class="max-w-[46ch] text-sm text-muted-foreground">
+    <div class="rounded-lg border border-border bg-surface-muted px-6 py-14 text-center">
+      <SearchX class="mx-auto size-7 text-subtle-foreground" aria-hidden="true" />
+      <h2 class="mt-4 font-serif text-[1.25rem]">No articles match your search</h2>
+      <p class="measure mx-auto mt-3 text-[0.9375rem] text-muted-foreground">
         Try a shorter search term, a different year or volume — or reset the filters to list every published article.
       </p>
-      <Button variant="outline" onclick={reset}>Reset filters</Button>
-    </Card>
+      <div class="mt-6">
+        <Button variant="outline" onclick={reset}>Reset filters</Button>
+      </div>
+    </div>
   {:else}
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <h2 class="text-xl tracking-tight">Article records</h2>
-      <p class="text-xs text-subtle-foreground">
+    <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-border-strong pb-4">
+      <h2 class="display-2">Article records</h2>
+      <p class="text-[0.8125rem] text-subtle-foreground tabular-nums">
         Showing {formatCount(visible.length)} of {formatCount(results.length)}
       </p>
     </div>
 
-    <ol class="grid gap-3">
+    <ol>
       {#each visible as article (article.issueId + '-' + article.num)}
         <ArticleCard {article} query={q} heading={3} showIssue={true} />
       {/each}
     </ol>
 
     {#if results.length > visible.length}
-      <div class="mt-6 flex flex-col items-center gap-2">
+      <div class="mt-8 flex flex-col items-center gap-3">
         <Button variant="outline" onclick={() => (limit += PAGE_SIZE)}>
           <ChevronDown aria-hidden="true" />
           Show {formatCount(Math.min(PAGE_SIZE, results.length - visible.length))} more
         </Button>
-        <p class="text-xs text-subtle-foreground tabular-nums">{formatCount(visible.length)} of {formatCount(results.length)} articles</p>
+        <p class="text-[0.8125rem] text-subtle-foreground tabular-nums">
+          {formatCount(visible.length)} of {formatCount(results.length)} articles
+        </p>
       </div>
     {/if}
   {/if}

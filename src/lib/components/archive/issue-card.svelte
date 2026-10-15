@@ -1,15 +1,14 @@
 <script lang="ts">
   import type { Issue } from '$lib/data/types';
   import { highlight, formatCount } from '$lib/utils';
-  import Badge from '$lib/components/ui/badge.svelte';
-  import Button from '$lib/components/ui/button.svelte';
   import ArticleCard from './article-card.svelte';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
 
-  /* Issue card. The article list is rendered when the issue is opened — the
-     archive page therefore stays light — and every issue also has its own
-     prerendered page (/archive/<issue>.html) where the full list is static
-     HTML for search engines and for direct linking. */
+  /* Issue entry in the archive browser. An editorial row, not a card: a hairline
+     separator, the issue title leading, its bibliographic line underneath, and a
+     disclosure for the article list. Every issue also has its own prerendered
+     page (/archive/<issue>.html) where the full list is static HTML for search
+     engines and for direct linking. */
   let {
     issue,
     query = '',
@@ -28,58 +27,56 @@
 
   const Heading = $derived((['h3', 'h4'] as const)[heading - 3]);
   const panelId = $derived(`panel-${issue.id}`);
-  const volume = $derived(issue.volumeNumber ? `Vol ${issue.volumeNumber}` : 'Special Edition');
+
+  const meta = $derived(
+    [
+      issue.volumeNumber ? `Volume ${issue.volumeNumber}` : 'Special edition',
+      issue.issueNumber ? `Issue ${issue.issueNumber}` : null,
+      issue.year ? String(issue.year) : null,
+      `${formatCount(issue.articles.length)} ${issue.articles.length === 1 ? 'article' : 'articles'}`
+    ]
+      .filter(Boolean)
+      .join(' · ')
+  );
 </script>
 
-<article
-  id={issue.id}
-  class="scroll-mt-44 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-[border-color,box-shadow] duration-300 {open
-    ? 'border-accent-border shadow-md ring-1 ring-accent-border/60'
-    : ''}"
->
-  <div class="p-5">
-    <p class="flex flex-wrap items-center gap-2">
-      <Badge variant="accent">{volume}</Badge>
-      {#if issue.issueNumber}
-        <Badge>Issue {issue.issueNumber}</Badge>
+<article id={issue.id} class="scroll-mt-40 border-t border-border">
+  <div class="py-5">
+    <svelte:element this={Heading} class="article-title">
+      {#if issueHref}
+        <a
+          class="text-heading no-underline decoration-accent-border decoration-1 underline-offset-4 transition-colors hover:text-accent-foreground hover:underline"
+          href={issueHref}
+        >
+          {@html highlight(issue.title, query)}
+        </a>
+      {:else}
+        {@html highlight(issue.title, query)}
       {/if}
-      {#if issue.year}
-        <Badge>{issue.year}</Badge>
-      {/if}
-      {#if issue.isSpecial}
-        <Badge variant="gold">Special</Badge>
-      {/if}
-    </p>
-
-    <svelte:element this={Heading} class="mt-2 text-base font-semibold text-foreground">
-      {@html highlight(issue.title, query)}
     </svelte:element>
 
-    <div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-dashed border-border pt-3">
-      <span class="text-xs text-subtle-foreground">
-        {formatCount(issue.articles.length)}
-        {issue.articles.length === 1 ? 'article' : 'articles'}
-      </span>
-      <span class="flex items-center gap-2">
-        {#if issueHref}
-          <a
-            class="text-xs font-semibold text-accent-foreground no-underline hover:underline"
-            href={issueHref}
-          >
-            Issue page
-          </a>
-        {/if}
-        <Button variant="outline" size="sm" aria-expanded={open} aria-controls={panelId} onclick={() => ontoggle?.()}>
-          {open ? 'Hide' : 'Browse'}
-          <ChevronDown class="transition-transform duration-300 {open ? 'rotate-180' : ''}" aria-hidden="true" />
-        </Button>
-      </span>
+    <p class="meta-row mt-2.5">{meta}</p>
+
+    <div class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <button
+        type="button"
+        class="inline-flex items-center gap-1.5 py-0.5 text-[0.8125rem] font-semibold text-accent-foreground transition-colors hover:underline hover:underline-offset-4"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onclick={() => ontoggle?.()}
+      >
+        {open ? 'Hide articles' : 'Browse articles'}
+        <ChevronDown class="size-3.5 transition-transform duration-200 {open ? 'rotate-180' : ''}" aria-hidden="true" />
+      </button>
+      {#if issueHref}
+        <a class="arrow-link text-[0.8125rem]" href={issueHref}>Issue page</a>
+      {/if}
     </div>
   </div>
 
   {#if open}
-    <div id={panelId} class="border-t border-border bg-surface-muted">
-      <ol class="grid gap-3 p-5">
+    <div id={panelId} class="border-l-2 border-accent-border bg-surface-muted px-5">
+      <ol>
         {#each issue.articles as article (article.num + article.title)}
           <ArticleCard {article} {query} showIssue={false} heading={4} />
         {/each}

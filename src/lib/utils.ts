@@ -36,14 +36,6 @@ export function formatCount(value: number): string {
   return Number(value || 0).toLocaleString('en-US');
 }
 
-/** "319-357" → "pp. 319–357"; "97" → "p. 97"; anything else is passed through. */
-/** "319-357" → "Pages 319–357"; "97" → "Page 97"; blank → "". */
-export function formatPages(pages: string): string {
-  const label = pageRangeValue(pages);
-  if (!label) return '';
-  return label.includes('–') ? `Pages ${label}` : `Page ${label}`;
-}
-
 /**
  * The bare range, for places that already print a "Pages" label next to it
  * ("319–357", "97") — avoids "Pages  Pages 319–357".

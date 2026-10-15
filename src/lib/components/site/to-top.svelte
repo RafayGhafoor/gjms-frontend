@@ -15,7 +15,7 @@
 {#if visible}
   <button
     type="button"
-    class="fixed right-5 bottom-5 z-40 inline-flex items-center gap-1.5 rounded-full border border-border-strong px-3 py-2 text-xs font-semibold text-muted-foreground shadow-md transition-colors glass hover:border-accent-border hover:text-accent-foreground no-print"
+    class="fixed right-5 bottom-5 z-40 inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-surface px-3 py-2 text-xs font-semibold text-muted-foreground shadow-md transition-colors hover:border-accent-border hover:text-accent-foreground no-print"
     onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
   >
     <ArrowUp class="size-3.5" aria-hidden="true" />

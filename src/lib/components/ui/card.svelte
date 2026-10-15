@@ -3,20 +3,22 @@
   import { tv, type VariantProps } from 'tailwind-variants';
   import type { Snippet } from 'svelte';
 
+  /* A panel, not a decoration. Borders are hairlines and shadows are avoided —
+     on this design a card should read as a bounded block of text. */
   export const cardVariants = tv({
-    base: 'rounded-xl border border-border bg-card text-card-foreground',
+    base: 'rounded-lg border border-border bg-card text-card-foreground',
     variants: {
       variant: {
-        default: 'shadow-sm',
-        flat: 'shadow-none',
-        elevated: 'shadow-md',
+        default: '',
+        flat: 'border-transparent bg-surface-muted',
+        elevated: 'shadow-sm',
         interactive:
-          'shadow-sm transition-[transform,border-color,box-shadow,background-color] duration-300 ease-nexus hover:-translate-y-0.5 hover:border-accent-border hover:bg-surface hover:shadow-lg'
+          'transition-[border-color,background-color] duration-200 ease-nexus hover:border-accent-border'
       },
       padding: {
         none: '',
         sm: 'p-4',
-        default: 'p-5',
+        default: 'p-6',
         lg: 'p-6 sm:p-8'
       }
     },

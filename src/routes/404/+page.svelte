@@ -1,12 +1,10 @@
 <script lang="ts">
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Card from '$lib/components/ui/card.svelte';
   import type { PageProps } from './$types';
   import { formatCount } from '$lib/utils';
   import FileText from '@lucide/svelte/icons/file-text';
   import Library from '@lucide/svelte/icons/library';
-  import SearchX from '@lucide/svelte/icons/search-x';
 
   let { data }: PageProps = $props();
 
@@ -22,17 +20,16 @@
   includeSiteGraph={false}
 />
 
-<section class="container-page py-16 lg:py-24">
-  <div class="mx-auto max-w-[60ch] text-center">
-    <SearchX class="mx-auto size-8 text-subtle-foreground" aria-hidden="true" />
-    <p class="eyebrow mt-4 text-subtle-foreground">Error 404</p>
-    <h1 class="mt-2 display-1">We could not find that page</h1>
-    <p class="mt-4 text-muted-foreground">
+<section class="container-page py-20 lg:py-28">
+  <div class="mx-auto max-w-[62ch]">
+    <p class="eyebrow text-accent-foreground">Error 404</p>
+    <h1 class="display-1 mt-4">We could not find that page</h1>
+    <p class="measure mt-5 text-muted-foreground">
       The link may be out of date, or the address may contain a typo. Everything the journal publishes is still
       reachable from the archive and the article index — {formatCount(data.stats.articles)} article records across
       {formatCount(data.stats.issues)} issues.
     </p>
-    <div class="mt-7 flex flex-wrap justify-center gap-3">
+    <div class="mt-9 flex flex-wrap gap-3">
       <Button href="/">Journal home</Button>
       <Button variant="outline" href="/archive.html">
         <Library aria-hidden="true" />
@@ -45,24 +42,24 @@
     </div>
   </div>
 
-  <div class="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-2">
-    <Card padding="lg">
-      <h2 class="text-base font-semibold">Looking for a specific article?</h2>
-      <p class="mt-2 text-sm text-muted-foreground">
-        Article addresses follow <span class="font-mono text-xs">/article/&lt;slug&gt;.html</span>. Search by title,
-        author, year or volume from the article index, or find the issue in the archive.
+  <div class="mx-auto mt-16 grid max-w-3xl gap-x-12 gap-y-10 sm:grid-cols-2">
+    <section class="border-t border-border-strong pt-5">
+      <h2 class="font-serif text-[1.125rem]">Looking for a specific article?</h2>
+      <p class="measure mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+        Article addresses follow <span class="font-mono text-[0.8125rem]">/article/&lt;slug&gt;.html</span>. Search by
+        title, author, year or volume from the article index, or find the issue in the archive.
       </p>
-    </Card>
-    <Card padding="lg">
-      <h2 class="text-base font-semibold">Submitting a manuscript?</h2>
-      <p class="mt-2 text-sm text-muted-foreground">
+    </section>
+    <section class="border-t border-border-strong pt-5">
+      <h2 class="font-serif text-[1.125rem]">Submitting a manuscript?</h2>
+      <p class="measure mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
         The author guidelines cover manuscript requirements, the publication fee and the review timeline, and the
         editorial office handles submissions by email.
       </p>
-      <div class="mt-4 flex flex-wrap gap-2">
+      <div class="mt-5 flex flex-wrap gap-3">
         <Button variant="outline" size="sm" href="/author-guideline.html">Author guidelines</Button>
         <Button variant="ghost" size="sm" href="/contact.html">Contact</Button>
       </div>
-    </Card>
+    </section>
   </div>
 </section>

@@ -25,3 +25,6 @@ __pycache__/
 
 # Generated from abstracts.json by the vite plugin (single source of truth stays at the root)
 /static/abstracts.json
+
+# Local browser captures used while reviewing the redesign.
+.screenshots/

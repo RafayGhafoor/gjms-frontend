@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { Archive, Article, ChartPoint, Issue } from '$lib/data/types';
+  import type { Archive, ChartPoint, Issue } from '$lib/data/types';
   import {
     SEARCH_MIN_LENGTH,
     filterArticles,
@@ -14,16 +14,12 @@
   import Input from '$lib/components/ui/input.svelte';
   import Select from '$lib/components/ui/select.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Card from '$lib/components/ui/card.svelte';
   import BarChart from '$lib/components/charts/bar-chart.svelte';
   import AreaChart from '$lib/components/charts/area-chart.svelte';
   import ArticleCard from './article-card.svelte';
   import IssueCard from './issue-card.svelte';
   import YearTimeline from './year-timeline.svelte';
-    import ChevronDown from '@lucide/svelte/icons/chevron-down';
-  import LayoutGrid from '@lucide/svelte/icons/layout-grid';
-  import List from '@lucide/svelte/icons/list';
-  import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
+  import ChevronDown from '@lucide/svelte/icons/chevron-down';
   import SearchX from '@lucide/svelte/icons/search-x';
 
   /* The archive browser. Filters live in component state and are mirrored into
@@ -31,7 +27,10 @@
      navigation, and every view stays deep-linkable
      (/archive.html?year=2025&volume=11&issue=4).
      The prerendered HTML always contains the full archive, so search engines and
-     JavaScript-less visitors see every issue and article. */
+     JavaScript-less visitors see every issue and article.
+     The charts are deliberately demoted into a collapsed analytics disclosure at
+     the foot of the page: the published record, not the statistics, is the
+     primary interface here. */
   let { archive }: { archive: Archive } = $props();
 
   const PAGE_SIZE = 40;
@@ -239,68 +238,10 @@
   }
 </script>
 
-<!-- At a glance: every figure is counted from archive-data.json -->
-<section class="container-page pt-10 pb-2" aria-labelledby="glance-heading">
-  <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
-    <div>
-      <p class="eyebrow text-subtle-foreground">From the published record</p>
-      <h2 id="glance-heading" class="mt-1 display-2">The archive at a glance</h2>
-    </div>
-    <p class="max-w-[46ch] text-xs text-subtle-foreground">
-      Counts are calculated directly from the journal's own archive index — no estimates, no target figures. Select any
-      bar to filter the list below.
-    </p>
-  </div>
-
-  <div class="grid gap-4 lg:grid-cols-3">
-    <Card padding="lg">
-      <p class="eyebrow text-subtle-foreground">Articles per year</p>
-      <p class="mt-1 text-sm text-muted-foreground">
-        {formatCount(archive.stats.articles)} articles across {archive.stats.years.length} publication years
-      </p>
-      <div class="mt-4">
-        <BarChart
-          points={archive.stats.articlesByYear}
-          ariaLabel="Articles published per year"
-          onSelect={onYearBar}
-          height={150}
-        />
-      </div>
-    </Card>
-
-    <Card padding="lg">
-      <p class="eyebrow text-subtle-foreground">Articles per volume</p>
-      <p class="mt-1 text-sm text-muted-foreground">
-        {formatCount(archive.stats.volumes)} numbered volumes
-        {#if archive.stats.specialEditions}· {archive.stats.specialEditions} special editions{/if}
-      </p>
-      <div class="mt-4">
-        <BarChart
-          points={archive.stats.articlesByVolume}
-          ariaLabel="Articles published per volume"
-          onSelect={onVolumeBar}
-          height={150}
-          tone="cyan"
-        />
-      </div>
-    </Card>
-
-    <Card padding="lg">
-      <p class="eyebrow text-subtle-foreground">Issues per year</p>
-      <p class="mt-1 text-sm text-muted-foreground">
-        {formatCount(archive.stats.issues)} issues from {archive.stats.firstYear} to {archive.stats.lastYear}
-      </p>
-      <div class="mt-4">
-        <AreaChart points={archive.stats.issuesByYear} ariaLabel="Issues published per year" height={150} />
-      </div>
-    </Card>
-  </div>
-</section>
-
 <!-- Filter toolbar -->
-<div class="sticky top-17 z-40 mt-6 border-y border-glass-border glass lg:top-[6.5rem]">
+<div class="sticky top-[5.0625rem] z-40 border-y border-border bg-background">
   <div class="container-page grid gap-3 py-4">
-    <div class="grid gap-3 lg:grid-cols-[minmax(14rem,1.6fr)_repeat(2,minmax(9rem,0.8fr))_minmax(9rem,0.7fr)_auto] lg:items-end">
+    <div class="grid gap-3 grid-cols-1 lg:grid-cols-[minmax(14rem,1.6fr)_repeat(2,minmax(9rem,0.8fr))_minmax(9rem,0.7fr)_auto] lg:items-end">
       <Input
         label="Search articles"
         name="archive-search"
@@ -332,57 +273,50 @@
         ]}
         bind:value={sort}
       />
-      <Button variant="outline" onclick={reset} disabled={!hasFilters}>
-        <RotateCcw aria-hidden="true" />
-        Reset
-      </Button>
+      <Button variant="outline" onclick={reset} disabled={!hasFilters}>Reset</Button>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div class="inline-flex items-center gap-0.5 rounded-full border border-border bg-muted p-0.5" role="group" aria-label="Archive view">
+    <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+      <div class="inline-flex items-center rounded-md border border-border bg-surface p-0.5" role="group" aria-label="Archive view">
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors {view ===
-          'archive'
-            ? 'bg-surface text-accent-foreground shadow-sm'
-            : 'text-muted-foreground hover:text-foreground'}"
+          class="rounded-[3px] px-3 py-1.5 text-[0.8125rem] font-semibold transition-colors {view === 'archive'
+            ? 'bg-muted text-accent-foreground'
+            : 'text-muted-foreground hover:text-heading'}"
           aria-pressed={view === 'archive'}
           onclick={() => {
             view = 'archive';
             limit = PAGE_SIZE;
           }}
         >
-          <LayoutGrid class="size-3.5" aria-hidden="true" />
           Browse by issue
         </button>
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors {view ===
-          'articles'
-            ? 'bg-surface text-accent-foreground shadow-sm'
-            : 'text-muted-foreground hover:text-foreground'}"
+          class="rounded-[3px] px-3 py-1.5 text-[0.8125rem] font-semibold transition-colors {view === 'articles'
+            ? 'bg-muted text-accent-foreground'
+            : 'text-muted-foreground hover:text-heading'}"
           aria-pressed={view === 'articles'}
           onclick={() => {
             view = 'articles';
             limit = PAGE_SIZE;
           }}
         >
-          <List class="size-3.5" aria-hidden="true" />
           All articles
         </button>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3 text-sm">
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.9375rem]">
         <p aria-live="polite" aria-atomic="true" class="text-muted-foreground">
-          <span class="font-semibold text-foreground">{formatCount(matchedArticleCount)}</span>
+          <span class="font-semibold text-heading tabular-nums">{formatCount(matchedArticleCount)}</span>
           {matchedArticleCount === 1 ? 'article' : 'articles'} in
-          <span class="font-semibold text-foreground">{formatCount(matchedIssueCount)}</span>
+          <span class="font-semibold text-heading tabular-nums">{formatCount(matchedIssueCount)}</span>
           {matchedIssueCount === 1 ? 'issue' : 'issues'}
         </p>
         {#if activeFilters.length}
-          <p class="flex items-center gap-2 text-xs text-subtle-foreground">
+          <p class="flex items-center gap-3 text-[0.8125rem] text-subtle-foreground">
             <span>Filtered by {activeFilters.join(' · ')}</span>
-            <button type="button" class="font-semibold text-accent-foreground hover:underline" onclick={reset}>
+            <button type="button" class="py-0.5 font-semibold text-accent-foreground hover:underline" onclick={reset}>
               Clear
             </button>
           </p>
@@ -393,85 +327,90 @@
 </div>
 
 <!-- Timeline + results -->
-<div class="container-page grid gap-8 py-10 lg:grid-cols-[13rem_minmax(0,1fr)]">
-  <aside class="lg:sticky lg:top-[11rem] lg:self-start">
+<div class="container-page grid gap-10 py-12 grid-cols-1 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-14">
+  <aside class="lg:sticky lg:top-[13rem] lg:self-start">
     <YearTimeline years={timelineYears} />
   </aside>
 
   <div>
     {#if matchedArticleCount === 0}
-      <Card padding="lg" class="grid justify-items-center gap-3 text-center">
-        <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-        <h2 class="text-lg">No articles match these filters</h2>
-        <p class="max-w-[46ch] text-sm text-muted-foreground">
+      <div class="rounded-lg border border-border bg-surface-muted px-6 py-14 text-center">
+        <SearchX class="mx-auto size-7 text-subtle-foreground" aria-hidden="true" />
+        <h2 class="mt-4 font-serif text-[1.25rem]">No articles match these filters</h2>
+        <p class="measure mx-auto mt-3 text-[0.9375rem] text-muted-foreground">
           Try a different year, volume, issue or search term — or reset the filters to browse the complete archive.
         </p>
-        <Button variant="outline" onclick={reset}>Reset filters</Button>
-      </Card>
+        <div class="mt-6">
+          <Button variant="outline" onclick={reset}>Reset filters</Button>
+        </div>
+      </div>
     {:else if showAllArticles}
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="display-2 mb-1">Articles</h2>
-        <p class="text-xs text-subtle-foreground">
+      <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-border-strong pb-4">
+        <h2 class="display-2">Articles</h2>
+        <p class="text-[0.8125rem] text-subtle-foreground tabular-nums">
           Showing {formatCount(visibleArticles.length)} of {formatCount(filteredArticles.length)}
         </p>
       </div>
-      <ol class="grid gap-3">
+      <ol>
         {#each visibleArticles as article (article.issueId + '-' + article.num)}
           <ArticleCard {article} query={q} heading={3} />
         {/each}
       </ol>
       {#if filteredArticles.length > visibleArticles.length}
-        <div class="mt-6 flex flex-col items-center gap-2">
+        <div class="mt-8 flex flex-col items-center gap-3">
           <Button variant="outline" onclick={() => (limit += PAGE_SIZE)}>
             <ChevronDown aria-hidden="true" />
             Show {formatCount(Math.min(PAGE_SIZE, filteredArticles.length - visibleArticles.length))} more
           </Button>
-          <p class="text-xs text-subtle-foreground tabular-nums">
+          <p class="text-[0.8125rem] text-subtle-foreground tabular-nums">
             {formatCount(visibleArticles.length)} of {formatCount(filteredArticles.length)} articles
           </p>
         </div>
       {/if}
     {:else}
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="display-2 mb-1">Browse by year, volume and issue</h2>
-        <div class="flex gap-2">
-          <Button variant="ghost" size="sm" onclick={expandAll}>Expand all</Button>
-          <Button variant="ghost" size="sm" onclick={collapseAll}>Collapse all</Button>
+      <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-border-strong pb-4">
+        <h2 class="display-2">Browse by year, volume and issue</h2>
+        <div class="flex items-center gap-5">
+          <button type="button" class="py-0.5 text-[0.8125rem] font-semibold text-accent-foreground hover:underline" onclick={expandAll}>
+            Expand all
+          </button>
+          <button type="button" class="py-0.5 text-[0.8125rem] font-semibold text-accent-foreground hover:underline" onclick={collapseAll}>
+            Collapse all
+          </button>
         </div>
       </div>
 
-      <div class="grid gap-10">
+      <div class="grid gap-14">
         {#each yearGroups as yearGroup (yearGroup.year)}
           {@const totals = yearTotals(yearGroup.volumes)}
           <section id="year-{yearGroup.year}" class="scroll-mt-44" aria-labelledby="year-{yearGroup.year}-heading">
-            <div class="mb-5 flex flex-wrap items-baseline gap-3 border-b border-border pb-3">
-              <h3 id="year-{yearGroup.year}-heading" class="display-1 tabular-nums">
+            <div class="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+              <h3 id="year-{yearGroup.year}-heading" class="font-serif text-[2rem] leading-none font-semibold tabular-nums">
                 {yearGroup.year}
               </h3>
-              <span class="text-sm text-subtle-foreground">
-                {formatCount(totals.issues)}{totals.issues === 1 ? 'issue' : 'issues'} · {formatCount(
-                  totals.articles
-                )} articles
-              </span>
+              <p class="text-[0.8125rem] text-subtle-foreground">
+                {formatCount(totals.issues)}{totals.issues === 1 ? 'issue' : 'issues'} · {formatCount(totals.articles)}
+                articles
+              </p>
             </div>
 
-            <div class="grid gap-6">
+            <div class="mt-6 grid gap-10">
               {#each yearGroup.volumes as [volumeLabel, list] (volumeLabel)}
-                <div class="grid gap-4">
+                <div class="grid gap-3">
                   {#if yearGroup.volumes.length > 1 || list.some((item) => item.isSpecial)}
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-4">
                       <h4 class="eyebrow whitespace-nowrap text-accent-foreground">
                         {list[0].isSpecial ? 'Special editions' : `Volume ${list[0].volumeNumber || volumeLabel}`}
                       </h4>
                       <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
-                      <span class="text-xs whitespace-nowrap text-subtle-foreground">
+                      <span class="text-[0.75rem] whitespace-nowrap text-subtle-foreground">
                         {list.length}{list.length === 1 ? ' issue' : ' issues'}
                       </span>
                     </div>
                   {/if}
                   <!-- One issue per row: titles get the full width and an expanded
                        issue list spreads out instead of squeezing into a column. -->
-                  <div class="grid gap-4">
+                  <div>
                     {#each list as item (item.id)}
                       <IssueCard
                         issue={item}
@@ -492,3 +431,66 @@
     {/if}
   </div>
 </div>
+
+<!-- Optional analytics: the charts are here, not in front of the published
+     record, and each bar stays a working filter control. -->
+<section class="container-page pb-16" aria-labelledby="statistics-heading">
+  <details class="group rounded-lg border border-border bg-surface-muted">
+    <summary
+      class="flex cursor-pointer list-none items-center gap-3 px-6 py-5 [&::-webkit-details-marker]:hidden"
+    >
+      <ChevronDown class="size-4 shrink-0 text-subtle-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
+      <span>
+        <span id="statistics-heading" class="font-serif text-[1.1875rem] font-semibold">Archive statistics</span>
+        <span class="mt-0.5 block text-[0.8125rem] text-subtle-foreground">
+          Articles and issues per year and per volume, counted from the journal's own archive index. Select a bar to
+          filter the archive.
+        </span>
+      </span>
+    </summary>
+
+    <div class="grid gap-8 border-t border-border px-6 py-6 lg:grid-cols-3">
+      <div>
+        <h3 class="eyebrow text-subtle-foreground">Articles per year</h3>
+        <p class="mt-2 text-[0.8125rem] text-muted-foreground">
+          {formatCount(archive.stats.articles)} articles across {archive.stats.years.length} publication years
+        </p>
+        <div class="mt-4">
+          <BarChart
+            points={archive.stats.articlesByYear}
+            ariaLabel="Articles published per year"
+            onSelect={onYearBar}
+            height={150}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 class="eyebrow text-subtle-foreground">Articles per volume</h3>
+        <p class="mt-2 text-[0.8125rem] text-muted-foreground">
+          {formatCount(archive.stats.volumes)} numbered volumes
+          {#if archive.stats.specialEditions}· {archive.stats.specialEditions} special editions{/if}
+        </p>
+        <div class="mt-4">
+          <BarChart
+            points={archive.stats.articlesByVolume}
+            ariaLabel="Articles published per volume"
+            onSelect={onVolumeBar}
+            height={150}
+            tone="cyan"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 class="eyebrow text-subtle-foreground">Issues per year</h3>
+        <p class="mt-2 text-[0.8125rem] text-muted-foreground">
+          {formatCount(archive.stats.issues)} issues from {archive.stats.firstYear} to {archive.stats.lastYear}
+        </p>
+        <div class="mt-4">
+          <AreaChart points={archive.stats.issuesByYear} ariaLabel="Issues published per year" height={150} />
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
