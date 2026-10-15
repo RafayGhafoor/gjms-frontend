@@ -303,6 +303,17 @@
     text-wrap: pretty;
   }
 
+  /* WCAG 1.4.1 (Use of Colour): a link that sits inside a block of prose must
+     not be distinguished from its surrounding text by colour alone. A link
+     that is the whole of its own block is a standalone control, not prose, and
+     carries its own styling — so this deliberately reaches only inline links. */
+  p a:not(:only-child),
+  blockquote a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
   /* Blocks of prose should never run wider than a comfortable measure. */
   p.measure,
   .measure p {

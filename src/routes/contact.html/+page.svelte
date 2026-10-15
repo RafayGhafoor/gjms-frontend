@@ -135,7 +135,7 @@
       <h2 id="submitting-heading" class="eyebrow text-subtle-foreground">Submitting a manuscript</h2>
       <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
         Read the author guidelines, then send your manuscript to
-        <a class="inline-block py-0.5 font-semibold text-accent-foreground no-underline hover:underline" href={`mailto:${SITE.email}`}>
+        <a class="inline-block py-0.5 font-semibold text-accent-foreground underline underline-offset-2" href={`mailto:${SITE.email}`}>
           {SITE.email}
         </a>.
       </p>

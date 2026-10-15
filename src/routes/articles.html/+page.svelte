@@ -127,7 +127,7 @@
       Every article record published by GJMSSH — {formatCount(archive.stats.articles)} articles across{' '}
       {formatCount(archive.stats.issues)} issues and {formatCount(archive.stats.volumes)} volumes,
       {archive.stats.firstYear}–{archive.stats.lastYear}. Search by title, author or page range, or narrow the list by
-      year and volume. To browse by issue, use the <a class="text-accent-foreground no-underline hover:underline" href="/archive.html">archive</a>.
+      year and volume. To browse by issue, use the <a class="text-accent-foreground underline underline-offset-2 hover:text-heading" href="/archive.html">archive</a>.
     </p>
   </div>
 </section>

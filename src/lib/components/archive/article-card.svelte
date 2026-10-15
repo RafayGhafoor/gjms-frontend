@@ -119,7 +119,7 @@
           <p class="mt-4 text-xs text-subtle-foreground">
             Abstract reproduced from the published article.
             {#if article.slug}
-              <a class="font-semibold text-accent-foreground no-underline hover:underline" href={articlePath(article.slug)}>
+              <a class="font-semibold text-accent-foreground underline underline-offset-2" href={articlePath(article.slug)}>
                 Open the article page
               </a>
             {/if}
