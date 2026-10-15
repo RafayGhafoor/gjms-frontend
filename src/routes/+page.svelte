@@ -242,21 +242,24 @@
 
       <ul class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {#each previousIssues as issue (issue.id)}
-          <li class="flex flex-col border-t border-border-strong pt-5">
-            <h3 class="font-serif text-[1.0625rem] leading-snug">
-              <a class="text-heading no-underline transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4" href={issuePath(issue.id)}>
+          <!-- One link per issue: the title, the metadata and the arrow all sit
+               inside it, so an assistive-technology user is not offered two
+               adjacent links to the same place (WAVE's "redundant link"). -->
+          <li class="border-t border-border-strong pt-5">
+            <a class="group flex h-full flex-col no-underline" href={issuePath(issue.id)}>
+              <h3 class="font-serif text-[1.0625rem] leading-snug text-heading transition-colors group-hover:text-accent-foreground">
                 {issue.title}
-              </a>
-            </h3>
-            <p class="mt-3 text-[0.8125rem] text-subtle-foreground">
-              {issue.articleCount} {issue.articleCount === 1 ? 'article' : 'articles'}
-            </p>
-            <p class="mt-auto pt-4">
-              <a class="arrow-link" href={issuePath(issue.id)}>
-                View issue
-                <ArrowRight aria-hidden="true" />
-              </a>
-            </p>
+              </h3>
+              <p class="mt-3 text-[0.8125rem] text-subtle-foreground">
+                {issue.articleCount} {issue.articleCount === 1 ? 'article' : 'articles'}
+              </p>
+              <p class="mt-auto pt-4">
+                <span class="arrow-link">
+                  View issue
+                  <ArrowRight aria-hidden="true" />
+                </span>
+              </p>
+            </a>
           </li>
         {/each}
       </ul>

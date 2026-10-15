@@ -81,11 +81,11 @@
     <p class="meta-row mt-3">
       {#if showIssue}
         <span>{issueLabel(article)}</span>
-        {#if pages}<span aria-hidden="true" class="text-border-strong">·</span>{/if}
+        {#if pages}<span aria-hidden="true" class="size-1 shrink-0 rounded-full bg-border-strong"></span>{/if}
       {/if}
       {#if pages}<span>Pages {pages}</span>{/if}
       {#if article.hasPdf}
-        <span aria-hidden="true" class="text-border-strong">·</span>
+        <span aria-hidden="true" class="size-1 shrink-0 rounded-full bg-border-strong"></span>
         <span>Open access</span>
       {/if}
     </p>

@@ -80,10 +80,10 @@
     <p class="meta-row mt-7 border-t border-border pt-5">
       {#if article.year}<span>{article.year}</span>{/if}
       {#if article.pages}
-        <span aria-hidden="true" class="text-border-strong">·</span>
+        <span aria-hidden="true" class="size-1 shrink-0 rounded-full bg-border-strong"></span>
         <span>Pages {pageRangeValue(article.pages)}</span>
       {/if}
-      <span aria-hidden="true" class="text-border-strong">·</span>
+      <span aria-hidden="true" class="size-1 shrink-0 rounded-full bg-border-strong"></span>
       <span>{article.hasPdf ? 'Open access PDF' : 'Full text not available'}</span>
     </p>
   {/if}
