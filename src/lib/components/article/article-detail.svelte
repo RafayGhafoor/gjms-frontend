@@ -64,7 +64,7 @@
         href={article.pdf}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Open the PDF of {article.title} in a new tab"
+        aria-label="Download PDF — {article.title} (opens in a new tab)"
       >
         <Download aria-hidden="true" />
         Download PDF
