@@ -2,16 +2,19 @@
   import type { Article } from '$lib/data/types';
   import { issueLabel } from '$lib/data/archive';
   import { articlePath } from '$lib/data/paths';
-  import { formatPages, highlight } from '$lib/utils';
+  import { pageRangeValue } from '$lib/utils';
+  import { highlight } from '$lib/utils';
   import { loadAbstract } from '$lib/client/abstracts';
-  import Badge from '$lib/components/ui/badge.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
   import Download from '@lucide/svelte/icons/download';
 
-  /* Article card — shows only fields that exist in archive-data.json.
-     Abstracts are not inlined here: the card body stays light and the abstract
-     is fetched from abstracts.json the first time a reader asks for one. */
+  /* An article as an editorial row, not a card: a hairline separator above, a
+     quiet number rail, the title leading at serif reading size, and the
+     bibliographic detail set small underneath. Only fields that exist in
+     archive-data.json are shown.
+     Abstracts are not inlined: the row stays light and the abstract is fetched
+     from abstracts.json the first time a reader asks for one. */
   let {
     article,
     query = '',
@@ -28,6 +31,7 @@
 
   const Heading = $derived((['h3', 'h4', 'h5'] as const)[heading - 3]);
   const panelId = $derived(`abstract-${article.issueId}-${article.num}`);
+  const pages = $derived(pageRangeValue(article.pages));
 
   let open = $state(false);
   let loading = $state(false);
@@ -47,20 +51,20 @@
 </script>
 
 <li
-  class="group grid gap-3 rounded-lg border border-border bg-surface p-4 transition-[border-color,background-color,box-shadow] duration-200 hover:border-accent-border hover:bg-card hover:shadow-sm sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4 {className}"
+  class="article-row grid gap-x-6 gap-y-3.5 sm:grid-cols-[2.25rem_minmax(0,1fr)] grid-cols-1 lg:grid-cols-[2.25rem_minmax(0,1fr)_auto] {className}"
 >
-  <span
-    class="grid size-8 shrink-0 place-items-center rounded-md bg-accent text-xs font-bold text-accent-foreground tabular-nums"
-    aria-hidden="true"
-  >
+  <span class="hidden font-serif text-sm leading-7 text-subtle-foreground tabular-nums sm:block" aria-hidden="true">
     {article.num}
   </span>
 
-  <div class="grid min-w-0 gap-1">
-    <svelte:element this={Heading} class="paper-title text-[1.0625rem] text-foreground">
+  <div class="min-w-0">
+    <svelte:element this={Heading} class="article-title">
       {#if article.slug}
         <!-- The title links to the article's own page, which carries its abstract inline. -->
-        <a class="text-foreground no-underline hover:text-accent-foreground hover:underline" href={articlePath(article.slug)}>
+        <a
+          class="text-heading no-underline decoration-accent-border decoration-1 underline-offset-4 transition-colors hover:text-accent-foreground hover:underline"
+          href={articlePath(article.slug)}
+        >
           {@html highlight(article.title, query)}
         </a>
       {:else}
@@ -69,44 +73,50 @@
     </svelte:element>
 
     {#if article.authors}
-      <p class="text-sm text-muted-foreground">{@html highlight(article.authors, query)}</p>
+      <p class="mt-2 text-[0.9375rem] leading-snug text-muted-foreground">
+        {@html highlight(article.authors, query)}
+      </p>
     {/if}
 
-    <div class="mt-0.5 flex flex-wrap items-center gap-2">
+    <p class="meta-row mt-3">
       {#if showIssue}
-        <Badge variant="accent">{issueLabel(article)}</Badge>
+        <span>{issueLabel(article)}</span>
+        {#if pages}<span aria-hidden="true" class="text-border-strong">·</span>{/if}
       {/if}
-      {#if article.pages}
-        <Badge>{formatPages(article.pages)}</Badge>
+      {#if pages}<span>Pages {pages}</span>{/if}
+      {#if article.hasPdf}
+        <span aria-hidden="true" class="text-border-strong">·</span>
+        <span>Open access</span>
       {/if}
-    </div>
+    </p>
 
     {#if article.hasPdf}
-      <div class="mt-1.5">
-        <button
-          type="button"
-          class="inline-flex items-center gap-1.5 rounded text-xs font-semibold text-accent-foreground transition-colors hover:underline"
-          aria-expanded={open}
-          aria-controls={panelId}
-          onclick={toggle}
-        >
-          {open ? 'Hide abstract' : 'Show abstract'}
-          <ChevronDown class="size-3.5 transition-transform duration-300 {open ? 'rotate-180' : ''}" aria-hidden="true" />
-        </button>
-      </div>
+      <button
+        type="button"
+        class="mt-3 inline-flex items-center gap-1.5 py-0.5 text-[0.8125rem] font-semibold text-accent-foreground transition-colors hover:underline hover:underline-offset-4"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onclick={toggle}
+      >
+        {open ? 'Hide abstract' : 'View abstract'}
+        <ChevronDown
+          class="size-3.5 transition-transform duration-200 {open ? 'rotate-180' : ''}"
+          aria-hidden="true"
+        />
+      </button>
     {/if}
 
     {#if open}
-      <div id={panelId} class="mt-2 rounded-md border border-border bg-surface-muted p-4">
+      <div id={panelId} class="mt-3 border-l-2 border-accent-border bg-surface-muted py-4 pr-4 pl-5">
         {#if loading}
           <p class="text-sm text-subtle-foreground">Loading the abstract…</p>
         {:else if abstract}
           {#each abstract.split(/\n{2,}/) as paragraph (paragraph)}
-            <p class="max-w-[72ch] text-sm leading-relaxed text-muted-foreground first:mt-0 [&:not(:first-child)]:mt-3">
+            <p class="measure text-[0.9375rem] leading-relaxed text-muted-foreground first:mt-0 [&:not(:first-child)]:mt-3">
               {paragraph}
             </p>
           {/each}
-          <p class="mt-3 text-xs text-subtle-foreground">
+          <p class="mt-4 text-xs text-subtle-foreground">
             Abstract reproduced from the published article.
             {#if article.slug}
               <a class="font-semibold text-accent-foreground no-underline hover:underline" href={articlePath(article.slug)}>
@@ -115,7 +125,7 @@
             {/if}
           </p>
         {:else}
-          <p class="text-sm text-muted-foreground">
+          <p class="measure text-[0.9375rem] text-muted-foreground">
             No abstract is held for this record in the journal's archive. The published full text is available as a PDF.
           </p>
         {/if}
@@ -123,9 +133,10 @@
     {/if}
   </div>
 
-  <div class="flex items-start sm:justify-end">
+  <div class="flex items-start sm:col-start-2 lg:col-start-3 lg:justify-end">
     {#if article.hasPdf}
       <Button
+        variant="outline"
         size="sm"
         href={article.pdf}
         target="_blank"
@@ -136,7 +147,7 @@
         PDF
       </Button>
     {:else}
-      <span class="text-xs text-subtle-foreground italic">PDF not available</span>
+      <span class="pt-2 text-xs text-subtle-foreground italic">PDF not available</span>
     {/if}
   </div>
 </li>

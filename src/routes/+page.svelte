@@ -1,61 +1,114 @@
 <script lang="ts">
   import Seo from '$lib/components/site/seo.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Card from '$lib/components/ui/card.svelte';
-  import Badge from '$lib/components/ui/badge.svelte';
-  import StatCard from '$lib/components/ui/stat-card.svelte';
-  import BarChart from '$lib/components/charts/bar-chart.svelte';
-  import AreaChart from '$lib/components/charts/area-chart.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
   import { content } from '$lib/data/content';
   import type { PageProps } from './$types';
-  import { normalisePdfUrl } from '$lib/data/archive';
   import { SITE, SUBMIT_HREF } from '$lib/config/site';
+  import { issuePath } from '$lib/data/paths';
   import { collectionPageNode, scholarlyArticleNode, webPageNode } from '$lib/seo';
-  import { formatCount, formatPages } from '$lib/utils';
+  import { formatCount } from '$lib/utils';
+  import ArrowRight from '@lucide/svelte/icons/arrow-right';
   import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
-  import BookOpen from '@lucide/svelte/icons/book-open';
-  import CalendarDays from '@lucide/svelte/icons/calendar-days';
-  import Clock from '@lucide/svelte/icons/clock';
-  import FileText from '@lucide/svelte/icons/file-text';
-  import GraduationCap from '@lucide/svelte/icons/graduation-cap';
-  import LayoutGrid from '@lucide/svelte/icons/layout-grid';
-  import Library from '@lucide/svelte/icons/library';
-  import Mail from '@lucide/svelte/icons/mail';
-  import ShieldCheck from '@lucide/svelte/icons/shield-check';
-  import Sparkles from '@lucide/svelte/icons/sparkles';
-  import Users from '@lucide/svelte/icons/users';
 
   let { data }: PageProps = $props();
 
-  /* Home page. Every figure is derived from archive-data.json / content.json at
-     build time; no summary, metric or claim is invented. The records and the
-     figures come from the server load, so the archive index stays out of the
-     browser. */
-  const latest = $derived(data.latest);
-  const archive = $derived({ stats: data.stats });
-  const currentIssue = $derived(content.currentIssue);
-  /* content.json records are untyped JSON — normalise once here. */
-  const currentIssueArticles = $derived(
-    content.currentIssue.articles.map((article) => ({
-      key: `${article.num ?? ''}-${article.title ?? ''}`,
-      title: String(article.title ?? ''),
-      authors: String(article.authors ?? ''),
-      pages: String(article.pages ?? ''),
-      pdf: normalisePdfUrl(article.pdf)
-    }))
-  );
-  const about = $derived(content.home.about);
-  // The published description, trimmed to its opening sentences — verbatim.
-  const lead = $derived(about.split(/(?<=\.)\s+/).slice(0, 2).join(' '));
-  const coverage = $derived(`${archive.stats.firstYear}–${archive.stats.lastYear}`);
+  /* Home page. Every sentence and figure below comes from the journal's own
+     records — content.json for the published copy and archive-data.json for the
+     articles and counts. Nothing is summarised, estimated or invented. */
+  const stats = $derived(data.stats);
+  const currentIssue = $derived(data.currentIssue);
+  const previousIssues = $derived(data.previousIssues);
 
-  const facts = $derived([
-    { label: 'Impact factor (SJIF)', value: content.stats.impactFactor, href: '/impact-factor.html' },
-    { label: 'Decision within', value: `${content.stats.daysToPublish} days`, href: '/author-guideline.html' },
-    { label: 'Acceptance rate', value: content.stats.acceptanceRate, href: '/impact-factor.html' },
-    { label: 'Publication fee', value: content.stats.publicationFee, href: '/author-guideline.html' }
+  /* The published description of the journal, reproduced verbatim. */
+  const about = $derived(content.home.about);
+  /* The journal's own statement of vision, opening sentences only. */
+  const visionLead = $derived(
+    content.visionMission.vision.split(/(?<=\.)\s+/).slice(0, 2).join(' ')
+  );
+  const featured = $derived(currentIssue.articles[0] ?? null);
+  const coverage = $derived(`${stats.firstYear}–${stats.lastYear}`);
+
+  /* Counted from the archive index, newest year first. */
+  const years = $derived([...stats.articlesByYear].reverse());
+
+  const glance = $derived([
+    { term: 'Publication frequency', detail: 'Quarterly' },
+    { term: 'Published since', detail: String(SITE.startYear) },
+    { term: 'Peer review', detail: 'Blind peer review' },
+    { term: 'Full text', detail: 'Open access PDF' },
+    { term: 'ISSN (print)', detail: SITE.issn.print },
+    { term: 'ISSN (online)', detail: SITE.issn.online },
+    { term: 'Articles published', detail: formatCount(stats.articles) },
+    { term: 'Issues published', detail: formatCount(stats.issues) }
   ]);
+
+  const disciplines = [
+    {
+      name: 'Management',
+      body: 'Research on organisations, strategy, finance and entrepreneurship, and on the management of people and resources.'
+    },
+    {
+      name: 'Social Sciences',
+      body: 'Research on economies, societies and public policy, and on the institutions that shape public life.'
+    },
+    {
+      name: 'Humanities',
+      body: 'Research on culture, language and history, and the critical study of human expression.'
+    }
+  ];
+
+  const authorSteps = [
+    {
+      step: '01',
+      title: 'Prepare your manuscript',
+      body: 'Review the manuscript requirements — length, title, author details, abstract, keywords, figures, tables and APA references.',
+      href: '/author-guideline.html',
+      linkText: 'Author guidelines'
+    },
+    {
+      step: '02',
+      title: 'Understand the review process',
+      body: 'Submissions are assessed through the journal’s blind peer review. The published decision timeline is two weeks from submission.',
+      href: '/author-guideline.html#key-facts',
+      linkText: 'Review timeline and fee'
+    },
+    {
+      step: '03',
+      title: 'Submit your research',
+      body: 'Send the manuscript to the editorial office by email, including the paper title and the names of every contributing author.',
+      href: SUBMIT_HREF,
+      linkText: 'Email the editorial office'
+    }
+  ];
+
+  const policies: { title: string; links: { label: string; href: string }[] }[] = [
+    {
+      title: 'About and governance',
+      links: [
+        { label: 'Editorial board', href: '/editorial-board.html' },
+        { label: 'Vision and mission', href: '/vision-mission.html' },
+        { label: 'Contact the editorial office', href: '/contact.html' }
+      ]
+    },
+    {
+      title: 'Publishing information',
+      links: [
+        { label: 'Author guidelines', href: '/author-guideline.html' },
+        { label: 'Publication ethics and plagiarism', href: '/author-guideline.html#ethics-and-integrity' },
+        { label: 'Publication fee', href: '/author-guideline.html#key-facts' }
+      ]
+    },
+    {
+      title: 'Research and discovery',
+      links: [
+        { label: 'Current issue', href: '/current-issue.html' },
+        { label: 'Archive', href: '/archive.html' },
+        { label: 'Articles', href: '/articles.html' },
+        { label: 'Indexing and impact', href: '/impact-factor.html' }
+      ]
+    }
+  ];
 
   const description =
     'Global Journal of Management, Social Sciences and Humanities (GJMSSH) — a blind peer-reviewed quarterly journal publishing management, social sciences and humanities research since 2015. Browse every published volume, issue and open-access article.';
@@ -68,237 +121,364 @@
   appendSiteName={false}
   jsonLd={[
     webPageNode({ path: '/', name: SITE.fullName, description }),
-    collectionPageNode({
-      path: '/',
-      name: 'GJMSSH — journal home',
-      description
-    }),
-    ...latest.map((article) => scholarlyArticleNode(article))
+    collectionPageNode({ path: '/', name: 'GJMSSH — journal home', description }),
+    ...currentIssue.articles.map((article) => scholarlyArticleNode(article))
   ]}
 />
 
-<!-- Hero -->
+<!-- ============================================================ 1 · HERO -->
 <section class="hero-surface relative overflow-hidden">
   <div class="hero-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <div class="container-page relative py-12 lg:py-16">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center">
-      <div class="max-w-[62ch]">
-        <div class="flex items-center gap-3">
-          <span class="brand-mark size-12 shrink-0" aria-hidden="true"></span>
-          <p class="eyebrow text-hero-muted">{SITE.tagline}</p>
+  <div class="container-page relative pt-14 pb-14 lg:pt-20 lg:pb-20">
+    <div class="grid gap-12 grid-cols-1 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+      <div>
+        <p class="eyebrow text-subtle-foreground">{SITE.tagline}</p>
+        <h1 class="display-hero mt-5 max-w-[19ch]">{SITE.fullName}</h1>
+        <p class="measure mt-6 text-[1.0625rem] leading-relaxed text-muted-foreground">{about}</p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <Button href="/current-issue.html">Explore the current issue</Button>
+          <Button variant="outline" href="/author-guideline.html">Author guidelines</Button>
         </div>
-        <h1 class="mt-3 display-1 text-hero-foreground">
-          {SITE.fullName}
-        </h1>
-        <p class="mt-5 text-base text-hero-muted">{lead}</p>
-        <div class="mt-7 flex flex-wrap gap-3">
-          <Button variant="gold" href={SUBMIT_HREF}>Submit manuscript</Button>
-          <Button variant="light" href="/current-issue.html">Current issue</Button>
-          <Button variant="light" href="/archive.html">Browse the archive</Button>
-        </div>
-        <p class="mt-5 text-xs text-hero-muted">
-          Published since {SITE.startYear} · {formatCount(archive.stats.issues)} issues ·{' '}
-          {formatCount(archive.stats.articles)} open-access articles
+
+        <p class="mt-7 text-[0.8125rem] text-subtle-foreground">
+          Published since {SITE.startYear} · {formatCount(stats.issues)} issues · {formatCount(stats.articles)} open-access
+          articles · {coverage}
         </p>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <StatCard variant="hero" value={archive.stats.articles} label="Articles" hint="{archive.stats.articlesWithPdf} with an open-access PDF">
-          {#snippet icon()}<FileText class="size-4" aria-hidden="true" />{/snippet}
-        </StatCard>
-        <StatCard variant="hero" value={archive.stats.issues} label="Issues" hint="{archive.stats.specialEditions} special editions">
-          {#snippet icon()}<LayoutGrid class="size-4" aria-hidden="true" />{/snippet}
-        </StatCard>
-        <StatCard variant="hero" value={archive.stats.volumes} label="Volumes" hint="Volume 1 to Volume {archive.stats.volumes}">
-          {#snippet icon()}<Library class="size-4" aria-hidden="true" />{/snippet}
-        </StatCard>
-        <StatCard variant="hero" value={coverage} label="Coverage" hint="{archive.stats.years.length} publication years">
-          {#snippet icon()}<CalendarDays class="size-4" aria-hidden="true" />{/snippet}
-        </StatCard>
+      <!-- Current-issue panel: the journal's own record, not a dashboard widget. -->
+      <aside class="border-t-2 border-heading/85 pt-6" aria-labelledby="hero-issue-heading">
+        <p class="eyebrow text-gold-foreground">Current issue</p>
+        <h2 id="hero-issue-heading" class="mt-3 font-serif text-[1.375rem] leading-snug">
+          {currentIssue.title}
+        </h2>
+
+        <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-[0.8125rem]">
+          {#if currentIssue.volumeNumber != null}
+            <div>
+              <dt class="text-subtle-foreground">Volume</dt>
+              <dd class="mt-0.5 font-semibold tabular-nums">{currentIssue.volumeNumber}</dd>
+            </div>
+          {/if}
+          {#if currentIssue.issueNumber != null}
+            <div>
+              <dt class="text-subtle-foreground">Issue</dt>
+              <dd class="mt-0.5 font-semibold tabular-nums">{currentIssue.issueNumber}</dd>
+            </div>
+          {/if}
+          <div>
+            <dt class="text-subtle-foreground">Articles</dt>
+            <dd class="mt-0.5 font-semibold tabular-nums">{currentIssue.articles.length}</dd>
+          </div>
+          {#if currentIssue.year}
+            <div>
+              <dt class="text-subtle-foreground">Year</dt>
+              <dd class="mt-0.5 font-semibold tabular-nums">{currentIssue.year}</dd>
+            </div>
+          {/if}
+        </dl>
+
+        {#if featured}
+          <div class="mt-6 border-t border-border pt-5">
+            <p class="eyebrow text-subtle-foreground">Featured article</p>
+            <p class="mt-2.5 font-serif text-[1.0625rem] leading-snug">{featured.title}</p>
+            {#if featured.authors}
+              <p class="mt-2 text-[0.875rem] leading-snug text-muted-foreground">{featured.authors}</p>
+            {/if}
+          </div>
+        {/if}
+
+        <a class="arrow-link mt-6" href="/current-issue.html">
+          View the issue
+          <ArrowRight aria-hidden="true" />
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= 2 · CURRENT ISSUE -->
+{#if currentIssue.articles.length}
+  <section class="container-page section-y" aria-labelledby="current-issue-heading">
+    <header class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-border-strong pb-5">
+      <div>
+        <h2 id="current-issue-heading" class="display-2">Current issue</h2>
+        <p class="mt-2 text-[0.9375rem] text-muted-foreground">
+          {currentIssue.title} · {currentIssue.articles.length}
+          {currentIssue.articles.length === 1 ? 'article' : 'articles'}
+        </p>
+      </div>
+      <a class="arrow-link" href="/current-issue.html">
+        View the complete issue
+        <ArrowRight aria-hidden="true" />
+      </a>
+    </header>
+
+    <ol class="mt-4">
+      {#each currentIssue.articles as article (article.issueId + '-' + article.num)}
+        <ArticleCard {article} heading={3} showIssue={false} />
+      {/each}
+    </ol>
+  </section>
+{/if}
+
+<!-- ================================================== 3 · RECENT ISSUES -->
+{#if previousIssues.length}
+  <section class="border-y border-border bg-surface-muted" aria-labelledby="recent-issues-heading">
+    <div class="container-page section-y">
+      <header class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <div>
+          <h2 id="recent-issues-heading" class="display-2">Previously published</h2>
+          <p class="mt-2 text-[0.9375rem] text-muted-foreground">
+            The issues that precede the current one, newest first.
+          </p>
+        </div>
+        <a class="arrow-link" href="/archive.html">
+          Browse the full archive
+          <ArrowRight aria-hidden="true" />
+        </a>
+      </header>
+
+      <ul class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+        {#each previousIssues as issue (issue.id)}
+          <li class="flex flex-col border-t border-border-strong pt-5">
+            <h3 class="font-serif text-[1.0625rem] leading-snug">
+              <a class="text-heading no-underline transition-colors hover:text-accent-foreground hover:underline hover:underline-offset-4" href={issuePath(issue.id)}>
+                {issue.title}
+              </a>
+            </h3>
+            <p class="mt-3 text-[0.8125rem] text-subtle-foreground">
+              {issue.articleCount} {issue.articleCount === 1 ? 'article' : 'articles'}
+            </p>
+            <p class="mt-auto pt-4">
+              <a class="arrow-link" href={issuePath(issue.id)}>
+                View issue
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </p>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+{/if}
+
+<!-- ================================================ 4 · ABOUT THE JOURNAL -->
+<section class="container-page section-y" aria-labelledby="about-heading">
+  <div class="grid gap-12 grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
+    <div>
+      <h2 id="about-heading" class="display-2 max-w-[22ch]">Advancing research across disciplines</h2>
+      <p class="measure mt-5 leading-relaxed text-muted-foreground">{visionLead}</p>
+      <p class="measure mt-4 leading-relaxed text-muted-foreground">
+        The journal is guided by an editor-in-chief and an international editorial board, and every submission is
+        assessed on merit through blind peer review.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <Button variant="outline" href="/vision-mission.html">
+          About the journal
+          <ArrowUpRight aria-hidden="true" />
+        </Button>
+        <Button variant="outline" href="/editorial-board.html">
+          Editorial board
+          <ArrowUpRight aria-hidden="true" />
+        </Button>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="eyebrow text-subtle-foreground">Journal at a glance</h3>
+      <dl class="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+        {#each glance as row (row.term)}
+          <div class="border-t border-border pt-3">
+            <dt class="text-[0.8125rem] text-subtle-foreground">{row.term}</dt>
+            <dd class="mt-1 font-medium tabular-nums">{row.detail}</dd>
+          </div>
+        {/each}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 5 · DISCIPLINES -->
+<section class="border-y border-border bg-surface-muted" aria-labelledby="scope-heading">
+  <div class="container-page section-y">
+    <header class="max-w-[62ch]">
+      <h2 id="scope-heading" class="display-2">Scope of the journal</h2>
+      <p class="measure mt-4 text-muted-foreground">
+        GJMSSH publishes research in management, the social sciences and the humanities, and invites submissions from
+        researchers worldwide.
+      </p>
+    </header>
+
+    <ul class="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-3">
+      {#each disciplines as discipline (discipline.name)}
+        <li class="border-t border-border-strong pt-5">
+          <h3 class="font-serif text-[1.1875rem]">{discipline.name}</h3>
+          <p class="measure mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{discipline.body}</p>
+        </li>
+      {/each}
+    </ul>
+
+    <p class="mt-10">
+      <a class="arrow-link" href="/vision-mission.html">
+        Read the journal's aims and scope
+        <ArrowRight aria-hidden="true" />
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ==================================================== 6 · FOR AUTHORS -->
+<section class="container-page section-y" aria-labelledby="authors-heading">
+  <header class="max-w-[62ch]">
+    <h2 id="authors-heading" class="display-2">Publishing with GJMSSH</h2>
+    <p class="measure mt-4 text-muted-foreground">
+      Everything authors need to prepare and submit their research.
+    </p>
+  </header>
+
+  <ol class="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-3">
+    {#each authorSteps as item (item.step)}
+      <li class="border-t border-border-strong pt-5">
+        <p class="font-serif text-[1.0625rem] text-gold-foreground tabular-nums" aria-hidden="true">{item.step}</p>
+        <h3 class="mt-3 font-serif text-[1.1875rem]">{item.title}</h3>
+        <p class="measure mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{item.body}</p>
+        <a class="arrow-link mt-4" href={item.href}>
+          {item.linkText}
+          <ArrowRight aria-hidden="true" />
+        </a>
+      </li>
+    {/each}
+  </ol>
+
+  <div class="mt-12 border-t border-border pt-6">
+    <h3 class="eyebrow text-subtle-foreground">Submission information</h3>
+    <ul class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+      {#each [
+        { label: 'Author guidelines', href: '/author-guideline.html' },
+        { label: 'Manuscript requirements', href: '/author-guideline.html#requirements-heading' },
+        { label: 'Publication fee', href: '/author-guideline.html#key-facts' },
+        { label: 'Publication ethics', href: '/author-guideline.html#ethics-and-integrity' }
+      ] as link (link.href)}
+        <li>
+          <a
+            class="inline-block py-0.5 text-[0.9375rem] font-medium text-accent-foreground no-underline hover:underline hover:underline-offset-4"
+            href={link.href}
+          >
+            {link.label}
+          </a>
+        </li>
+      {/each}
+    </ul>
+  </div>
+</section>
+
+<!-- ======================================================= 7 · ARCHIVE -->
+<section class="border-y border-border bg-surface-muted" aria-labelledby="archive-heading">
+  <div class="container-page section-y">
+    <div class="grid gap-12 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-16">
+      <div>
+        <h2 id="archive-heading" class="display-2">Explore the journal archive</h2>
+        <p class="measure mt-4 text-muted-foreground">
+          Every volume and issue the journal has published is in the archive, with direct access to the full text of
+          each article. The published record runs from {stats.firstYear} to {stats.lastYear} —
+          {formatCount(stats.articles)} articles across {formatCount(stats.issues)} issues and
+          {formatCount(stats.volumes)} numbered volumes{#if stats.specialEditions}, including
+            {formatCount(stats.specialEditions)} special editions{/if}.
+        </p>
+
+        <form class="mt-7 flex max-w-lg items-stretch gap-2" action="/articles.html" method="get">
+          <label class="sr-only" for="home-archive-search">
+            Search articles by title, author or page range
+          </label>
+          <input
+            id="home-archive-search"
+            name="q"
+            type="search"
+            placeholder="Title, author or page range"
+            class="h-11 min-w-0 flex-1 rounded-md border border-input bg-surface px-3.5 text-[0.9375rem] text-foreground outline-none placeholder:text-subtle-foreground hover:border-accent-border focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/30"
+          />
+          <Button type="submit">Search</Button>
+        </form>
+
+        <p class="mt-6">
+          <a class="arrow-link" href="/archive.html">
+            View the full archive
+            <ArrowRight aria-hidden="true" />
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h3 class="eyebrow text-subtle-foreground">Browse by year</h3>
+        <ul class="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3">
+          {#each years as year (year.label)}
+            <li class="bg-background">
+              <a
+                class="flex items-baseline justify-between gap-3 px-4 py-3.5 no-underline transition-colors hover:bg-accent"
+                href={`/archive.html?year=${year.label}`}
+              >
+                <span class="font-serif text-[1.0625rem] text-heading tabular-nums">{year.label}</span>
+                <span class="text-[0.75rem] text-subtle-foreground tabular-nums">{year.value}</span>
+              </a>
+            </li>
+          {/each}
+        </ul>
+        <p class="mt-3 text-[0.75rem] text-subtle-foreground">
+          Each year links to that year's issues and articles in the archive. The count is the number of articles
+          published in that year.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="container-page grid gap-12 py-12 lg:py-16">
-  <!-- About + activities -->
-  <section class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" aria-labelledby="about-heading">
-    <Card padding="lg">
-      <p class="eyebrow text-subtle-foreground">About the journal</p>
-      <h2 id="about-heading" class="mt-2 text-2xl tracking-tight">A platform for management and social science research</h2>
-      <p class="mt-4 text-muted-foreground">{about}</p>
-      <div class="mt-5 flex flex-wrap gap-3">
-        <Button variant="outline" href="/vision-mission.html">Vision &amp; mission</Button>
-        <Button variant="outline" href="/editorial-board.html">Editorial board</Button>
-      </div>
-    </Card>
+<!-- ================================== 8 · JOURNAL INFORMATION/POLICIES -->
+<section class="container-page section-y" aria-labelledby="information-heading">
+  <h2 id="information-heading" class="display-2">Journal information and policies</h2>
 
-    <div class="grid gap-4">
-      <Card padding="lg">
-        <p class="eyebrow text-subtle-foreground">Articles published per year</p>
-        <p class="mt-1 text-sm text-muted-foreground">
-          {formatCount(archive.stats.articles)} articles across {archive.stats.years.length} publication years
-        </p>
-        <div class="mt-4">
-          <BarChart points={archive.stats.articlesByYear} ariaLabel="Articles published per year" height={140} />
-        </div>
-      </Card>
-      <Card padding="lg">
-        <p class="eyebrow text-subtle-foreground">Issues published per year</p>
-        <p class="mt-1 text-sm text-muted-foreground">
-          {formatCount(archive.stats.issues)} issues from {archive.stats.firstYear} to {archive.stats.lastYear}
-        </p>
-        <div class="mt-4">
-          <AreaChart points={archive.stats.issuesByYear} ariaLabel="Issues published per year" height={130} />
-        </div>
-      </Card>
-    </div>
-  </section>
-
-  <!-- Latest articles -->
-  <section aria-labelledby="latest-heading">
-    <div class="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
+  <div class="mt-10 grid gap-x-10 gap-y-10 md:grid-cols-3">
+    {#each policies as group (group.title)}
       <div>
-        <p class="eyebrow text-subtle-foreground">Latest records</p>
-        <h2 id="latest-heading" class="mt-1 text-2xl tracking-tight">Recently published articles</h2>
+        <h3 class="eyebrow text-subtle-foreground">{group.title}</h3>
+        <ul class="mt-4">
+          {#each group.links as link (link.href + link.label)}
+            <li class="border-t border-border">
+              <a
+                class="block py-3 text-[0.9375rem] text-muted-foreground no-underline transition-colors hover:text-accent-foreground"
+                href={link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          {/each}
+        </ul>
       </div>
-      <Button variant="outline" size="sm" href="/articles.html">
-        Search all {formatCount(archive.stats.articles)} articles
-        <ArrowUpRight aria-hidden="true" />
-      </Button>
-    </div>
-    <ol class="grid gap-3">
-      {#each latest as article (article.issueId + '-' + article.num)}
-        <ArticleCard {article} heading={3} showIssue={true} />
-      {/each}
-    </ol>
-  </section>
+    {/each}
+  </div>
+</section>
 
-  <!-- Current issue -->
-  <section aria-labelledby="current-heading">
-    <Card padding="lg" variant="elevated">
-      <div class="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p class="eyebrow text-subtle-foreground">Current issue</p>
-          <h2 id="current-heading" class="mt-1 text-2xl tracking-tight">{currentIssue.title}</h2>
-          <p class="mt-2 text-sm text-muted-foreground">
-            {currentIssueArticles.length} articles published in this issue.
-          </p>
-        </div>
-        <Button href="/current-issue.html">Open the current issue</Button>
+<!-- =================================================== 9 · SUBMIT CTA -->
+<section class="band-navy" aria-labelledby="submit-heading">
+  <div class="container-page section-y">
+    <div class="grid gap-x-12 gap-y-8 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+      <div>
+        <h2 id="submit-heading" class="display-2 text-band-foreground">Submit your research</h2>
+        <p class="measure mt-4 leading-relaxed text-band-muted">
+          Share your work with the journal's editorial team. Review the submission guidelines before sending your
+          manuscript — the published decision timeline is two weeks from submission.
+        </p>
       </div>
-
-      <ol class="mt-6 grid gap-3">
-        {#each currentIssueArticles as article (article.key)}
-          <li class="grid gap-2 rounded-lg border border-border bg-surface p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-            <div class="min-w-0">
-              <p class="paper-title text-[1.0625rem]">{article.title}</p>
-              {#if article.authors}<p class="mt-1 text-sm text-muted-foreground">{article.authors}</p>{/if}
-              {#if article.pages}<p class="mt-1 text-xs text-subtle-foreground">{formatPages(article.pages)}</p>{/if}
-            </div>
-            {#if article.pdf}
-              <Button size="sm" variant="outline" href={article.pdf} target="_blank" rel="noopener noreferrer">
-                PDF
-              </Button>
-            {/if}
-          </li>
-        {/each}
-      </ol>
-    </Card>
-  </section>
-
-  <!-- Why publish here (existing published copy) -->
-  <section aria-labelledby="features-heading">
-    <p class="eyebrow text-subtle-foreground">For authors</p>
-    <h2 id="features-heading" class="mt-1 text-2xl tracking-tight">Publishing with GJMSSH</h2>
-    <div class="mt-5 grid gap-4 md:grid-cols-3">
-      {#each content.home.features as feature (feature.title)}
-        {@const href =
-          feature.linkHref.endsWith('.html') ? `/${feature.linkHref}` : feature.linkHref}
-        <Card variant="interactive" padding="lg" class="flex flex-col">
-          <span class="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground" aria-hidden="true">
-            {#if feature.title.includes('Submit')}
-              <Mail class="size-4" />
-            {:else if feature.title.includes('Editorial')}
-              <Users class="size-4" />
-            {:else}
-              <Clock class="size-4" />
-            {/if}
-          </span>
-          <h3 class="mt-3 text-base font-semibold">{feature.title}</h3>
-          <p class="mt-1 flex-1 text-sm text-muted-foreground">{feature.description}</p>
-          <a class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-accent-foreground no-underline hover:underline" {href}>
-            {feature.linkText}
-            <ArrowUpRight class="size-3.5" aria-hidden="true" />
-          </a>
-        </Card>
-      {/each}
+      <div class="flex flex-wrap gap-3">
+        <Button variant="light" href={SUBMIT_HREF}>Submission instructions</Button>
+        <Button variant="light" href="/author-guideline.html">Author guidelines</Button>
+      </div>
     </div>
-  </section>
 
-  <!-- Journal facts (the journal's own published figures) -->
-  <section aria-labelledby="facts-heading">
-    <div class="mb-4">
-      <p class="eyebrow text-subtle-foreground">Journal facts</p>
-      <h2 id="facts-heading" class="mt-1 text-2xl tracking-tight">Figures published by the journal</h2>
-      <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
-        These are the journal's own published declarations. The archive figures above are counted directly from the
-        journal's article index.
-      </p>
-    </div>
-    <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {#each facts as fact (fact.label)}
-        <Card padding="lg" class="flex flex-col">
-          <dt class="eyebrow text-subtle-foreground">{fact.label}</dt>
-          <dd class="mt-2 text-2xl font-bold">{fact.value}</dd>
-          <a class="mt-3 text-xs font-semibold text-accent-foreground no-underline hover:underline" href={fact.href}>
-            Read more
-          </a>
-        </Card>
-      {/each}
-    </dl>
-  </section>
-
-  <!-- Explore -->
-  <section aria-labelledby="explore-heading">
-    <div class="mb-5 border-b border-border pb-3">
-      <p class="eyebrow text-subtle-foreground">Information</p>
-      <h2 id="explore-heading" class="mt-1 text-2xl tracking-tight">Explore the journal</h2>
-    </div>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {#each [
-        { title: 'Archive', body: 'Browse all volumes, issues and articles by year.', href: '/archive.html', icon: Library },
-        { title: 'Articles', body: 'Search the full article index by title, author, year or issue.', href: '/articles.html', icon: FileText },
-        { title: 'Current issue', body: 'The most recently published issue.', href: '/current-issue.html', icon: Sparkles },
-        { title: 'Editorial board', body: 'Editor-in-chief and international members.', href: '/editorial-board.html', icon: Users },
-        { title: 'Author guidelines', body: 'Submission requirements, policies and templates.', href: '/author-guideline.html', icon: GraduationCap },
-        { title: 'Indexing & impact', body: 'The journal\'s published indexing and impact figures.', href: '/impact-factor.html', icon: ShieldCheck }
-      ] as item (item.href)}
-        {@const Icon = item.icon}
-        <Card variant="interactive" padding="lg" class="flex flex-col">
-          <Icon class="size-4 text-accent-foreground" aria-hidden="true" />
-          <h3 class="mt-3 text-base font-semibold">{item.title}</h3>
-          <p class="mt-1 flex-1 text-sm text-muted-foreground">{item.body}</p>
-          <a class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-accent-foreground no-underline hover:underline" href={item.href}>
-            Open
-            <ArrowUpRight class="size-3.5" aria-hidden="true" />
-          </a>
-        </Card>
-      {/each}
-    </div>
-  </section>
-
-  <!-- Submit CTA -->
-  <section class="rounded-2xl border border-border bg-surface-muted p-8 text-center" aria-labelledby="submit-heading">
-    <BookOpen class="mx-auto size-6 text-accent-foreground" aria-hidden="true" />
-    <h2 id="submit-heading" class="mt-3 text-2xl tracking-tight">Submit your manuscript</h2>
-    <p class="mx-auto mt-2 max-w-[60ch] text-sm text-muted-foreground">
-      Send your manuscript to the editorial office by email. Please read the author guidelines before submitting.
+    <p class="mt-8 border-t border-band-border pt-6 text-[0.8125rem] text-band-muted">
+      Manuscripts are received by email at
+      <a class="inline-block py-0.5 text-band-foreground no-underline underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
     </p>
-    <div class="mt-5 flex flex-wrap justify-center gap-3">
-      <Button variant="gold" href={SUBMIT_HREF}>{SITE.email}</Button>
-      <Button variant="outline" href="/author-guideline.html">Author guidelines</Button>
-    </div>
-    <p class="mt-4"><Badge variant="outline">{SITE.tagline}</Badge></p>
-  </section>
-</div>
+  </div>
+</section>

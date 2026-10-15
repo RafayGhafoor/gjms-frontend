@@ -1,32 +1,28 @@
 <script lang="ts">
   import Seo from '$lib/components/site/seo.svelte';
+  import PageHeader from '$lib/components/site/page-header.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Card from '$lib/components/ui/card.svelte';
-  import Badge from '$lib/components/ui/badge.svelte';
   import ArticleCard from '$lib/components/archive/article-card.svelte';
   import { content } from '$lib/data/content';
   import type { PageProps } from './$types';
   import { issuePath } from '$lib/data/paths';
-  import { normalisePdfUrl, sortIssues } from '$lib/data/archive';
+  import { normalisePdfUrl } from '$lib/data/archive';
   import { breadcrumbNode, publicationIssueNodes, scholarlyArticleNode, webPageNode } from '$lib/seo';
-  import { formatCount, formatPages } from '$lib/utils';
-  import type { Issue } from '$lib/data/types';
-  import CalendarDays from '@lucide/svelte/icons/calendar-days';
-  import FileText from '@lucide/svelte/icons/file-text';
-  import Library from '@lucide/svelte/icons/library';
-  import LayoutGrid from '@lucide/svelte/icons/layout-grid';
+  import { formatCount, pageRangeValue } from '$lib/utils';
 
-  /* The current issue is announced in content.json; where it also exists in the
-     archive index we use that record (one source of truth per article). The
-     volume/issue/year numbers come from the journal's own published title. */
-
-  const title = $derived(content.currentIssue.title);
+  /* The current issue is announced in content.json and resolved against the
+     archive index in the server load. Volume, issue, year and page range are
+     all taken from the journal's published records — never derived from a
+     target or an estimate. */
   let { data }: PageProps = $props();
+
+  const title = $derived(data.title);
   const matched = $derived(data.matched);
 
   const fallbackArticles = $derived(
     content.currentIssue.articles.map((article) => ({
       key: `${article.num ?? ''}-${article.title ?? ''}`,
+      num: String(article.num ?? ''),
       title: String(article.title ?? ''),
       authors: String(article.authors ?? ''),
       pages: String(article.pages ?? ''),
@@ -47,10 +43,9 @@
     if (!starts.length || !ends.length) return '';
     const from = Math.min(...starts);
     const to = Math.max(...ends);
-    return from === to ? formatPages(String(from)) : `Pages ${from}–${to}`;
+    return from === to ? pageRangeValue(String(from)) : `${from}–${to}`;
   });
 
-  /* The four most recent earlier issues, newest first. */
   const previousIssues = $derived(data.previousIssues);
   const stats = $derived(data.stats);
 
@@ -74,138 +69,146 @@
   ]}
 />
 
-<section class="hero-surface relative overflow-hidden">
-  <div class="hero-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <div class="container-page relative py-10 lg:py-14">
-    <nav class="mb-6" aria-label="Breadcrumb">
-      <ol class="flex flex-wrap items-center gap-1.5 text-xs text-hero-muted">
-        <li><a class="no-underline hover:text-white" href="/">Home</a></li>
-        <li aria-hidden="true">/</li>
-        <li><span class="font-semibold text-hero-foreground" aria-current="page">Current issue</span></li>
-      </ol>
-    </nav>
-
-    <p class="flex flex-wrap items-center gap-2">
-      <Badge variant="gold">Current issue</Badge>
-      {#if matched?.volumeNumber}<Badge variant="accent">Volume {matched.volumeNumber}</Badge>{/if}
-      {#if matched?.issueNumber}<Badge>Issue {matched.issueNumber}</Badge>{/if}
-    </p>
-
-    <h1 class="mt-3 max-w-[46ch] display-1 text-hero-foreground">
-      {title}
-    </h1>
-    <p class="mt-4 max-w-[60ch] text-base text-hero-muted">
-      {articleCount} {articleCount === 1 ? 'article' : 'articles'} in this issue, published in full on the journal's
-      content delivery network.
-    </p>
-
-    <dl class="mt-6 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
-      <div class="rounded-xl border border-white/15 bg-white/6 p-3 backdrop-blur-sm">
-        <dt class="eyebrow flex items-center gap-1.5 text-hero-muted">
-          <FileText class="size-3.5" aria-hidden="true" />Articles
-        </dt>
-        <dd class="mt-1 text-2xl font-bold text-hero-foreground tabular-nums">{articleCount}</dd>
-      </div>
-      <div class="rounded-xl border border-white/15 bg-white/6 p-3 backdrop-blur-sm">
-        <dt class="eyebrow flex items-center gap-1.5 text-hero-muted">
-          <Library class="size-3.5" aria-hidden="true" />Volume
-        </dt>
-        <dd class="mt-1 text-2xl font-bold text-hero-foreground tabular-nums">{matched?.volumeNumber ?? '—'}</dd>
-      </div>
-      <div class="rounded-xl border border-white/15 bg-white/6 p-3 backdrop-blur-sm">
-        <dt class="eyebrow flex items-center gap-1.5 text-hero-muted">
-          <LayoutGrid class="size-3.5" aria-hidden="true" />Issue
-        </dt>
-        <dd class="mt-1 text-2xl font-bold text-hero-foreground tabular-nums">{matched?.issueNumber ?? '—'}</dd>
-      </div>
-      <div class="rounded-xl border border-white/15 bg-white/6 p-3 backdrop-blur-sm">
-        <dt class="eyebrow flex items-center gap-1.5 text-hero-muted">
-          <CalendarDays class="size-3.5" aria-hidden="true" />Pages
-        </dt>
-        <dd class="mt-1 text-lg font-bold text-hero-foreground">{pageRange || '—'}</dd>
-      </div>
-    </dl>
-
-    <div class="mt-6 flex flex-wrap gap-3">
-      {#if matched}
-        <Button variant="light" href={issuePath(matched.id)}>Issue landing page</Button>
-      {/if}
-      <Button variant="light" href="/archive.html">Archive</Button>
-      <Button variant="light" href="/articles.html">Search all articles</Button>
+<PageHeader
+  eyebrow="Current issue"
+  title={title}
+  description={`${articleCount} ${articleCount === 1 ? 'article' : 'articles'} in this issue, published in full on the journal's content delivery network.`}
+  items={[{ name: 'Home', href: '/' }, { name: 'Current issue' }]}
+>
+  <dl class="mt-9 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border-strong pt-6 sm:grid-cols-4">
+    <div>
+      <dt class="text-[0.8125rem] text-subtle-foreground">Articles</dt>
+      <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{articleCount}</dd>
     </div>
-  </div>
-</section>
+    {#if matched?.volumeNumber}
+      <div>
+        <dt class="text-[0.8125rem] text-subtle-foreground">Volume</dt>
+        <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{matched.volumeNumber}</dd>
+      </div>
+    {/if}
+    {#if matched?.issueNumber}
+      <div>
+        <dt class="text-[0.8125rem] text-subtle-foreground">Issue</dt>
+        <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{matched.issueNumber}</dd>
+      </div>
+    {/if}
+    {#if matched?.year}
+      <div>
+        <dt class="text-[0.8125rem] text-subtle-foreground">Published</dt>
+        <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{matched.year}</dd>
+      </div>
+    {/if}
+    {#if pageRange}
+      <div>
+        <dt class="text-[0.8125rem] text-subtle-foreground">Page range</dt>
+        <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{pageRange}</dd>
+      </div>
+    {/if}
+  </dl>
 
-<div class="container-page grid gap-10 py-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+  <div class="mt-8 flex flex-wrap gap-3">
+    {#if matched}
+      <Button href={issuePath(matched.id)}>Issue landing page</Button>
+    {/if}
+    <Button variant="outline" href="/archive.html">Archive</Button>
+    <Button variant="outline" href="/articles.html">Search all articles</Button>
+  </div>
+</PageHeader>
+
+<div class="container-page grid gap-12 py-14 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16 lg:py-16">
   <div>
-    <div class="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
-      <h2 class="text-xl tracking-tight">Articles in this issue</h2>
-      <p class="text-xs text-subtle-foreground">
-        {matched ? 'Titles, authors, page ranges and PDFs from the journal archive index.' : 'As published on the journal\'s current-issue page.'}
+    <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3 border-b border-border-strong pb-4">
+      <h2 class="display-2">Articles in this issue</h2>
+      <p class="text-[0.8125rem] text-subtle-foreground">
+        {matched
+          ? 'Titles, authors, page ranges and PDFs from the journal archive index.'
+          : "As published on the journal's current-issue page."}
       </p>
     </div>
 
     {#if matched}
-      <ol class="grid gap-3">
+      <ol>
         {#each matched.articles as article (article.num + article.title)}
           <ArticleCard {article} heading={3} showIssue={false} />
         {/each}
       </ol>
     {:else}
-      <ol class="grid gap-3">
+      <ol>
         {#each fallbackArticles as article (article.key)}
-          <li class="grid gap-3 rounded-lg border border-border bg-surface p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <li class="article-row grid gap-x-6 gap-y-3.5 sm:grid-cols-[2.25rem_minmax(0,1fr)] grid-cols-1 lg:grid-cols-[2.25rem_minmax(0,1fr)_auto]">
+            <span class="hidden font-serif text-sm leading-7 text-subtle-foreground tabular-nums sm:block" aria-hidden="true">
+              {article.num}
+            </span>
             <div class="min-w-0">
-              <p class="paper-title text-[1.0625rem]">{article.title}</p>
-              {#if article.authors}<p class="mt-1 text-sm text-muted-foreground">{article.authors}</p>{/if}
-              {#if article.pages}<p class="mt-1 text-xs text-subtle-foreground">{formatPages(article.pages)}</p>{/if}
+              <p class="article-title">{article.title}</p>
+              {#if article.authors}
+                <p class="mt-2 text-[0.9375rem] leading-snug text-muted-foreground">{article.authors}</p>
+              {/if}
+              {#if article.pages}
+                <p class="meta-row mt-3">Pages {pageRangeValue(article.pages)}</p>
+              {/if}
             </div>
-            {#if article.pdf}
-              <Button size="sm" href={article.pdf} target="_blank" rel="noopener noreferrer">PDF</Button>
-            {:else}
-              <span class="text-xs text-subtle-foreground italic">PDF not available</span>
-            {/if}
+            <div class="flex items-start sm:col-start-2 lg:col-start-3 lg:justify-end">
+              {#if article.pdf}
+                <Button variant="outline" size="sm" href={article.pdf} target="_blank" rel="noopener noreferrer">
+                  PDF
+                </Button>
+              {:else}
+                <span class="pt-2 text-xs text-subtle-foreground italic">PDF not available</span>
+              {/if}
+            </div>
           </li>
         {/each}
       </ol>
     {/if}
   </div>
 
-  <aside class="grid content-start gap-6 lg:sticky lg:top-[9rem] lg:self-start">
-    <Card padding="lg">
-      <h2 class="eyebrow text-subtle-foreground">Issue summary</h2>
-      <dl class="mt-3 grid gap-2 text-sm">
-        <div class="flex items-center justify-between gap-3">
+  <aside class="grid content-start gap-8 lg:sticky lg:top-[7.5rem] lg:self-start">
+    <section class="rounded-lg border border-border bg-card p-6" aria-labelledby="issue-summary-heading">
+      <h2 id="issue-summary-heading" class="eyebrow text-subtle-foreground">Issue summary</h2>
+      <dl class="mt-4 grid gap-2.5 text-[0.9375rem]">
+        <div class="flex items-baseline justify-between gap-4">
           <dt class="text-muted-foreground">Articles</dt>
           <dd class="font-semibold tabular-nums">{formatCount(articleCount)}</dd>
         </div>
         {#if pageRange}
-          <div class="flex items-center justify-between gap-3">
-            <dt class="text-muted-foreground">Pages</dt>
-            <dd class="font-semibold">{pageRange}</dd>
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="text-muted-foreground">Page range</dt>
+            <dd class="font-semibold tabular-nums">{pageRange}</dd>
           </div>
         {/if}
-        <div class="flex items-center justify-between gap-3">
-          <dt class="text-muted-foreground">Journal</dt>
-          <dd class="font-semibold">{stats.issues} issues published</dd>
+        {#if matched?.year}
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="text-muted-foreground">Published</dt>
+            <dd class="font-semibold tabular-nums">{matched.year}</dd>
+          </div>
+        {/if}
+        <div class="flex items-baseline justify-between gap-4">
+          <dt class="text-muted-foreground">Issues in archive</dt>
+          <dd class="font-semibold tabular-nums">{formatCount(stats.issues)}</dd>
         </div>
       </dl>
-      <div class="mt-4">
-        <Button variant="outline" size="sm" href="/author-guideline.html">Submission guidelines</Button>
+      <div class="mt-5 border-t border-border pt-5">
+        <a class="arrow-link text-[0.875rem]" href="/author-guideline.html">Submission guidelines</a>
       </div>
-    </Card>
+    </section>
 
-    <Card padding="lg">
-      <h2 class="eyebrow text-subtle-foreground">Previous issues</h2>
-      <ul class="mt-3 grid gap-2">
-        {#each previousIssues as item (item.id)}
-          <li>
-            <a class="text-sm text-muted-foreground no-underline hover:text-accent-foreground" href={issuePath(item.id)}>
-              {item.title}
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </Card>
+    {#if previousIssues.length}
+      <section aria-labelledby="previous-issues-heading">
+        <h2 id="previous-issues-heading" class="eyebrow text-subtle-foreground">Previous issues</h2>
+        <ul class="mt-4">
+          {#each previousIssues as item (item.id)}
+            <li class="border-t border-border last:border-b">
+              <a
+                class="block py-3 text-[0.9375rem] leading-snug text-muted-foreground no-underline transition-colors hover:text-accent-foreground"
+                href={issuePath(item.id)}
+              >
+                {item.title}
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
   </aside>
 </div>

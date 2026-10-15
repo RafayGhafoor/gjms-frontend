@@ -3,24 +3,30 @@
   import { tv, type VariantProps } from 'tailwind-variants';
   import type { Snippet } from 'svelte';
 
+  /* Buttons are restrained: 44px tall by default, a 7px radius, no glow and no
+     scale-on-press. The primary action is the muted teal; `navy` is the ink
+     navy reserved for the manuscript-submission calls to action; `brass`
+     remains available but is deliberately not used for actions. */
   export const buttonVariants = tv({
-    base: 'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold no-underline transition-[transform,background-color,border-color,box-shadow,color] duration-200 ease-nexus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 active:scale-[0.985] [&_svg]:size-4 [&_svg]:shrink-0',
+    base: 'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md font-semibold no-underline transition-[background-color,border-color,color,box-shadow] duration-200 ease-nexus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-55 [&_svg]:size-4 [&_svg]:shrink-0',
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover hover:shadow-md',
-        gold: 'bg-gold text-[#1a1204] shadow-sm hover:bg-gold-hover',
+        default: 'bg-primary text-primary-foreground hover:bg-primary-hover',
+        navy: 'bg-[var(--cta-surface)] text-[var(--cta-foreground)] hover:bg-[var(--cta-surface-hover)]',
         outline: 'border border-border-strong bg-transparent text-foreground hover:border-primary hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-surface-strong',
+        secondary: 'border border-transparent bg-secondary text-secondary-foreground hover:bg-surface-strong',
         ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground',
-        light: 'border border-white/25 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20',
-        link: 'p-0 text-primary underline-offset-4 hover:underline'
+        /* For use on the navy band only. */
+        light: 'border border-white/25 bg-white/8 text-white hover:bg-white/16',
+        brass: 'bg-gold text-[#241a06] hover:bg-gold-hover',
+        link: 'p-0 text-accent-foreground underline-offset-4 hover:underline'
       },
       size: {
-        sm: 'h-8 px-3 text-xs',
-        default: 'h-9 px-4 text-sm',
-        lg: 'h-11 px-6 text-base',
-        icon: 'size-9',
-        iconSm: 'size-8'
+        sm: 'h-9 px-3.5 text-sm',
+        default: 'h-11 px-5 text-[0.9375rem]',
+        lg: 'h-12 px-6 text-base',
+        icon: 'size-11',
+        iconSm: 'size-9'
       }
     },
     defaultVariants: { variant: 'default', size: 'default' }

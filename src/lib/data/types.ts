@@ -121,8 +121,17 @@ export type JournalContent = {
   };
   authorGuidelines: {
     intro: string;
-    sections: { title: string; text: string }[];
-    highlights: { title: string; text: string }[];
+    sections: {
+      title: string;
+      text: string;
+      /** Optional second lead-in before the labelled list ("Reference formats:"). */
+      text2?: string;
+      /** Optional plain bullet list published with the section (abstract elements). */
+      list?: string[];
+      /** Optional list of labelled items (paper types, reference formats). */
+      labeledList?: { label: string; text: string }[];
+    }[];
+    highlights: { title: string; text: string; style?: string }[];
     disclaimer: string;
   };
   visionMission: {

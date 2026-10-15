@@ -1,6 +1,6 @@
 <script lang="ts">
   import { userPrefersMode, setMode } from 'mode-watcher';
-    import Sun from '@lucide/svelte/icons/sun';
+  import Sun from '@lucide/svelte/icons/sun';
   import Moon from '@lucide/svelte/icons/moon';
   import Monitor from '@lucide/svelte/icons/monitor';
   import { cn } from '$lib/utils';
@@ -16,7 +16,7 @@
 
 <div
   class={cn(
-    'inline-flex items-center gap-0.5 rounded-full border border-border bg-muted p-0.5',
+    'inline-flex items-center gap-0.5 rounded-md border border-border bg-surface p-0.5',
     className
   )}
   role="group"
@@ -27,8 +27,8 @@
     <button
       type="button"
       class={cn(
-        'grid size-7 place-items-center rounded-full text-subtle-foreground transition-[background-color,color,box-shadow] duration-200 outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50',
-        active && 'bg-surface text-accent-foreground shadow-sm'
+        'grid size-7 place-items-center rounded-[3px] text-subtle-foreground transition-colors duration-200 outline-none hover:text-heading focus-visible:ring-2 focus-visible:ring-ring/45',
+        active && 'bg-muted text-accent-foreground'
       )}
       aria-pressed={active}
       aria-label={option.label}

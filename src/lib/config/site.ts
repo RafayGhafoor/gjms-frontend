@@ -29,6 +29,10 @@ export const SITE = {
  *  plain-text surfaces that repeat the journal's identity. */
 export const ISSN_LABEL = `ISSN ${SITE.issn.print} (print), ISSN ${SITE.issn.online} (online)`;
 
+/** The journal's real submission route: a mailto to the editorial office. Declared
+ *  before FOOTER_GROUPS so the footer's "Submission instructions" link can use it. */
+export const SUBMIT_HREF = `mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`;
+
 export type NavItem = {
   label: string;
   href: string;
@@ -62,35 +66,37 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'About', href: '/vision-mission.html', description: 'Vision, mission and journal scope' }
 ];
 
+/* The footer's three link columns. The journal's own identity (name, ISSN,
+ * email) is the fourth column and is rendered by the footer component itself.
+ * Every href points at a page that exists — no placeholder destinations. */
 export const FOOTER_GROUPS: { title: string; links: { label: string; href: string }[] }[] = [
   {
-    title: 'Explore',
+    title: 'Discover',
     links: [
-      { label: 'Archive', href: '/archive.html' },
       { label: 'Current issue', href: '/current-issue.html' },
-      { label: 'All articles', href: '/articles.html' },
-      { label: 'Indexing & impact', href: '/impact-factor.html' }
+      { label: 'Articles', href: '/articles.html' },
+      { label: 'Archive', href: '/archive.html' }
     ]
   },
   {
     title: 'For authors',
     links: [
       { label: 'Author guidelines', href: '/author-guideline.html' },
-      { label: 'Publication ethics & policies', href: '/author-guideline.html' },
-      { label: 'Submit a manuscript', href: `mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH` }
+      { label: 'Submission instructions', href: SUBMIT_HREF },
+      { label: 'Publication ethics', href: '/author-guideline.html#ethics-and-integrity' },
+      { label: 'Publication fee', href: '/author-guideline.html' }
     ]
   },
   {
-    title: 'Journal',
+    title: 'Information',
     links: [
+      { label: 'About the journal', href: '/vision-mission.html' },
       { label: 'Editorial board', href: '/editorial-board.html' },
-      { label: 'Vision & mission', href: '/vision-mission.html' },
+      { label: 'Indexing and impact', href: '/impact-factor.html' },
       { label: 'Contact', href: '/contact.html' }
     ]
   }
 ];
-
-export const SUBMIT_HREF = `mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`;
 
 export function absoluteUrl(path: string): string {
   if (!path || path === '/') return `${SITE.origin}/`;

@@ -24,6 +24,13 @@
   includeSiteGraph={false}
 />
 
+<!-- The comparison families are not in the shipped font sheet (they would add
+     ~8 KB of render-blocking CSS to every page on the site), so this internal
+     harness loads its own. -->
+<svelte:head>
+  <link rel="stylesheet" href="/fonts/font-faces-harness.css" />
+</svelte:head>
+
 <!-- switcher -->
 <div class="sticky top-0 z-10 border-b border-border glass">
   <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-2 px-6 py-3">

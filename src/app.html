@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#faf9f6" />
 
     <link rel="icon" href="%sveltekit.assets%/favicon.ico" sizes="any" />
     <link rel="icon" href="%sveltekit.assets%/favicon-32.png" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" />
@@ -11,22 +11,44 @@
     <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
     <link rel="manifest" href="%sveltekit.assets%/site.webmanifest" />
 
-    <!-- Self-hosted webfonts. Generating them is scripts/fetch-fonts.mjs; the
-         sheet only declares @font-face, so a family is downloaded only when a
-         page actually uses it. No third-party request, no CORS dependency. -->
+    <!-- The two faces the site ships, preloaded so the hero heading and body
+         copy paint in their final typeface — no swap-induced reflow on the
+         largest contentful paint. `crossorigin` is required for font preloads
+         even same-origin, and must match the @font-face request exactly. -->
+    <link
+      rel="preload"
+      href="%sveltekit.assets%/fonts/source-serif-4/latin-300-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="%sveltekit.assets%/fonts/source-sans-3/latin-300-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Self-hosted webfonts. Generating them is scripts/fetch-fonts.mjs; this
+         sheet declares only the two shipped families (~1.8 KB), so it stays a
+         cheap render-blocking request. No third-party host, no CORS dependency. -->
     <link rel="stylesheet" href="%sveltekit.assets%/fonts/font-faces.css" />
 
     <script>
       // Applies the stored colour scheme before first paint (mode-watcher key).
+      // The journal's default identity is the light editorial theme, so an
+      // unset preference resolves to light rather than to the OS setting;
+      // "Match system theme" remains available in the header toggle.
       (function () {
         try {
-          var mode = localStorage.getItem('mode-watcher-mode') || 'system';
+          var mode = localStorage.getItem('mode-watcher-mode') || 'light';
           var dark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           var el = document.documentElement;
           el.classList.toggle('dark', dark);
           el.style.colorScheme = dark ? 'dark' : 'light';
           var meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.setAttribute('content', dark ? '#000000' : '#ffffff');
+          if (meta) meta.setAttribute('content', dark ? '#0e1519' : '#faf9f6');
         } catch (e) {
           /* storage unavailable — default to the light theme */
         }

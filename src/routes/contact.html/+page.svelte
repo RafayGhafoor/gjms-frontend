@@ -1,23 +1,26 @@
 <script lang="ts">
   import Seo from '$lib/components/site/seo.svelte';
-  import Breadcrumbs from '$lib/components/site/breadcrumbs.svelte';
-  import Card from '$lib/components/ui/card.svelte';
+  import PageHeader from '$lib/components/site/page-header.svelte';
   import Button from '$lib/components/ui/button.svelte';
   import { content } from '$lib/data/content';
   import type { PageProps } from './$types';
-
-  let { data }: PageProps = $props();
-  const stats = $derived(data.stats);
   import { SITE } from '$lib/config/site';
   import { breadcrumbNode, webPageNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
   import Mail from '@lucide/svelte/icons/mail';
   import Globe from '@lucide/svelte/icons/globe';
-  import ClipboardList from '@lucide/svelte/icons/clipboard-list';
-  import Users from '@lucide/svelte/icons/users';
-  import Library from '@lucide/svelte/icons/library';
 
-  const description = `Contact the editorial office of the Global Journal of Management, Social Sciences and Humanities (GJMSSH) about manuscript submissions, publication policies or collaboration.`;
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
+
+  const description =
+    'Contact the editorial office of the Global Journal of Management, Social Sciences and Humanities (GJMSSH) about manuscript submissions, publication policies or collaboration.';
+
+  const elsewhere = $derived([
+    { label: 'Author guidelines', href: '/author-guideline.html', body: 'Manuscript requirements, fee and review timeline.' },
+    { label: 'Editorial board', href: '/editorial-board.html', body: 'Who reviews and guides the journal.' },
+    { label: 'Journal archive', href: '/archive.html', body: `Every issue published since ${stats.firstYear}.` }
+  ]);
 </script>
 
 <Seo
@@ -33,100 +36,112 @@
   ]}
 />
 
-<section class="border-b border-border bg-surface-muted">
-  <div class="container-page py-10">
-    <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
-    <h1 class="display-1">Contact</h1>
-    <p class="mt-3 max-w-[72ch] text-muted-foreground">{content.contact.intro}</p>
-  </div>
-</section>
+<PageHeader
+  eyebrow="Editorial office"
+  title="Contact"
+  description={content.contact.intro}
+  items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]}
+/>
 
-<div class="container-page grid gap-6 py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
-  <div class="grid content-start gap-6">
-    <Card padding="lg" variant="elevated">
-      <h2 class="text-xl tracking-tight">Editorial office</h2>
-      <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
+<div class="container-page grid gap-12 py-14 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16 lg:py-16">
+  <div class="grid content-start gap-14">
+    <section aria-labelledby="office-heading">
+      <h2 id="office-heading" class="display-2 border-b border-border-strong pb-3">How to reach us</h2>
+      <p class="measure mt-6 text-muted-foreground">
         Manuscript submissions and editorial correspondence are handled by email. Please include the manuscript title and
         the names of all authors in your message.
       </p>
-      <div class="mt-5 grid gap-4 sm:grid-cols-2">
-        <a
-          class="flex items-center gap-3 rounded-xl border border-border bg-surface p-4 no-underline transition-colors hover:border-accent-border"
-          href={`mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`}
-        >
-          <span class="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground" aria-hidden="true">
-            <Mail class="size-4" />
-          </span>
-          <span class="min-w-0">
-            <span class="eyebrow block text-subtle-foreground">Email</span>
-            <span class="block truncate text-sm font-semibold text-foreground">{SITE.email}</span>
-          </span>
-        </a>
-        <a
-          class="flex items-center gap-3 rounded-xl border border-border bg-surface p-4 no-underline transition-colors hover:border-accent-border"
-          href={`https://${SITE.website}`}
-          rel="noopener"
-        >
-          <span class="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground" aria-hidden="true">
-            <Globe class="size-4" />
-          </span>
-          <span class="min-w-0">
-            <span class="eyebrow block text-subtle-foreground">Website</span>
-            <span class="block truncate text-sm font-semibold text-foreground">{SITE.website}</span>
-          </span>
-        </a>
-      </div>
-    </Card>
 
-    <Card padding="lg">
-      <h2 class="text-xl tracking-tight">Before you write</h2>
-      <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
+      <dl class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+        <div class="border-t border-border-strong pt-4">
+          <dt class="eyebrow flex items-center gap-2 text-accent-foreground">
+            <Mail class="size-3.5" aria-hidden="true" />Email
+          </dt>
+          <dd class="mt-2">
+            <a
+              class="text-[1.0625rem] font-semibold break-all text-heading no-underline hover:text-accent-foreground hover:underline"
+              href={`mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`}
+            >
+              {SITE.email}
+            </a>
+          </dd>
+        </div>
+        <div class="border-t border-border-strong pt-4">
+          <dt class="eyebrow flex items-center gap-2 text-accent-foreground">
+            <Globe class="size-3.5" aria-hidden="true" />Website
+          </dt>
+          <dd class="mt-2">
+            <a
+              class="text-[1.0625rem] font-semibold text-heading no-underline hover:text-accent-foreground hover:underline"
+              href={`https://${SITE.website}`}
+              rel="noopener"
+            >
+              {SITE.website}
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <div class="mt-8">
+        <Button variant="navy" href={`mailto:${SITE.email}?subject=Manuscript%20submission%20to%20GJMSSH`}>
+          <Mail aria-hidden="true" />
+          Submit a manuscript
+        </Button>
+      </div>
+    </section>
+
+    <section aria-labelledby="before-heading">
+      <h2 id="before-heading" class="display-2 border-b border-border-strong pb-3">Before you write</h2>
+      <p class="measure mt-6 text-muted-foreground">
         Most questions are answered on the pages below — checking them first may save you time.
       </p>
-      <div class="mt-5 grid gap-4 sm:grid-cols-3">
-        {#each [
-          { title: 'Author guidelines', body: 'Manuscript requirements, fee and review timeline.', href: '/author-guideline.html', icon: ClipboardList },
-          { title: 'Editorial board', body: 'Who reviews and guides the journal.', href: '/editorial-board.html', icon: Users },
-          { title: 'Archive', body: 'Every issue and article published since 2015.', href: '/archive.html', icon: Library }
-        ] as item (item.href)}
-          {@const Icon = item.icon}
-          <a class="group rounded-xl border border-border bg-surface p-4 no-underline transition-colors hover:border-accent-border" href={item.href}>
-            <Icon class="size-4 text-accent-foreground" aria-hidden="true" />
-            <span class="mt-2 block text-sm font-semibold text-foreground group-hover:text-accent-foreground">{item.title}</span>
-            <span class="mt-1 block text-xs text-muted-foreground">{item.body}</span>
-          </a>
+      <ul class="mt-6">
+        {#each elsewhere as item (item.href)}
+          <li class="border-t border-border last:border-b">
+            <a class="group block py-4 no-underline" href={item.href}>
+              <span class="font-serif text-[1.125rem] text-heading group-hover:text-accent-foreground">{item.label}</span>
+              <span class="mt-1 block text-[0.875rem] text-muted-foreground">{item.body}</span>
+            </a>
+          </li>
         {/each}
-      </div>
-    </Card>
+      </ul>
+    </section>
   </div>
 
-  <aside class="grid content-start gap-6">
-    <Card padding="lg">
-      <h2 class="eyebrow text-subtle-foreground">Journal</h2>
-      <dl class="mt-3 grid gap-2 text-sm">
-        <div><dt class="text-subtle-foreground">Name</dt><dd class="font-semibold">{SITE.fullName}</dd></div>
-        <div>
-          <dt class="text-subtle-foreground">ISSN</dt>
-          <dd class="font-semibold tabular-nums">{SITE.issn.print} <span class="font-normal text-muted-foreground">(print)</span><br />{SITE.issn.online} <span class="font-normal text-muted-foreground">(online)</span></dd>
-        </div>
-        <div><dt class="text-subtle-foreground">Published since</dt><dd class="font-semibold">{SITE.startYear}</dd></div>
-        <div><dt class="text-subtle-foreground">Issues</dt><dd class="font-semibold tabular-nums">{formatCount(stats.issues)}</dd></div>
-        <div><dt class="text-subtle-foreground">Articles</dt><dd class="font-semibold tabular-nums">{formatCount(stats.articles)}</dd></div>
+  <aside class="grid content-start gap-10">
+    <section aria-labelledby="journal-facts-heading">
+      <h2 id="journal-facts-heading" class="eyebrow text-subtle-foreground">The journal</h2>
+      <dl class="mt-4 grid gap-3">
+        {#each [
+          { term: 'Name', detail: SITE.fullName },
+          { term: 'Print ISSN', detail: SITE.issn.print },
+          { term: 'Online ISSN', detail: SITE.issn.online },
+          { term: 'Published since', detail: String(SITE.startYear) },
+          { term: 'Issues', detail: formatCount(stats.issues) },
+          { term: 'Articles', detail: formatCount(stats.articles) }
+        ] as row (row.term)}
+          <div class="border-t border-border pt-3">
+            <dt class="text-[0.75rem] tracking-[0.06em] text-subtle-foreground uppercase">{row.term}</dt>
+            <dd class="mt-1 text-[0.875rem] leading-snug font-medium">{row.detail}</dd>
+          </div>
+        {/each}
       </dl>
-      <div class="mt-4">
+      <div class="mt-5">
         <Button variant="outline" size="sm" href="/current-issue.html">Current issue</Button>
       </div>
-    </Card>
+    </section>
 
-    <Card padding="lg" class="border-gold-border bg-gold-soft">
-      <h2 class="eyebrow text-gold-foreground">Submitting a manuscript</h2>
-      <p class="mt-2 text-sm text-foreground">
+    <section class="rounded-lg border border-border bg-surface-muted p-6" aria-labelledby="submitting-heading">
+      <h2 id="submitting-heading" class="eyebrow text-subtle-foreground">Submitting a manuscript</h2>
+      <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
         Read the author guidelines, then send your manuscript to
-        <a class="font-semibold text-gold-foreground" href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        <a class="inline-block py-0.5 font-semibold text-accent-foreground no-underline hover:underline" href={`mailto:${SITE.email}`}>
+          {SITE.email}
+        </a>.
       </p>
-      <div class="mt-4">
-        <Button variant="gold" size="sm" href="/author-guideline.html">Open the guidelines</Button>
+      <div class="mt-5">
+        <Button variant="outline" size="sm" href="/author-guideline.html">Open the guidelines</Button>
       </div>
-    </Card>
+    </section>
   </aside>
 </div>

@@ -1,24 +1,22 @@
 <script lang="ts">
   import Seo from '$lib/components/site/seo.svelte';
-  import Breadcrumbs from '$lib/components/site/breadcrumbs.svelte';
-  import Card from '$lib/components/ui/card.svelte';
+  import PageHeader from '$lib/components/site/page-header.svelte';
   import Input from '$lib/components/ui/input.svelte';
   import Button from '$lib/components/ui/button.svelte';
-  import Badge from '$lib/components/ui/badge.svelte';
   import { content } from '$lib/data/content';
   import type { PageProps } from './$types';
-
-  let { data }: PageProps = $props();
-  const stats = $derived(data.stats);
   import { breadcrumbNode, collectionPageNode, personNode } from '$lib/seo';
   import { formatCount } from '$lib/utils';
   import Mail from '@lucide/svelte/icons/mail';
   import SearchX from '@lucide/svelte/icons/search-x';
-  import Users from '@lucide/svelte/icons/users';
 
   /* The roster is reproduced exactly as published in content.json:
    * name + affiliation only. No photos, titles, countries or biographies are
-   * invented — the avatar is the member's own initials. */
+   * invented — the only typographic device is the editor-in-chief's monogram,
+   * built from the published name itself. */
+
+  let { data }: PageProps = $props();
+  const stats = $derived(data.stats);
 
   function initials(name: string): string {
     const cleaned = name
@@ -30,19 +28,6 @@
     const first = parts[0][0] ?? '';
     const last = parts.length > 1 ? (parts[parts.length - 1][0] ?? '') : '';
     return `${first}${last}`.toUpperCase();
-  }
-
-  const palette = [
-    'bg-accent text-accent-foreground',
-    'bg-gold-soft text-gold-foreground',
-    'bg-cyan-soft text-cyan-foreground',
-    'bg-surface-strong text-foreground'
-  ];
-
-  function tone(name: string): string {
-    let hash = 0;
-    for (const character of name) hash = (hash * 31 + character.charCodeAt(0)) % 9973;
-    return palette[hash % palette.length];
   }
 
   const members = $derived(content.editorialBoard.members);
@@ -57,7 +42,9 @@
     );
   });
 
-  const description = $derived(`The editor-in-chief and ${members.length} international editorial board members of the Global Journal of Management, Social Sciences and Humanities (GJMSSH), with their published affiliations.`);
+  const description = $derived(
+    `The editor-in-chief and ${members.length} international editorial board members of the Global Journal of Management, Social Sciences and Humanities (GJMSSH), with their published affiliations.`
+  );
 </script>
 
 <Seo
@@ -75,64 +62,68 @@
   ]}
 />
 
-<section class="border-b border-border bg-surface-muted">
-  <div class="container-page py-10">
-    <Breadcrumbs class="mb-5" items={[{ name: 'Home', href: '/' }, { name: 'Editorial board' }]} />
-    <h1 class="display-1">Editorial board</h1>
-    <p class="mt-3 max-w-[70ch] text-muted-foreground">
-      GJMSSH is guided by an editor-in-chief and an international board of academics and professionals. The roster below
-      is reproduced from the journal's published editorial board page — names and affiliations only.
-    </p>
-    <dl class="mt-6 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
-      <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
-        <dt class="eyebrow text-subtle-foreground">Board members</dt>
-        <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(members.length)}</dd>
-      </div>
-      <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
-        <dt class="eyebrow text-subtle-foreground">Affiliated institutions</dt>
-        <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(affiliations)}</dd>
-      </div>
-      <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
-        <dt class="eyebrow text-subtle-foreground">Issues published</dt>
-        <dd class="mt-1 text-2xl font-bold tabular-nums">{formatCount(stats.issues)}</dd>
-      </div>
-    </dl>
-  </div>
-</section>
+<PageHeader
+  eyebrow="Masthead"
+  title="Editorial board"
+  description="GJMSSH is guided by an editor-in-chief and an international board of academics and professionals. The roster below is reproduced from the journal's published editorial board page — names and affiliations only."
+  items={[{ name: 'Home', href: '/' }, { name: 'Editorial board' }]}
+>
+  <dl class="mt-9 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border-strong pt-6 sm:grid-cols-3">
+    <div>
+      <dt class="text-[0.8125rem] text-subtle-foreground">Board members</dt>
+      <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{formatCount(members.length)}</dd>
+    </div>
+    <div>
+      <dt class="text-[0.8125rem] text-subtle-foreground">Affiliated institutions</dt>
+      <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{formatCount(affiliations)}</dd>
+    </div>
+    <div>
+      <dt class="text-[0.8125rem] text-subtle-foreground">Issues published</dt>
+      <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{formatCount(stats.issues)}</dd>
+    </div>
+  </dl>
+</PageHeader>
 
-<div class="container-page grid gap-10 py-10">
+<div class="container-page grid gap-16 py-14 lg:py-16">
+  <!-- Editor-in-chief, treated as a masthead entry rather than a profile card. -->
   <section aria-labelledby="eic-heading">
-    <h2 id="eic-heading" class="text-xl tracking-tight">Editor-in-chief</h2>
-    <Card padding="lg" variant="elevated" class="mt-4 flex flex-wrap items-center gap-5">
+    <h2 id="eic-heading" class="eyebrow text-accent-foreground">Editor-in-chief</h2>
+    <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5 border-y border-border py-8">
       <span
-        class="grid size-16 shrink-0 place-items-center rounded-xl bg-[linear-gradient(140deg,var(--primary),#1e40af_55%,var(--cyan))] text-xl font-bold text-white"
+        class="grid size-16 shrink-0 place-items-center rounded-md bg-accent font-serif text-[1.375rem] font-semibold text-accent-foreground"
         aria-hidden="true"
       >
         {initials(content.editorialBoard.editorInChief)}
       </span>
       <div class="min-w-0">
-        <p class="text-lg font-bold">{content.editorialBoard.editorInChief}</p>
-        <p class="mt-1 flex flex-wrap items-center gap-2">
-          <Badge variant="accent">Editor-in-chief</Badge>
-          <Badge variant="outline">{stats.firstYear}–{stats.lastYear}</Badge>
+        <p class="font-serif text-[1.5rem] leading-tight font-semibold text-heading">
+          {content.editorialBoard.editorInChief}
+        </p>
+        <p class="mt-2 text-[0.875rem] text-subtle-foreground">
+          Editor-in-chief · {stats.firstYear}–{stats.lastYear}
         </p>
       </div>
-      <div class="ml-auto">
-        <Button variant="outline" href={`mailto:${content.site.email}?subject=GJMSSH%20editorial%20office`}>
+      <div class="sm:ml-auto">
+        <Button
+          variant="outline"
+          size="sm"
+          href={`mailto:${content.site.email}?subject=GJMSSH%20editorial%20office`}
+        >
           <Mail aria-hidden="true" />
           Editorial office
         </Button>
       </div>
-    </Card>
+    </div>
   </section>
 
+  <!-- Board directory -->
   <section aria-labelledby="members-heading">
-    <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-b border-border-strong pb-4">
       <div>
-        <h2 id="members-heading" class="text-xl tracking-tight">Editorial board members</h2>
-        <p aria-live="polite" aria-atomic="true" class="mt-1 text-sm text-muted-foreground">
-          Showing <span class="font-semibold text-foreground">{formatCount(filtered.length)}</span> of
-          {formatCount(members.length)} members
+        <h2 id="members-heading" class="display-2">Editorial board members</h2>
+        <p aria-live="polite" aria-atomic="true" class="mt-2 text-[0.9375rem] text-muted-foreground">
+          Showing <span class="font-semibold text-heading tabular-nums">{formatCount(filtered.length)}</span> of
+          <span class="tabular-nums">{formatCount(members.length)}</span> members
         </p>
       </div>
       <div class="w-full sm:w-72">
@@ -141,45 +132,38 @@
     </div>
 
     {#if filtered.length === 0}
-      <Card padding="lg" class="mt-5 grid justify-items-center gap-3 text-center">
-        <SearchX class="size-8 text-subtle-foreground" aria-hidden="true" />
-        <h3 class="text-base">No member matches “{q}”</h3>
-        <p class="text-sm text-muted-foreground">Try a shorter search term, or clear the filter.</p>
-        <Button variant="outline" onclick={() => (q = '')}>Clear filter</Button>
-      </Card>
+      <div class="mt-8 rounded-lg border border-border bg-surface-muted px-6 py-14 text-center">
+        <SearchX class="mx-auto size-7 text-subtle-foreground" aria-hidden="true" />
+        <h3 class="mt-4 font-serif text-[1.1875rem]">No member matches “{q}”</h3>
+        <p class="measure mx-auto mt-3 text-[0.9375rem] text-muted-foreground">
+          Try a shorter search term, or clear the filter to list every member of the board.
+        </p>
+        <div class="mt-6">
+          <Button variant="outline" onclick={() => (q = '')}>Clear filter</Button>
+        </div>
+      </div>
     {:else}
-      <ul class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <ul class="mt-2 grid gap-x-12 md:grid-cols-2">
         {#each filtered as member (member.name)}
-          <li>
-            <Card variant="interactive" padding="lg" class="flex h-full gap-4">
-              <span
-                class="grid size-11 shrink-0 place-items-center rounded-lg text-sm font-bold {tone(member.name)}"
-                aria-hidden="true"
-              >
-                {initials(member.name)}
-              </span>
-              <div class="min-w-0">
-                <h3 class="text-base font-semibold">{member.name}</h3>
-                <p class="mt-1 text-sm text-muted-foreground">{member.affiliation}</p>
-              </div>
-            </Card>
+          <li class="border-b border-border py-5">
+            <h3 class="font-serif text-[1.0625rem] leading-snug">{member.name}</h3>
+            <p class="measure mt-1.5 text-[0.875rem] leading-relaxed text-muted-foreground">{member.affiliation}</p>
           </li>
         {/each}
       </ul>
     {/if}
   </section>
 
-  <section class="rounded-2xl border border-border bg-surface-muted p-8" aria-labelledby="board-cta">
-    <Users class="size-6 text-accent-foreground" aria-hidden="true" />
-    <h2 id="board-cta" class="mt-3 text-xl tracking-tight">Publishing with GJMSSH</h2>
-    <p class="mt-2 max-w-[70ch] text-sm text-muted-foreground">
+  <section aria-labelledby="board-cta">
+    <h2 id="board-cta" class="display-2">Publishing with GJMSSH</h2>
+    <p class="measure mt-4 text-muted-foreground">
       Submissions are assessed through the journal's blind peer review process. Read the author guidelines for the
       manuscript requirements, or contact the editorial office with any question about the process.
     </p>
-    <div class="mt-5 flex flex-wrap gap-3">
-      <Button variant="gold" href="/author-guideline.html">Author guidelines</Button>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <Button variant="navy" href="/author-guideline.html">Author guidelines</Button>
       <Button variant="outline" href="/contact.html">Contact the editorial office</Button>
-      <Button variant="outline" href="/vision-mission.html">Vision &amp; mission</Button>
+      <Button variant="ghost" href="/vision-mission.html">Vision and mission</Button>
     </div>
   </section>
 </div>

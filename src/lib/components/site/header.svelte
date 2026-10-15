@@ -5,7 +5,7 @@
   import Menu from '@lucide/svelte/icons/menu';
   import X from '@lucide/svelte/icons/x';
   import Search from '@lucide/svelte/icons/search';
-  import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
+  import Mail from '@lucide/svelte/icons/mail';
   import ThemeToggle from './theme-toggle.svelte';
   import Button from '$lib/components/ui/button.svelte';
 
@@ -14,48 +14,61 @@
   const currentPath = $derived(page.url.pathname || '/');
   const isCurrent = (href: string) => currentPath === href || (href !== '/' && currentPath.startsWith(href));
 
-  /* Contact is a top-strip and footer link so the primary bar fits a laptop. */
-  const mobileNav = [...NAV_ITEMS, { label: 'Contact', href: '/contact.html', description: 'Reach the editorial office' }];
+  /* The mobile panel carries everything the desktop bar carries, plus Contact,
+     which the primary bar has no room for. */
+  const mobileNav = [
+    ...NAV_ITEMS,
+    { label: 'Contact', href: '/contact.html', description: 'Reach the editorial office' }
+  ];
+
+  function close() {
+    open = false;
+  }
+
+  const onKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape' && open) close();
+  };
 </script>
 
-<header class="sticky top-0 z-50 border-b border-glass-border glass no-print">
-  <div class="hidden border-b border-border/70 lg:block">
-    <div class="container-wide flex h-9 items-center justify-between text-[0.6875rem] text-subtle-foreground">
-      <p class="eyebrow">{SITE.tagline}</p>
-      <div class="flex items-center gap-3">
-        <a class="transition-colors hover:text-accent-foreground" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-        <span aria-hidden="true" class="text-border-strong">|</span>
-        <a class="transition-colors hover:text-accent-foreground" href="/author-guideline.html">Submission guidelines</a>
-        <span aria-hidden="true" class="text-border-strong">|</span>
-        <a class="transition-colors hover:text-accent-foreground" href="/contact.html">Contact</a>
-      </div>
-    </div>
-  </div>
+<svelte:window onkeydown={onKeydown} />
 
-  <div class="container-wide flex min-h-16 items-center gap-3 py-2">
-    <a class="flex shrink-0 items-center no-underline" href="/">
-      <!-- The full lockup from small screens up, the icon alone on the narrowest
-           viewports. The artwork itself is decorative here: the accessible name
-           comes from the hidden text below, so screen readers and crawlers get
-           the journal's name in words. -->
+<header class="sticky top-0 z-50 border-b border-border bg-background no-print">
+  <div class="container-wide flex min-h-[5rem] items-center gap-3 py-2.5">
+    <!-- Masthead: the journal's own mark with the acronym, and the full title
+         beneath it once there is room. The visible text is decorative for
+         assistive tech — the accessible name comes from the sr-only line, so
+         the link is still named when only the mark is painted. -->
+    <a class="flex min-w-0 shrink-0 items-center gap-3 no-underline" href="/" aria-label="{SITE.name} — home">
       <span class="sr-only">{SITE.name} — {SITE.fullName}</span>
-      <span class="brand-lockup hidden sm:block" aria-hidden="true"></span>
-      <span class="brand-mark sm:hidden" aria-hidden="true"></span>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="hidden min-w-0 flex-col justify-center sm:flex" aria-hidden="true">
+        <span class="font-serif text-[1.3125rem] leading-none font-semibold tracking-tight text-heading">
+          {SITE.name}
+        </span>
+        <span class="mt-1 hidden text-[0.6875rem] leading-[1.25] text-subtle-foreground 2xl:block">
+          Global Journal of Management, Social Sciences and Humanities
+        </span>
+      </span>
     </a>
 
-    <nav class="mx-auto hidden min-w-0 xl:block" aria-label="Primary">
-      <ul class="flex items-center gap-0.5 no-scrollbar">
+    <nav class="mx-auto hidden min-w-0 lg:block" aria-label="Primary">
+      <ul class="flex items-center gap-0.5">
         {#each NAV_ITEMS as item (item.href)}
           <li class="shrink-0">
             <a
               href={item.href}
               aria-current={isCurrent(item.href) ? 'page' : undefined}
               class={cn(
-                'block rounded-md px-2.5 py-2 text-sm font-medium whitespace-nowrap text-muted-foreground no-underline transition-colors duration-200 hover:bg-muted hover:text-foreground',
-                isCurrent(item.href) && 'bg-accent font-semibold text-accent-foreground'
+                'relative block rounded-[3px] px-2 py-2 text-[0.875rem] font-medium whitespace-nowrap no-underline transition-colors duration-200 xl:px-2.5',
+                isCurrent(item.href)
+                  ? 'text-heading'
+                  : 'text-muted-foreground hover:bg-muted hover:text-heading'
               )}
             >
               {item.label}
+              {#if isCurrent(item.href)}
+                <span class="absolute inset-x-2 -bottom-0.5 h-[2px] rounded-full bg-primary xl:inset-x-2.5" aria-hidden="true"></span>
+              {/if}
             </a>
           </li>
         {/each}
@@ -64,60 +77,84 @@
 
     <div class="ml-auto flex shrink-0 items-center gap-2">
       <a
-        class="grid size-9 place-items-center rounded-md text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-foreground"
+        class="grid size-10 place-items-center rounded-md text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-heading"
         href="/articles.html"
         aria-label="Search articles"
         title="Search articles"
       >
-        <Search class="size-4" aria-hidden="true" />
+        <Search class="size-[1.125rem]" aria-hidden="true" />
       </a>
-      <Button class="hidden sm:inline-flex" size="sm" href={SUBMIT_HREF}>
-        <span class="hidden 2xl:inline">Submit manuscript</span>
-        <span class="2xl:hidden">Submit</span>
-        <ArrowUpRight aria-hidden="true" />
+
+      <a
+        class="hidden size-10 place-items-center rounded-md text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-heading xl:grid"
+        href={`mailto:${SITE.email}`}
+        aria-label="Email the editorial office"
+        title={SITE.email}
+      >
+        <Mail class="size-[1.125rem]" aria-hidden="true" />
+      </a>
+
+      <Button variant="navy" size="sm" href={SUBMIT_HREF} class="hidden sm:inline-flex">
+        <span class="xl:hidden">Submit</span>
+        <span class="hidden xl:inline">Submit manuscript</span>
       </Button>
-      <ThemeToggle />
+
+      <ThemeToggle class="hidden sm:inline-flex" />
+
       <button
         type="button"
-        class="grid size-9 place-items-center rounded-md border border-border bg-surface text-foreground xl:hidden"
+        class="grid size-10 place-items-center rounded-md border border-border-strong bg-surface text-foreground lg:hidden"
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? 'Close menu' : 'Open menu'}
         onclick={() => (open = !open)}
       >
         {#if open}
-          <X class="size-4" aria-hidden="true" />
+          <X class="size-[1.125rem]" aria-hidden="true" />
         {:else}
-          <Menu class="size-4" aria-hidden="true" />
+          <Menu class="size-[1.125rem]" aria-hidden="true" />
         {/if}
       </button>
     </div>
   </div>
 
   {#if open}
-    <div id="mobile-nav" class="border-t border-border bg-surface xl:hidden">
-      <nav class="container-wide py-3" aria-label="Primary mobile">
-        <ul class="grid gap-0.5">
+    <div id="mobile-nav" class="border-t border-border bg-background lg:hidden">
+      <nav class="container-wide py-4" aria-label="Primary mobile">
+        <ul class="grid">
           {#each mobileNav as item (item.href)}
-            <li>
+            <li class="border-b border-border last:border-b-0">
               <a
                 href={item.href}
                 aria-current={isCurrent(item.href) ? 'page' : undefined}
                 class={cn(
-                  'block rounded-md px-3 py-2.5 no-underline transition-colors hover:bg-muted',
-                  isCurrent(item.href) ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
+                  'block py-3 no-underline transition-colors',
+                  isCurrent(item.href) ? 'text-accent-foreground' : 'text-muted-foreground'
                 )}
-                onclick={() => (open = false)}
+                onclick={close}
               >
-                <span class="text-sm font-semibold">{item.label}</span>
+                <span class={cn('font-serif text-[1.0625rem]', isCurrent(item.href) && 'font-semibold')}>
+                  {item.label}
+                </span>
                 {#if item.description}
-                  <span class="mt-0.5 block text-xs text-subtle-foreground">{item.description}</span>
+                  <span class="mt-0.5 block text-[0.8125rem] leading-snug text-subtle-foreground">
+                    {item.description}
+                  </span>
                 {/if}
               </a>
             </li>
           {/each}
         </ul>
-        <Button class="mt-3 w-full sm:hidden" href={SUBMIT_HREF}>Submit manuscript</Button>
+
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          <Button variant="navy" href={SUBMIT_HREF} onclick={close}>Submit manuscript</Button>
+          <a class="text-sm font-medium text-accent-foreground no-underline hover:underline" href={`mailto:${SITE.email}`}>
+            {SITE.email}
+          </a>
+        </div>
+        <div class="mt-5 sm:hidden">
+          <ThemeToggle />
+        </div>
       </nav>
     </div>
   {/if}
