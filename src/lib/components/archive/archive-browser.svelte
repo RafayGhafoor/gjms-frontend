@@ -48,6 +48,11 @@
   let limit = $state(PAGE_SIZE);
   let expanded = $state<string[]>([]);
   let hydrated = $state(false);
+  /* The statistics charts stay OUT of the DOM until a reader opens the
+     disclosure. They are collapsed by default, so rendering 24 bars, 24 axes
+     labels and an area path up front cost ~300 DOM nodes and their mount work
+     on a page whose job is to list the published record. */
+  let chartsOpen = $state(false);
 
   function parseNumeric(value: string | null): number | 'all' | 'special' {
     if (!value || value === 'all') return 'all';
@@ -435,7 +440,7 @@
 <!-- Optional analytics: the charts are here, not in front of the published
      record, and each bar stays a working filter control. -->
 <section class="container-page pb-16" aria-labelledby="statistics-heading">
-  <details class="group rounded-lg border border-border bg-surface-muted">
+  <details bind:open={chartsOpen} class="group rounded-lg border border-border bg-surface-muted">
     <summary
       class="flex cursor-pointer list-none items-center gap-3 px-6 py-5 [&::-webkit-details-marker]:hidden"
     >
@@ -450,6 +455,7 @@
     </summary>
 
     <div class="grid gap-8 border-t border-border px-6 py-6 lg:grid-cols-3">
+      {#if chartsOpen}
       <div>
         <h3 class="eyebrow text-subtle-foreground">Articles per year</h3>
         <p class="mt-2 text-[0.8125rem] text-muted-foreground">
@@ -491,6 +497,7 @@
           <AreaChart points={archive.stats.issuesByYear} ariaLabel="Issues published per year" height={150} />
         </div>
       </div>
+      {/if}
     </div>
   </details>
 </section>
