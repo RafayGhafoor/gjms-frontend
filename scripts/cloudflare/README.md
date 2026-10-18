@@ -3,6 +3,49 @@
 This directory holds the tooling for the one performance item the audit could
 not fix from inside the repository.
 
+## Current state (2026-10-15)
+
+The zone is created and fully staged. **Nothing is live yet** — DNS for gjmsweb.com
+is still served by the old nameservers, so every rule below is inert until the
+registrar is switched. `cf:apply` is idempotent, so re-running it is safe.
+
+| | |
+| --- | --- |
+| Zone | `gjmsweb.com` · `d3b7d6ea47a714568964eaa3e6a8d9f0` (account *Rafayghafoor@gmail.com*, id `120f4f205e32689b9d8f270f51e382e4`) |
+| Nameservers to set at the registrar | **`donald.ns.cloudflare.com`** and **`jamie.ns.cloudflare.com`** |
+| Status | `pending` — waiting only on the nameserver change |
+| Records created | the four GitHub Pages apex `A`s plus a `www` CNAME, all proxied |
+| Rules staged | 2 cache rules (1 y immutable on `/_app/immutable/`, 30 d on `/fonts/` + `/brand/` + icons), a `www`→apex 301, and a response-header rule (`x-content-type-options`, `referrer-policy`, `permissions-policy`, `x-frame-options`) |
+| Zone settings | SSL `full` → **`strict`**, Always Use HTTPS `off` → **`on`**, min TLS `1.0` → **`1.2`**, TLS 1.3, Brotli, HTTP/3 on, 0-RTT off |
+
+### The DNS import returned ZERO records — this is the one thing to fix
+
+Cloudflare's importer reads the existing zone over DNS, and the current
+authoritative servers answer `A`/`NS`/`SOA` but **do not answer `TXT` at all**. So
+nothing was imported; the five site records above were created explicitly from the
+independently verified set instead. **Every other record the zone holds — above all
+the GitHub Pages domain-verification `TXT` — must be read out of the
+registrar/reseller panel and re-created in Cloudflare before the switch.**
+
+GitHub currently reports the domain as **verified**
+(`protected_domain_state: "verified"`, `pending_domain_unverified_at: null`), so
+there is no fire today — but GitHub re-checks the domain periodically, and that
+check will fail if the record is not in the new zone. Its HTTPS certificate also
+expires **2026-11-19** and renews against the live DNS.
+
+### Also worth knowing
+
+- The certificate renewal uses an HTTP challenge at `/.well-known/acme-challenge/`,
+  which none of the cache rules match — so the renewal keeps working through the
+  proxy.
+- The site's own `robots.txt` cannot govern `gjms.b-cdn.net`, where the PDFs live.
+- Two different Cloudflare accounts exist in this picture: the zone lives in
+  *Rafayghafoor@gmail.com's Account*, while the first token tried belonged to
+  *Gualdi LLC* (which holds three unrelated zones). Make sure every future token
+  is scoped to the account that holds the zone.
+
+---
+
 ## Why
 
 GitHub Pages serves **every** asset with `Cache-Control: max-age=600` and offers
@@ -66,29 +109,29 @@ In the current DNS panel, set the `A` record TTLs to 300 s so the switch-over
 window is minutes rather than hours. If the reseller panel does not expose TTLs,
 skip this and accept a propagation window of up to ~4.4 h.
 
-## Step 1 — add the site to Cloudflare
+## Step 1 — the zone (already done)
 
-1. Cloudflare dashboard → **Add a site** → `gjmsweb.com` → Free plan.
-2. Let Cloudflare scan the existing DNS. **Do not change nameservers yet.**
-3. Note the two assigned nameservers — you will need them in step 5.
+Created via `POST /zones` with `jump_start: true`. The assigned nameservers are
+`donald.ns.cloudflare.com` and `jamie.ns.cloudflare.com`.
 
-## Step 2 — audit the imported records (the important one)
+## Step 2 — recreate the records the import could not read (do this first)
 
-Compare the Cloudflare-imported list against the registrar's DNS zone export.
-Every record that exists today must exist in Cloudflare. In particular, confirm
-the presence of:
+Open the **registrar/reseller DNS panel** — not a DNS query, because the current
+nameservers do not answer `TXT` — and copy out every record:
 
 - `_github-pages-challenge-<owner>.gjmsweb.com` **TXT** — GitHub Pages domain
-  verification. **If it is missing, add it back before switching.**
-- any `google-site-verification` / other ownership TXT records
-- `MX` / SPF / DKIM / DMARC records if the domain ever receives mail
-  (none are resolvable today, but trust the export, not my probe)
-- any `CAA` records (none exist today — Cloudflare's Universal SSL will need to
-  be able to issue, so leave CAA absent unless you add one that permits the
-  CAs Cloudflare uses)
+  verification. GitHub's Settings → Pages shows the exact name and value if the
+  domain is in an unverified state. **Without this, the custom domain can detach
+  from the repository and the site reverts to `*.github.io`.**
+- any `google-site-verification` / other ownership `TXT` records
+- `MX` / SPF / DKIM / DMARC, if the domain ever receives mail
+  (none are resolvable today, but trust the panel, not a probe)
+- any `CAA` records (none exist today; Cloudflare's Universal SSL needs to be able
+  to issue, so leave `CAA` absent unless you add one permitting its CAs)
 
-`node scripts/cloudflare/cloudflare.mjs plan` prints the site records for
-comparison.
+Add each one to the new Cloudflare zone (`cf:apply` will never delete or rewrite
+anything it did not create, so this is additive). Then run
+`npm run cf:plan` and confirm the nameserver list has changed before moving on.
 
 ## Step 3 — create a scoped API token
 
