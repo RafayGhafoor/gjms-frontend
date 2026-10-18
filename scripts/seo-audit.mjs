@@ -17,6 +17,22 @@ const BUILD = 'build';
 const OUT = 'docs/seo';
 const ORIGIN = 'https://gjmsweb.com';
 
+/**
+ * Svelte escapes text inside attributes, so a description that is 158 characters
+ * of real prose arrives as `&#39;` for every apostrophe and measures several
+ * characters too long. Decoding before measuring is the difference between an
+ * accurate length metric and ten phantom "description over 160 chars" findings.
+ */
+const decodeEntities = (value) =>
+  value
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+
 if (!existsSync(BUILD)) {
   console.error('No build/ directory — run `npm run build` first.');
   process.exit(1);
@@ -77,12 +93,16 @@ const pages = walk(BUILD).map((file) => {
 
   return {
     rel,
-    type: pageType(rel),
+    /* A hand-authored legacy-slug redirect stub (`static/article/*.html`) is not
+       an article: it is noindex, carries no JSON-LD and exists only to move an
+       old URL. Classifying it as one inflated the article count and diluted
+       citation_* coverage below 100%. */
+    type: /http-equiv="refresh"/i.test(html) ? 'redirect' : pageType(rel),
     bytes: statSync(file).size,
     gzip: gzipSize(file),
     words: text.split(' ').filter(Boolean).length,
-    title: (html.match(/<title>([^<]*)<\/title>/) ?? [, ''])[1],
-    description: (html.match(/name="description" content="([^"]*)"/) ?? [, ''])[1],
+    title: decodeEntities((html.match(/<title>([^<]*)<\/title>/) ?? [, ''])[1]),
+    description: decodeEntities((html.match(/name="description" content="([^"]*)"/) ?? [, ''])[1]),
     canonical: (html.match(/rel="canonical" href="([^"]*)"/) ?? [, ''])[1],
     robots: (html.match(/name="robots" content="([^"]*)"/) ?? [, ''])[1],
     h1: (html.match(/<h1[\s>]/g) ?? []).length,
@@ -132,7 +152,7 @@ while (frontier.length) {
 
 /* -------------------------------------------------------------- aggregates */
 
-const types = ['home', 'page', 'issue', 'article', '404'];
+const types = ['home', 'page', 'issue', 'article', 'redirect', '404'];
 const summary = Object.fromEntries(
   types.map((type) => {
     const group = pages.filter((p) => p.type === type);
@@ -159,7 +179,7 @@ const summary = Object.fromEntries(
 /* noindex pages (the typography harness, the 404) are excluded from indexability
    metrics — counting them as "deep" would understate the score for pages that
    are deliberately not part of the site graph. */
-const indexable = pages.filter((p) => p.type !== '404' && !p.robots.includes('noindex'));
+const indexable = pages.filter((p) => p.type !== '404' && p.type !== 'redirect' && !p.robots.includes('noindex'));
 const orphans = indexable.filter((p) => (inbound.get(p.rel) ?? 0) === 0);
 const deep = indexable.filter((p) => (depth.get(p.rel) ?? 99) > 3);
 const missingDescription = indexable.filter((p) => p.description.length < 50);
@@ -167,7 +187,10 @@ const longDescription = indexable.filter((p) => p.description.length > 160);
 const duplicateTitles = Object.entries(
   indexable.reduce((acc, p) => ({ ...acc, [p.title]: (acc[p.title] ?? 0) + 1 }), {})
 ).filter(([, n]) => n > 1);
-const schemaInvalid = pages.filter((p) => !p.schemaValid);
+/* The 404 and the legacy redirect stubs are deliberately bare — noindex, no
+   canonical, no site graph — so "no JSON-LD" is their intended state, not a
+   defect. Counting them here reported permanent false findings. */
+const schemaInvalid = pages.filter((p) => !p.schemaValid && p.type !== '404' && p.type !== 'redirect');
 
 /* ------------------------------------------------------------------ report */
 
@@ -276,21 +299,60 @@ writeFileSync(join(OUT, 'internal-linking.md'), linkMap);
    Criteria that need content the journal has not published are listed as gaps
    with the reason, rather than scoring zero silently. */
 const hasPolicyLayer = existsSync('src/routes/policies.html') || existsSync('src/routes/publication-ethics.html');
-const citationCoverage = summary.article.withCitationTags / summary.article.count;
+
+/* The registered ISSNs, read out of the site config rather than hardcoded. An
+   earlier revision of this file asserted "no ISSN" and "The journal must supply
+   it", which was untrue — and because this report is regenerated wholesale, that
+   claim silently reverted the corrected document on every re-run. Derive it. */
+const issnBlock = readFileSync('src/lib/config/site.ts', 'utf8').match(/issn:\s*\{([^}]*)\}/s)?.[1] ?? '';
+const issns = [...issnBlock.matchAll(/'([^']+)'/g)].map((m) => m[1]);
+const issnCoverage = issns.length
+  ? indexable.filter((p) => {
+      const html = readFileSync(join(BUILD, p.rel), 'utf8');
+      return issns.every((issn) => html.includes(issn));
+    }).length / indexable.length
+  : 0;
+const issnPublished = issns.length > 0 && issnCoverage === 1;
+
+/* Sitemap coverage is read from the artifact the build actually wrote. */
+const sitemapPath = join(BUILD, 'sitemap.xml');
+const sitemapUrls = existsSync(sitemapPath)
+  ? (readFileSync(sitemapPath, 'utf8').match(/<loc>/g) || []).length
+  : 0;
+
+/* Front-end weight, measured from the built homepage rather than asserted. An
+   earlier revision claimed "no webfonts", which was never true — the site
+   self-hosts variable fonts on purpose (CLAUDE.md → Fonts), and preloads them. */
+const homeHtml = readFileSync(join(BUILD, 'index.html'), 'utf8');
+const styleSheets = (homeHtml.match(/rel="stylesheet"/g) || []).length;
+const preloadedFonts = (homeHtml.match(/rel="preload"[^>]*as="font"/g) || []).length;
+
+/* Lab-measured, not computed. PageSpeed Insights (Lighthouse 13.5): 97 mobile /
+   100 desktop on the homepage, 96 mobile on the archive page. Lighthouse 12
+   locally reproduces 95–100 but with a ±13-point spread across consecutive runs
+   of one unchanged URL, so this is the low end of the repeatable band rather
+   than the best run. Re-measure after any change to fonts, CSS volume or hero. */
+const PERFORMANCE_SCORE = 95;
+/* Measured over indexable article pages only — the denominator must not include
+   the redirect stub or any noindex page. */
+const indexableArticles = indexable.filter((p) => p.type === 'article');
+const citationCoverage = indexableArticles.length
+  ? indexableArticles.filter((p) => p.citationTags > 0).length / indexableArticles.length
+  : 0;
 const schemaCoverage = indexable.filter((p) => p.schemaValid).length / indexable.length;
 const descCoverage = indexable.filter((p) => p.description.length >= 50 && p.description.length <= 160).length / indexable.length;
 const metaCoverage = indexable.filter((p) => p.og && p.twitter).length / indexable.length;
 
 const scorecard = [
-  ['Crawlability & indexing', 100, 'robots.txt with AI policy, 401-URL sitemap, canonicals on every indexable page, branded 404, no orphans'],
+  ['Crawlability & indexing', 100, `robots.txt with AI policy, ${sitemapUrls}-URL sitemap, canonicals on every indexable page, branded 404, no orphans`],
   ['Structured data', Math.round(schemaCoverage * 100), 'Organization, Periodical, WebSite, Breadcrumb, CollectionPage, PublicationIssue, ScholarlyArticle, Person'],
   ['Academic metadata', Math.round(citationCoverage * 100), 'Highwire citation_* tags on every article page'],
   ['Metadata hygiene', Math.round(descCoverage * 100), 'Unique titles, 50–160 char descriptions, OG + Twitter cards'],
   ['Social previews', Math.round(metaCoverage * 100), 'OG + Twitter tags with a 1200×630 card on every indexable page (per-article cards listed under gaps)'],
   ['Internal linking', Math.round(Math.max(0, 100 - orphans.length * 20 - deep.length)), `${orphans.length} orphans, ${deep.length} pages deeper than 3 clicks`],
-  ['Performance', 92, `Median page ${Math.round(summary.page.avgGzipKb)} KB gzipped, single 9 KB CSS, no webfonts, no framework on content pages`],
+  ['Performance', PERFORMANCE_SCORE, `Median page ${Math.round(summary.page.avgGzipKb)} KB gzipped, ${styleSheets} stylesheets (app + self-hosted font sheet), ${preloadedFonts} preloaded variable webfonts, no third-party origin`],
   ['AI/answer-engine access', 85, 'llms.txt, named AI crawler allow-list, abstracts verbatim in HTML, no FAQ layer yet'],
-  ['E-E-A-T / entity', 55, 'Journal entity + editorial roster + guidelines; missing policy pages (ethics, peer review, copyright, privacy, data sharing), no ISSN, no sameAs profiles'],
+  ['E-E-A-T / entity', issnPublished ? 70 : 55, `Journal entity + editorial roster + guidelines${issnPublished ? ' + registered ISSNs on 100% of indexable pages (footer, citation_issn, Periodical JSON-LD, llms.txt)' : ''}${hasPolicyLayer ? '' : ' + no policy layer (ethics, peer review, copyright, privacy, data sharing)'}; no sameAs profiles`],
   ['Topical authority', 30, 'No research-area landing pages; articles carry no subject classification']
 ];
 
@@ -313,7 +375,9 @@ const readiness = [
   '| Gap | Blocked by |',
   '| --- | --- |',
   '| E-E-A-T policy layer | Journal must publish ethics, peer-review, copyright, open-access, privacy, data-sharing and conflict-of-interest text — none exists in the repository |',
-  '| ISSN | The journal must supply it; it cannot be inferred |',
+  issnPublished
+    ? '| ISSN | **Resolved.** The registered pair is published on every indexable page: the footer, the indexing page, `citation_issn` on article pages, `Periodical` JSON-LD and `llms.txt`. Both numbers and their provenance live in `SITE.issn`, and this row is computed from the build |'
+    : '| ISSN | The journal must supply it; it cannot be inferred |',
   '| Entity reconciliation | External profile URLs (Scholar, DOAJ, ResearchGate, Crossref) for `sameAs` |',
   '| Per-article social images | Build-time image rendering (adds a native dependency to CI) |',
   '| Answer-engine excerpts | A signed-off FAQ whose answers reuse the journal\'s published wording |',

@@ -11,6 +11,7 @@
     "sync": "svelte-kit sync",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "sitemap": "node scripts/generate-sitemap.js",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "cf:plan": "node scripts/cloudflare/cloudflare.mjs plan",
     "cf:apply": "node scripts/cloudflare/cloudflare.mjs apply",
     "cf:verify": "node scripts/cloudflare/cloudflare.mjs verify"
