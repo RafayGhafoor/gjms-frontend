@@ -10,7 +10,10 @@
     "preview": "vite preview --port 4173",
     "sync": "svelte-kit sync",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "sitemap": "node scripts/generate-sitemap.js"
+    "sitemap": "node scripts/generate-sitemap.js",
+    "cf:plan": "node scripts/cloudflare/cloudflare.mjs plan",
+    "cf:apply": "node scripts/cloudflare/cloudflare.mjs apply",
+    "cf:verify": "node scripts/cloudflare/cloudflare.mjs verify"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.10",
