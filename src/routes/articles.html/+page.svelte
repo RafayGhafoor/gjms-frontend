@@ -23,18 +23,27 @@
 
   let q = $state('');
   let year = $state<number | 'all'>('all');
-  let volume = $state<number | 'all'>('all');
+  let volume = $state<number | 'all' | 'special'>('all');
   let sort = $state<SortKey>('newest');
   let limit = $state(PAGE_SIZE);
   let hydrated = $state(false);
+  /* Discrete filter changes push a history entry so Back undoes them; typing in
+     the search box replaces instead, so Back never walks a keystroke trail.
+     Plain `let` on purpose: the effect reads it without depending on it. */
+  let lastFilters = '';
 
   onMount(() => {
     const params = new URLSearchParams(location.search);
     q = (params.get('q') ?? '').trim();
     const yearParam = Number(params.get('year'));
     year = Number.isFinite(yearParam) && params.get('year') ? yearParam : 'all';
-    const volumeParam = Number(params.get('volume'));
-    volume = Number.isFinite(volumeParam) && params.get('volume') ? volumeParam : 'all';
+    const volumeParam = params.get('volume');
+    volume =
+      volumeParam === 'special'
+        ? 'special'
+        : volumeParam && Number.isFinite(Number(volumeParam))
+          ? Number(volumeParam)
+          : 'all';
     const sortParam = params.get('sort');
     sort = sortParam === 'oldest' || sortParam === 'title' ? sortParam : 'newest';
     hydrated = true;
@@ -48,7 +57,12 @@
     if (volume !== 'all') params.set('volume', String(volume));
     if (sort !== 'newest') params.set('sort', sort);
     const query = params.toString();
-    history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+    const url = `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+    const filtersKey = `${year}|${volume}|${sort}`;
+    const push = lastFilters !== '' && filtersKey !== lastFilters;
+    lastFilters = filtersKey;
+    if (push) history.pushState(null, '', url);
+    else history.replaceState(null, '', url);
   });
 
   const filter = $derived<ArchiveFilter>({ q, year, volume });
@@ -96,7 +110,7 @@
 
   function onVolumeChange(event: Event) {
     const value = (event.currentTarget as HTMLSelectElement).value;
-    volume = value === 'all' || value === 'special' ? 'all' : Number(value);
+    volume = value === 'all' ? 'all' : value === 'special' ? 'special' : Number(value);
     limit = PAGE_SIZE;
   }
 
@@ -134,10 +148,11 @@
 
 <div class="sticky top-[5.0625rem] z-40 border-b border-border bg-background">
   <div class="container-page grid gap-3 py-4">
-    <div class="grid gap-3 grid-cols-1 lg:grid-cols-[minmax(14rem,1.6fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.8fr)_auto] lg:items-end">
+    <div class="grid grid-cols-2 items-end gap-3 lg:grid-cols-[minmax(14rem,1.6fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.8fr)_auto]">
       <Input
         label="Search articles"
         name="article-search"
+        class="col-span-2 lg:col-span-1"
         placeholder="Title, author or page range"
         bind:value={q}
         oninput={onSearchInput}
@@ -147,7 +162,7 @@
         label="Volume"
         name="article-volume"
         options={volumeOptions}
-        value={volume === 'all' ? 'all' : String(volume)}
+        value={String(volume)}
         onchange={onVolumeChange}
       />
       <Select
@@ -160,7 +175,7 @@
         ]}
         bind:value={sort}
       />
-      <Button variant="outline" onclick={reset} disabled={!hasFilters}>
+      <Button variant="outline" class="h-9" onclick={reset} disabled={!hasFilters}>
         <RotateCcw aria-hidden="true" />
         Reset
       </Button>
@@ -176,8 +191,12 @@
         <p class="flex items-center gap-2 text-xs text-subtle-foreground">
           <span>
             Filtered by
-            {[year !== 'all' ? String(year) : null, volume !== 'all' ? `volume ${volume}` : null].filter(Boolean).join(' · ') ||
-              'search'}
+            {[
+              year !== 'all' ? String(year) : null,
+              volume === 'special' ? 'special editions' : volume !== 'all' ? `volume ${volume}` : null
+            ]
+              .filter(Boolean)
+              .join(' · ') || 'search'}
           </span>
           <button type="button" class="py-0.5 font-semibold text-accent-foreground hover:underline" onclick={reset}>Clear</button>
         </p>
@@ -211,6 +230,13 @@
         <ArticleCard {article} query={q} heading={3} showIssue={true} />
       {/each}
     </ol>
+
+    <noscript>
+      <p class="mt-6 text-[0.9375rem] text-muted-foreground">
+        Filtering, sorting and paging need JavaScript. Every issue is still browsable as its own page from the
+        <a class="text-accent-foreground underline underline-offset-2" href="/archive.html">archive</a>.
+      </p>
+    </noscript>
 
     {#if results.length > visible.length}
       <div class="mt-8 flex flex-col items-center gap-3">

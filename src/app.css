@@ -314,9 +314,12 @@
     text-underline-offset: 0.2em;
   }
 
-  /* Blocks of prose should never run wider than a comfortable measure. */
-  p.measure,
-  .measure p {
+  /* Blocks of prose should never run wider than a comfortable measure. The
+     selector used to be `p.measure`, so the utility was dead on every <dd> and
+     <h3> that carried it and those ran the full column width (~118 characters
+     per line). `.measure` itself is the cap: 70ch lands at ~70–78 characters of
+     running Source Sans, which is the reading range the type is set for. */
+  .measure {
     max-width: 70ch;
   }
 

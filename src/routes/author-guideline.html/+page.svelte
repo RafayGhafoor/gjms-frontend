@@ -23,10 +23,16 @@
   const sections = $derived(guidelines.sections.map((section) => ({ ...section, id: anchor(section.title) })));
   const highlights = $derived(guidelines.highlights);
 
+  /* The 30-day figure is the journal's time to publication — its own guidelines
+     publish a two-week decision and publication in 30 days — so the label says
+     which of the two it is. The fee is written "US$200" in the guidelines text
+     and "$200" in the stats block; the page uses the guidelines' form. */
+  const fee = $derived(content.stats.publicationFee.replace(/^\$/, 'US$'));
+
   const facts = $derived([
-    { term: 'Decision within', detail: `${content.stats.daysToPublish} days` },
+    { term: 'Publication within', detail: `${content.stats.daysToPublish} days` },
     { term: 'Acceptance rate', detail: content.stats.acceptanceRate },
-    { term: 'Publication fee', detail: content.stats.publicationFee }
+    { term: 'Publication fee', detail: fee }
   ]);
 
   const description = $derived(

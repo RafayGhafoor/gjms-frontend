@@ -86,7 +86,15 @@
     if (view !== 'archive') params.set('view', 'articles');
     if (expanded.length) params.set('open', expanded.join(','));
     const query = params.toString();
-    history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+    const url = `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+    /* A filter, sort or view change is a discrete intent, so it pushes a history
+       entry and Back undoes it. Typing in the search box and opening an issue
+       replace instead — Back should not walk a keystroke or disclosure trail. */
+    const filtersKey = `${year}|${volume}|${issue}|${sort}|${view}`;
+    const push = lastFilters !== '' && filtersKey !== lastFilters;
+    lastFilters = filtersKey;
+    if (push) history.pushState(null, '', url);
+    else history.replaceState(null, '', url);
   });
 
   const filter = $derived<ArchiveFilter>({ year, volume, issue });

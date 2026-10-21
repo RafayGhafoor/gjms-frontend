@@ -82,7 +82,7 @@ export const FOOTER_GROUPS: { title: string; links: { label: string; href: strin
     title: 'For authors',
     links: [
       { label: 'Author guidelines', href: '/author-guideline.html' },
-      { label: 'Submission instructions', href: SUBMIT_HREF },
+      { label: 'Email your manuscript', href: SUBMIT_HREF },
       { label: 'Publication ethics', href: '/author-guideline.html#ethics-and-integrity' },
       { label: 'Publication fee', href: '/author-guideline.html' }
     ]

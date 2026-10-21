@@ -46,7 +46,7 @@
 <PageHeader
   {eyebrow}
   title={article.title}
-  headingClass="display-title"
+  headingClass="display-title lg:max-w-[32ch]"
   items={[
     { name: 'Home', href: '/' },
     { name: 'Archive', href: '/archive.html' },
@@ -103,12 +103,12 @@
           Abstract reproduced from the published article. The full text is available as an open-access PDF.
         </p>
         {#if article.hasPdf}
-          <div class="mt-6">
-            <Button href={article.pdf} target="_blank" rel="noopener noreferrer">
-              <Download aria-hidden="true" />
+          <p class="mt-6">
+            <a class="arrow-link" href={article.pdf} target="_blank" rel="noopener noreferrer">
               Read the full text (PDF)
-            </Button>
-          </div>
+              <ArrowRight aria-hidden="true" />
+            </a>
+          </p>
         {/if}
       </section>
     {:else}
@@ -161,18 +161,6 @@
           </div>
         {/each}
       </dl>
-      {#if article.hasPdf}
-        <div class="mt-5 border-t border-border pt-5">
-          <a
-            class="inline-block py-0.5 text-xs break-all text-accent-foreground no-underline hover:underline"
-            href={article.pdf}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open the PDF record
-          </a>
-        </div>
-      {/if}
     </section>
 
     {#if related.length}

@@ -39,7 +39,7 @@
       hint: "Journal's published figure"
     },
     {
-      term: 'Decision timeline',
+      term: 'Publication within',
       value: `${content.stats.daysToPublish} days`,
       hint: 'Published in the author guidelines'
     },
@@ -53,7 +53,11 @@
   const publishingFacts = $derived([
     { term: 'ISSN (print)', detail: SITE.issn.print, hint: 'Also the linking ISSN (ISSN-L)' },
     { term: 'ISSN (online)', detail: SITE.issn.online, hint: 'Registered with the ISSN International Centre' },
-    { term: 'Publication fee', detail: content.stats.publicationFee, hint: 'As published in the author guidelines' },
+    {
+      term: 'Publication fee',
+      detail: content.stats.publicationFee.replace(/^\$/, 'US$'),
+      hint: 'As published in the author guidelines'
+    },
     { term: 'Articles published', detail: formatCount(stats.articles), hint: 'Counted from the journal article index' }
   ]);
 
