@@ -41,6 +41,74 @@ rows. Technical and Performance stay where they are until the host changes —
 they are response-header problems, and GitHub Pages does not let a repository
 set them.
 
+## Open work
+
+Checklist form of the findings below — tick these off in place. The number in
+brackets is the finding it closes. `Accepted` and `Open — will not fix` items are
+not on this list; their rows explain why.
+
+### Blocked on infrastructure (no repository change can close these)
+
+- [ ] Switch the nameservers at the registrar to `donald.ns.cloudflare.com` /
+      `jamie.ns.cloudflare.com`. The rules are already staged and idempotent
+      (`scripts/cloudflare/`, see its README) — this is the only step left for
+      immutable caching, Brotli, HTTP/3, the `www` 301, the security headers and
+      301s for the extension-less duplicates. [F1, F8]
+- [ ] Give `www.gjmsweb.com` a DNS record. Covered by the staged Cloudflare
+      config; if the switch slips, add a `www` CNAME/redirect at the current
+      authoritative DNS instead — it does not need the migration. [F3]
+- [ ] Re-run the crawl in this file once DNS points at Cloudflare and amend the
+      findings with the new state. [F1, F3, F8]
+
+### Needs `gjms-automation` (data provenance, not the website)
+
+- [ ] Mark the four Author's Guideline records (Vol 2 No.1–No.4, 2016) as front
+      matter, so the site renders them as a plain `WebPage` without `citation_*`
+      and keeps them out of the sitemap. Today they are `ScholarlyArticle`, in
+      the sitemap, with no author — and they inflate "341 articles" against a
+      real 337 research papers. [F4]
+- [ ] Find the missing author for
+      `a-constrastive-study-of-gtm-and-clt-in-teaching-english-grammar-…`, the
+      one genuine record with none, and check whether it duplicates
+      `a-contrastive-study-of-grammar-translation-method-and-direct-method-…`. [F4]
+- [ ] Backfill the 40 records `abstracts.json` has no extraction for. The site
+      must not substitute generated text, so this is the only route. [F6]
+
+### Needs editor copy or an editorial decision
+
+- [ ] Publish the policy layer: publication ethics, peer-review process,
+      copyright and licensing, open-access statement, privacy, data
+      availability, conflict of interest, archiving, plagiarism and retraction.
+      Also missing: the publishing institution and a postal address — contact is
+      email only. Biggest single E-E-A-T gain available. [F5]
+- [ ] Confirm real profile URLs (Google Scholar, DOAJ, Crossref, ResearchGate,
+      ORCID) so `organizationNode()` can carry `sameAs`. One-line change once
+      the URLs exist; do not assert an index membership the journal cannot show. [F7]
+- [ ] Decide how the "Google Scholar: 2.89" figure is presented beside SJIF 5.99:
+      name the metric's actual source, or drop it. Google Scholar publishes no
+      journal-level metric, so as written it is the weakest trust signal on the
+      site. [F16]
+
+### This repository
+
+- [ ] Lengthen the `author-guideline.html` title to "Author guidelines:
+      submission, fee and review" (26 → 54 characters). Written and reverted
+      once already because that file carried unrelated uncommitted edits. [F12]
+- [ ] Add an RSS/Atom feed plus `<link rel="alternate"
+      type="application/rss+xml">` in `seo.svelte`. One prerendered route over
+      the archive the sitemap already walks. [F19]
+- [ ] Decide on images: per-article social cards need build-time rendering and a
+      native dependency in CI; content images need publisher-supplied artwork.
+      Zero `<img>` elements site-wide today. [F13]
+
+### Verification
+
+- [ ] Confirm Search Console and Bing Webmaster ownership (no
+      `google-site-verification` meta exists — DNS verification would not show
+      one), submit `sitemap.xml`, and check coverage for the extension-less
+      duplicates. Index state and field Core Web Vitals are unmeasured in this
+      audit: the PageSpeed Insights API returned `429` and no key was configured. [F20]
+
 ## Findings
 
 Priority is what it costs the journal, not what it costs to fix. `Fixed` means
