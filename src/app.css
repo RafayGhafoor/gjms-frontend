@@ -299,7 +299,11 @@
     text-wrap: balance;
   }
 
-  p {
+  /* Balanced paragraph endings: no one-word last line on prose, list items or
+     definition values (the three places it actually showed up). */
+  p,
+  li,
+  dd {
     text-wrap: pretty;
   }
 
@@ -321,6 +325,8 @@
      running Source Sans, which is the reading range the type is set for. */
   .measure {
     max-width: 70ch;
+    /* Keeps a one-word tail from landing alone on the last line of a measure. */
+    text-wrap: pretty;
   }
 
   a {

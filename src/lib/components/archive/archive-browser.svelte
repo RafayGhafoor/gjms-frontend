@@ -23,7 +23,8 @@
   import SearchX from '@lucide/svelte/icons/search-x';
 
   /* The archive browser. Filters live in component state and are mirrored into
-     the query string with history.replaceState — no server round trip, no
+     the query string with history.replaceState for keystrokes and
+     history.pushState for discrete changes — no server round trip, no
      navigation, and every view stays deep-linkable
      (/archive.html?year=2025&volume=11&issue=4).
      The prerendered HTML always contains the full archive, so search engines and
@@ -48,6 +49,9 @@
   let limit = $state(PAGE_SIZE);
   let expanded = $state<string[]>([]);
   let hydrated = $state(false);
+  /* Last discrete filter tuple written to the URL. Plain `let` on purpose: the
+     effect reads it to choose push vs replace, without depending on it. */
+  let lastFilters = '';
   /* The statistics charts stay OUT of the DOM until a reader opens the
      disclosure. They are collapsed by default, so rendering 24 bars, 24 axes
      labels and an area path up front cost ~300 DOM nodes and their mount work

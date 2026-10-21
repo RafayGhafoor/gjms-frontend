@@ -28,3 +28,6 @@ __pycache__/
 
 # Local browser captures used while reviewing the redesign.
 .screenshots/
+
+# tgrep trigram index (local search cache)
+.tgrep/
