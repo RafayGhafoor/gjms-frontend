@@ -29,7 +29,7 @@
 </script>
 
 <Seo
-  title="Vision and mission"
+  title="Aims, scope and mission of the journal"
   {description}
   path="/vision-mission.html"
   jsonLd={[

@@ -4,7 +4,7 @@
    inferred. */
 
 import { SITE, absoluteUrl } from '$lib/config/site';
-import { articlePath } from '$lib/data/paths';
+import { articlePath, issuePath } from '$lib/data/paths';
 import type { Article, Issue } from '$lib/data/types';
 
 export function organizationNode() {
@@ -26,7 +26,7 @@ export function organizationNode() {
       '@type': 'ImageObject',
       url: absoluteUrl('/icon-512.png'),
       width: 512,
-      height: 351
+      height: 512
     }
   };
 }
@@ -55,15 +55,12 @@ export function websiteNode() {
     url: `${SITE.origin}/`,
     name: `${SITE.name} — ${SITE.fullName}`,
     inLanguage: 'en',
-    publisher: { '@id': `${SITE.origin}/#organization` },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE.origin}/articles.html?q={search_term_string}`
-      },
-      'query-input': 'required name=search_term_string'
-    }
+    publisher: { '@id': `${SITE.origin}/#organization` }
+    /* No `potentialAction` SearchAction. Google retired the sitelinks search box
+       in November 2024, so the annotation earns nothing — and it pointed at
+       `/articles.html?q=`, a URL robots.txt deliberately keeps crawlers out of.
+       The on-site search still works; it just is not advertised as a schema
+       action. */
   };
 }
 
@@ -129,6 +126,11 @@ export function scholarlyArticleNode(article: Article, issueUrl?: string) {
 
   return clean({
     '@type': 'ScholarlyArticle',
+    /* A stable identifier so the same article listed on a page's card, in an
+       issue's ItemList or in the article page's own graph is one entity rather
+       than several anonymous nodes. */
+    '@id': article.slug ? `${absoluteUrl(articlePath(article.slug))}#article` : undefined,
+    mainEntityOfPage: article.slug ? { '@type': 'WebPage', '@id': absoluteUrl(articlePath(article.slug)) } : undefined,
     headline: article.title,
     abstract: article.abstract || undefined,
     inLanguage: 'en',
@@ -155,8 +157,15 @@ export function publicationIssueNodes(issues: Issue[], limit = 50) {
   return issues.slice(0, limit).map((issue) =>
     clean({
       '@type': 'PublicationIssue',
+      /* Keyed by its own page, so an issue referenced from a dozen article
+         pages is one identifier instead of a dozen near-identical nodes. */
+      '@id': absoluteUrl(issuePath(issue.id)),
+      url: absoluteUrl(issuePath(issue.id)),
       name: issue.title,
       issueNumber: issue.issueNumber != null ? String(issue.issueNumber) : undefined,
+      /* Special editions carry no number in the archive, and clean() drops the
+         undefined rather than asserting a volume the data does not hold. */
+      volumeNumber: issue.volumeNumber != null ? String(issue.volumeNumber) : undefined,
       datePublished: issue.year ? String(issue.year) : undefined,
       isPartOf: { '@id': `${SITE.origin}/#journal` },
       numberOfPages: undefined,

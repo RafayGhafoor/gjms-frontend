@@ -46,7 +46,13 @@ export const GET: RequestHandler = () => {
     `- Description: ${SITE.tagline}`,
     `- Peer review: blind peer review`,
     `- Publication fee: ${content.stats.publicationFee}`,
-    `- Review timeline: decision within ${content.stats.daysToPublish} days`,
+    /* Two different clocks, and the journal publishes both: the guidelines
+       promise a decision "within two weeks of submission" and the stats block
+       counts 30 days to publication. Emitting a single "decision within 30
+       days" would have answer engines quoting a timeframe the site never
+       promised, so each number is labelled with the clock it belongs to. */
+    '- Decision timeline: within two weeks of submission',
+    `- Publication timeline: ${content.stats.daysToPublish} days`,
     `- Acceptance rate: ${content.stats.acceptanceRate}`,
     `- Impact factor (SJIF, latest published): ${content.stats.impactFactor}`,
     `- Google Scholar: ${content.impactFactor.googleScholar}`,
