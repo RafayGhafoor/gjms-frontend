@@ -11,9 +11,10 @@ export const prerender = true;
  * wildcard group already allows them), which makes the policy reviewable rather
  * than accidental.
  *
- * The two Disallow rules keep crawlers out of filtered views — `/archive.html?year=`
+ * The Disallow rules keep crawlers out of filtered views — `/archive.html?year=`
  * and `?open=` are the same document as the canonical page and add nothing but
- * duplicate URLs. Search-result-style query strings stay excluded. */
+ * duplicate URLs — and out of SvelteKit's `__data.json` endpoints, which serve
+ * the same content as JSON and would otherwise be indexable in their own right. */
 const AI_AND_ANSWER_ENGINE_CRAWLERS = [
   'GPTBot', // OpenAI training
   'OAI-SearchBot', // OpenAI search index
@@ -40,6 +41,9 @@ export const GET: RequestHandler = () => {
     'Disallow: /404.html',
     '# Internal type-pairing harness — not part of the journal\'s published content.',
     'Disallow: /type/',
+    '# SvelteKit data endpoints: every page is also served as JSON at <page>__data.json.',
+    '# Same content, second URL — keep crawlers out.',
+    'Disallow: /*__data.json',
     '',
     '# Answer engines and AI crawlers — explicitly allowed',
     ...AI_AND_ANSWER_ENGINE_CRAWLERS.map((bot) => `User-agent: ${bot}`),
@@ -47,6 +51,7 @@ export const GET: RequestHandler = () => {
     'Disallow: /*?q=',
     'Disallow: /*?open=',
     'Disallow: /type/',
+    'Disallow: /*__data.json',
     '',
     '# A plain-text summary for language models (llmstxt.org)',
     `# ${SITE.origin}/llms.txt`,

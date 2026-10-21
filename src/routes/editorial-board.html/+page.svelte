@@ -48,7 +48,7 @@
 </script>
 
 <Seo
-  title="Editorial board"
+  title="Editorial board: editor-in-chief and members"
   {description}
   path="/editorial-board.html"
   jsonLd={[

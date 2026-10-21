@@ -67,7 +67,7 @@
 </script>
 
 <Seo
-  title="Indexing and impact"
+  title="Indexing and impact: published figures"
   {description}
   path="/impact-factor.html"
   jsonLd={[

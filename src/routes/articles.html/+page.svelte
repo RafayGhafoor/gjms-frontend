@@ -118,7 +118,7 @@
 </script>
 
 <Seo
-  title="Articles"
+  title={`Article index: search all ${archive.stats.articles} articles`}
   {description}
   path="/articles.html"
   jsonLd={[
