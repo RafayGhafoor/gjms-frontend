@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T23:20:00Z",
+  "title": "Design System: GJMSSH — Academic Editorial",
+  "extensions": {
+    "colorMeta": {
+      "ink-navy": {
+        "role": "neutral",
+        "displayName": "Ink Navy",
+        "canonical": "#102a3a",
+        "tonalRamp": ["#071219", "#0c1e2a", "#102a3a", "#26455a", "#4d6b7d", "#7f95a3", "#b3c1c9", "#eef2f4"]
+      },
+      "warm-ivory": {
+        "role": "neutral",
+        "displayName": "Warm Ivory",
+        "canonical": "#faf9f6",
+        "tonalRamp": ["#2a2926", "#4f4e49", "#77756e", "#9c9a93", "#c2c0b9", "#e0ded8", "#f1efea", "#faf9f6"]
+      },
+      "academic-teal": {
+        "role": "primary",
+        "displayName": "Muted Academic Teal",
+        "canonical": "#24676b",
+        "tonalRamp": ["#08211f", "#0d3335", "#12464a", "#1c5559", "#24676b", "#3f8b8f", "#7fb6b8", "#dceceb"]
+      },
+      "brass": {
+        "role": "secondary",
+        "displayName": "Restrained Brass",
+        "canonical": "#b49a69",
+        "tonalRamp": ["#2b2416", "#4a3d24", "#6b5934", "#8a7448", "#b49a69", "#cbb68d", "#e2d5b6", "#f4efe3"]
+      },
+      "band-navy": {
+        "role": "neutral",
+        "displayName": "Submission Band Navy",
+        "canonical": "#102a3a",
+        "tonalRamp": ["#071219", "#0c2130", "#102a3a", "#1b3c4f", "#3a5b6c", "#6b8796", "#a3b6c0", "#f4f7f7"]
+      },
+      "dark-canvas": {
+        "role": "neutral",
+        "displayName": "Charcoal Navy Canvas",
+        "canonical": "#0e1519",
+        "tonalRamp": ["#0e1519", "#131d22", "#1a262c", "#223036", "#33434b", "#55676f", "#8a9aa1", "#e4ebee"]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "Lifted Teal",
+        "canonical": "#5aa9ad",
+        "tonalRamp": ["#0b1f21", "#123437", "#1c5559", "#2f7b7f", "#5aa9ad", "#6fbabd", "#a8d6d7", "#e6f3f3"]
+      }
+    },
+    "typographyMeta": {
+      "display-hero": { "displayName": "Display Hero", "purpose": "The journal's own name on the home page only." },
+      "display-1": { "displayName": "Page Title", "purpose": "Every interior page's H1 inside PageHeader." },
+      "display-2": { "displayName": "Section Heading", "purpose": "Section headings; always underlined by a 2px rule." },
+      "article-title": { "displayName": "Article Title", "purpose": "Titles inside article rows and issue lists." },
+      "body": { "displayName": "Body", "purpose": "Interface copy, metadata, controls." },
+      "reading": { "displayName": "Reading", "purpose": "Abstracts and policy prose at 17px/1.8, capped at 70ch." },
+      "label": { "displayName": "Eyebrow", "purpose": "One keyword above a page H1; group labels in asides and fields." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px rgb(16 42 58 / 0.05)", "purpose": "Controls that must lift off the paper." },
+      { "name": "shadow-md", "value": "0 3px 10px -4px rgb(16 42 58 / 0.1)", "purpose": "Raised panels; never sections." },
+      { "name": "shadow-lg", "value": "0 16px 36px -20px rgb(16 42 58 / 0.22)", "purpose": "Overlays and the mobile menu panel." }
+    ],
+    "motion": [
+      { "name": "ease-nexus", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Every state transition; 160–200ms." },
+      { "name": "reveal", "value": "nexus-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both", "purpose": "One authored entrance on the hero band, skipped under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single teal action on a view — open the issue, browse the archive.",
+      "html": "<button class=\"ds-btn-primary\">Explore the current issue</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: 7px; background: #24676b; color: #ffffff; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.9375rem; font-weight: 600; cursor: pointer; transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-primary:hover { background: #1c5559; } .ds-btn-primary:focus-visible { outline: 2px solid #24676b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Submit Manuscript Button",
+      "kind": "button",
+      "refersTo": "button-submit",
+      "description": "The navy CTA reserved for manuscript submission (a mailto in practice).",
+      "html": "<a class=\"ds-btn-submit\" href=\"mailto:gjmsweb@proton.me\">Submit manuscript</a>",
+      "css": ".ds-btn-submit { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 7px; background: #102a3a; color: #ffffff; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.9375rem; font-weight: 600; text-decoration: none; transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-submit:hover { background: #0b1f2c; } .ds-btn-submit:focus-visible { outline: 2px solid #24676b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action in a hero or toolbar; hairline edge that turns teal on hover.",
+      "html": "<button class=\"ds-btn-outline\">Author guidelines</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 1px solid #ccd3d1; border-radius: 7px; background: transparent; color: #172b3a; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.9375rem; font-weight: 600; cursor: pointer; transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-outline:hover { border-color: #24676b; background: #e9f1f0; color: #1c5559; } .ds-btn-outline:focus-visible { outline: 2px solid #24676b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "The article-index and archive search: eyebrow label above, 36px white control.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field-label\" for=\"ds-search\">Search articles</label><div class=\"ds-field-control\"><svg class=\"ds-field-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"></circle><path d=\"m20 20-3.5-3.5\"></path></svg><input id=\"ds-search\" class=\"ds-input\" type=\"search\" placeholder=\"Title, author or page range\" /></div></div>",
+      "css": ".ds-field { display: grid; gap: 4px; }\n.ds-field-label { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5f6d75; }\n.ds-field-control { position: relative; }\n.ds-field-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #5f6d75; pointer-events: none; }\n.ds-input { width: 100%; height: 36px; padding: 0 12px 0 36px; border: 1px solid #ccd3d1; border-radius: 7px; background: #ffffff; color: #172b3a; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.875rem; transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1); }\n.ds-input::placeholder { color: #5f6d75; }\n.ds-input:hover { border-color: #c3d9d6; }\n.ds-input:focus-visible { outline: none; border-color: #24676b; box-shadow: 0 0 0 2px rgb(36 103 107 / 0.3); }"
+    },
+    {
+      "name": "Record Card",
+      "kind": "card",
+      "refersTo": "card-record",
+      "description": "An article's citation identity as a definition list — journal, ISSN pair, volume, issue, year, pages.",
+      "html": "<section class=\"ds-record\"><h2 class=\"ds-record-label\">Record details</h2><dl class=\"ds-record-list\"><div class=\"ds-record-row\"><dt>Print ISSN</dt><dd>2520-7113</dd></div><div class=\"ds-record-row\"><dt>Volume</dt><dd>12</dd></div><div class=\"ds-record-row\"><dt>Pages</dt><dd>1–33</dd></div></dl></section>",
+      "css": ".ds-record { padding: 24px; border: 1px solid #e1e5e4; border-radius: 8px; background: #ffffff; }\n.ds-record-label { margin: 0; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5f6d75; }\n.ds-record-list { margin: 16px 0 0; display: grid; gap: 12px; }\n.ds-record-row { padding-top: 12px; border-top: 1px solid #e1e5e4; }\n.ds-record-row:first-child { padding-top: 0; border-top: 0; }\n.ds-record-row dt { font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #5f6d75; }\n.ds-record-row dd { margin: 4px 0 0; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; line-height: 1.35; color: #172b3a; }"
+    },
+    {
+      "name": "Article Row",
+      "kind": "custom",
+      "description": "The signature listing row: numeric rail, serif title, metadata line with drawn dots, outlined PDF control on a hairline.",
+      "html": "<article class=\"ds-row\"><span class=\"ds-row-num\" aria-hidden=\"true\">1</span><div class=\"ds-row-body\"><h3 class=\"ds-row-title\">Impact of Renewable and Non-Renewable Energy Consumption on Environmental Quality: Evidence from Pakistan</h3><p class=\"ds-row-authors\">Tania Manzoor, Prof. Dr. Abdul Ghafoor Awan</p><p class=\"ds-row-meta\"><span>Vol 12 · Issue 1 · 2026</span><span class=\"ds-dot\" aria-hidden=\"true\"></span><span>Pages 1–33</span><span class=\"ds-dot\" aria-hidden=\"true\"></span><span>Open access</span></p></div><a class=\"ds-row-pdf\" href=\"#\">PDF</a></article>",
+      "css": ".ds-row { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr) auto; gap: 0 24px; align-items: start; padding: 20px 0; border-bottom: 1px solid #e1e5e4; font-family: 'Source Sans 3', system-ui, sans-serif; }\n.ds-row-num { font-family: 'Source Serif 4', Georgia, serif; font-size: 0.875rem; line-height: 1.75rem; color: #5f6d75; }\n.ds-row-title { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3125rem; font-weight: 600; line-height: 1.3; color: #102a3a; }\n.ds-row-authors { margin: 8px 0 0; font-size: 0.9375rem; color: #55636b; }\n.ds-row-meta { display: flex; align-items: center; gap: 12px; margin: 12px 0 0; font-size: 0.8125rem; color: #5f6d75; }\n.ds-dot { width: 4px; height: 4px; border-radius: 9999px; background: #ccd3d1; }\n.ds-row-pdf { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1px solid #ccd3d1; border-radius: 7px; background: transparent; color: #172b3a; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1), background-color 160ms cubic-bezier(0.22, 1, 0.36, 1); }\n.ds-row-pdf:hover { border-color: #24676b; background: #e9f1f0; color: #1c5559; }\n.ds-row-pdf:focus-visible { outline: 2px solid #24676b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Navigation Header",
+      "kind": "nav",
+      "description": "80px sticky-ish tier: brand lockup, seven nav links with a teal current underline, search, mail, navy submit, three-way theme control.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-brand\" href=\"#\">GJMSSH</a><nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-link--current\" href=\"#\">Articles</a><a class=\"ds-nav-link\" href=\"#\">Current issue</a><a class=\"ds-nav-link\" href=\"#\">Archive</a></nav><a class=\"ds-header-cta\" href=\"#\">Submit manuscript</a></header>",
+      "css": ".ds-header { display: flex; align-items: center; gap: 32px; height: 80px; padding: 0 32px; border-bottom: 1px solid #e1e5e4; background: #faf9f6; font-family: 'Source Sans 3', system-ui, sans-serif; }\n.ds-brand { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; color: #102a3a; text-decoration: none; }\n.ds-nav { display: flex; gap: 24px; margin-left: auto; }\n.ds-nav-link { position: relative; padding: 6px 0; color: #172b3a; font-size: 0.9375rem; text-decoration: none; }\n.ds-nav-link:hover { color: #1c5559; }\n.ds-nav-link--current::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: #24676b; }\n.ds-nav-link:focus-visible { outline: 2px solid #24676b; outline-offset: 2px; }\n.ds-header-cta { display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 7px; background: #102a3a; color: #ffffff; font-size: 0.875rem; font-weight: 600; text-decoration: none; }\n.ds-header-cta:hover { background: #0b1f2c; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "description": "The one keyword above a page H1 and the group-label style for asides and form fields.",
+      "html": "<p class=\"ds-eyebrow\">Article index</p>",
+      "css": ".ds-eyebrow { margin: 0; font-family: 'Source Sans 3', system-ui, sans-serif; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; line-height: 1.4; text-transform: uppercase; color: #1c5559; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Offprint",
+    "overview": "The system should read as a journal's offprint: warm paper, an ink-navy serif voice, hairline rules instead of boxes, and exactly one muted teal marker telling you where the action is. The look is committed to the academic record rather than a dashboard — the interface is mostly typography and rules, and its largest ornament is a published article's own title.\n\nDensity is editorial, not dense: generous section rhythm (76–104px), a 1216px measure of content, and reading columns held at ~70 characters. Colour is restrained to four voices — ivory paper, ink navy, muted teal, brass — with brass reserved for small editorial marks and never for an action. The world is light-first by identity: the default theme is warm ivory even when the operating system prefers dark, and the dark theme is a layered charcoal-navy restatement of the same hierarchy, not a separate brand.\n\nDepth comes from tone and hairlines, not from shadow. Cards appear only where a block genuinely needs a boundary; lists of articles are hairline rows. Decoration is refused: no gradient text, no glow, no card grids standing in for a record list.",
+    "keyCharacteristics": [
+      "Warm ivory paper (#faf9f6) with a white surface for panels; dark theme layers #0e1519 → #131d22",
+      "Ink navy headings (#102a3a) in Source Serif 4 at weight 600; Source Sans 3 for everything functional",
+      "One teal action per view (#24676b); the manuscript CTA keeps its own ink navy",
+      "Hairline 1px rules at 8px panel radius and 7px control radius",
+      "76–104px section rhythm, articles as rows, charts demoted behind disclosure"
+    ],
+    "rules": [
+      { "name": "The One Teal Rule", "body": "Exactly one teal action is visible per viewport. A second teal button on the same screen is a hierarchy bug, not a style choice.", "section": "colors" },
+      { "name": "The Brass Is Never A Button Rule", "body": "Brass marks things; it never invites a click. No brass button, no brass link.", "section": "colors" },
+      { "name": "The Band Is Navy Rule", "body": "The submission band and the footer are the only full-bleed navy surfaces in the light theme, carrying their own text pair at 7.08:1. Never derive them from --heading, which flips to near-white in dark mode.", "section": "colors" },
+      { "name": "The Heading Owns Its Weight Rule", "body": "Headings inherit 600 and their colour from the base layer. Never add font-bold or a colour utility to an h1–h3, and never bake a colour into a display-* utility.", "section": "typography" },
+      { "name": "The One Keyword Rule", "body": "At most one eyebrow above a page heading; never one above every section heading. It names the page's category, not a decoration.", "section": "typography" },
+      { "name": "The 70-Character Rule", "body": "Prose carries .measure (70ch). It applies to the element that bears it — not just <p> — which is what keeps definitions and list values from running to 118 characters.", "section": "typography" },
+      { "name": "The Rule Before The Card Rule", "body": "A list is hairline rows, not a card grid. Card appears only where a block genuinely needs a boundary. Nested cards are always wrong.", "section": "elevation" },
+      { "name": "The No Glow Rule", "body": "No coloured halos, no zero-offset shadows, no gradient text. Emphasis comes from weight, size or a rule.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use semantic tokens (bg-surface, text-muted-foreground, border-border-strong) and never a raw hex or gray-* utility.",
+      "Do reproduce the journal's published copy verbatim, and omit a section entirely when the journal has no published text for it.",
+      "Do keep the primary teal to one instance per viewport, and give the manuscript CTA the navy variant.",
+      "Do draw separators with a 4px dot element, not a · character.",
+      "Do keep body and metadata contrast at AA or better, including 13px metadata in --subtle-foreground.",
+      "Do hold prose at .measure (70ch) and let the reading size be 17px/1.8.",
+      "Do keep every control in a toolbar the same height, and every interactive target at least 24×24px."
+    ],
+    "donts": [
+      "Don't add font-bold or a colour utility to an h1–h3, and don't bake colour into a display-* utility.",
+      "Don't invent scope, metrics, dates, featured status or author claims to fill a layout.",
+      "Don't put a brass-coloured button or link anywhere; brass is a mark, never an action.",
+      "Don't wrap article lists in cards, and never nest cards inside cards.",
+      "Don't use a gradient as decoration, gradient text, a coloured halo, or a zero-offset shadow.",
+      "Don't add a second eyebrow above section headings; one keyword per page heading only.",
+      "Don't let a <dd> or <li> lose its measure — a full-width definition line runs to 118 characters."
+    ]
+  }
+}
