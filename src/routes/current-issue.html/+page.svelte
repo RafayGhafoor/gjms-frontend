@@ -47,7 +47,6 @@
   });
 
   const previousIssues = $derived(data.previousIssues);
-  const stats = $derived(data.stats);
 
   const description = $derived(
     `Current issue ${title} — the current issue of the Global Journal of Management, Social Sciences and Humanities (GJMSSH), with ${articleCount} open-access articles and full text PDFs.`
@@ -75,7 +74,7 @@
   description={`${articleCount} ${articleCount === 1 ? 'article' : 'articles'} in this issue, published in full on the journal's content delivery network.`}
   items={[{ name: 'Home', href: '/' }, { name: 'Current issue' }]}
 >
-  <dl class="mt-9 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border-strong pt-6 sm:grid-cols-4">
+  <dl class="mt-9 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-border-strong pt-6 sm:grid-cols-3 lg:grid-cols-5">
     <div>
       <dt class="text-[0.8125rem] text-subtle-foreground">Articles</dt>
       <dd class="mt-1.5 font-serif text-[1.5rem] leading-none font-semibold tabular-nums">{articleCount}</dd>
@@ -108,7 +107,7 @@
 
   <div class="mt-8 flex flex-wrap gap-3">
     {#if matched}
-      <Button href={issuePath(matched.id)}>Issue landing page</Button>
+      <Button href={issuePath(matched.id)}>Open the issue</Button>
     {/if}
     <Button variant="outline" href="/archive.html">Archive</Button>
     <Button variant="outline" href="/articles.html">Search all articles</Button>
@@ -164,34 +163,6 @@
   </div>
 
   <aside class="grid content-start gap-8 lg:sticky lg:top-[7.5rem] lg:self-start">
-    <section class="rounded-lg border border-border bg-card p-6" aria-labelledby="issue-summary-heading">
-      <h2 id="issue-summary-heading" class="eyebrow text-subtle-foreground">Issue summary</h2>
-      <dl class="mt-4 grid gap-2.5 text-[0.9375rem]">
-        <div class="flex items-baseline justify-between gap-4">
-          <dt class="text-muted-foreground">Articles</dt>
-          <dd class="font-semibold tabular-nums">{formatCount(articleCount)}</dd>
-        </div>
-        {#if pageRange}
-          <div class="flex items-baseline justify-between gap-4">
-            <dt class="text-muted-foreground">Page range</dt>
-            <dd class="font-semibold tabular-nums">{pageRange}</dd>
-          </div>
-        {/if}
-        {#if matched?.year}
-          <div class="flex items-baseline justify-between gap-4">
-            <dt class="text-muted-foreground">Published</dt>
-            <dd class="font-semibold tabular-nums">{matched.year}</dd>
-          </div>
-        {/if}
-        <div class="flex items-baseline justify-between gap-4">
-          <dt class="text-muted-foreground">Issues in archive</dt>
-          <dd class="font-semibold tabular-nums">{formatCount(stats.issues)}</dd>
-        </div>
-      </dl>
-      <div class="mt-5 border-t border-border pt-5">
-        <a class="arrow-link text-[0.875rem]" href="/author-guideline.html">Submission guidelines</a>
-      </div>
-    </section>
 
     {#if previousIssues.length}
       <section aria-labelledby="previous-issues-heading">

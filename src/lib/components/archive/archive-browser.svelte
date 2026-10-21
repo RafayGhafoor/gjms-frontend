@@ -23,7 +23,8 @@
   import SearchX from '@lucide/svelte/icons/search-x';
 
   /* The archive browser. Filters live in component state and are mirrored into
-     the query string with history.replaceState — no server round trip, no
+     the query string with history.replaceState for keystrokes and
+     history.pushState for discrete changes — no server round trip, no
      navigation, and every view stays deep-linkable
      (/archive.html?year=2025&volume=11&issue=4).
      The prerendered HTML always contains the full archive, so search engines and
@@ -48,6 +49,9 @@
   let limit = $state(PAGE_SIZE);
   let expanded = $state<string[]>([]);
   let hydrated = $state(false);
+  /* Last discrete filter tuple written to the URL. Plain `let` on purpose: the
+     effect reads it to choose push vs replace, without depending on it. */
+  let lastFilters = '';
   /* The statistics charts stay OUT of the DOM until a reader opens the
      disclosure. They are collapsed by default, so rendering 24 bars, 24 axes
      labels and an area path up front cost ~300 DOM nodes and their mount work
@@ -86,7 +90,15 @@
     if (view !== 'archive') params.set('view', 'articles');
     if (expanded.length) params.set('open', expanded.join(','));
     const query = params.toString();
-    history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+    const url = `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+    /* A filter, sort or view change is a discrete intent, so it pushes a history
+       entry and Back undoes it. Typing in the search box and opening an issue
+       replace instead — Back should not walk a keystroke or disclosure trail. */
+    const filtersKey = `${year}|${volume}|${issue}|${sort}|${view}`;
+    const push = lastFilters !== '' && filtersKey !== lastFilters;
+    lastFilters = filtersKey;
+    if (push) history.pushState(null, '', url);
+    else history.replaceState(null, '', url);
   });
 
   const filter = $derived<ArchiveFilter>({ year, volume, issue });

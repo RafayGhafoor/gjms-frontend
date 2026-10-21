@@ -43,21 +43,6 @@
     { term: 'Issues published', detail: formatCount(stats.issues) }
   ]);
 
-  const disciplines = [
-    {
-      name: 'Management',
-      body: 'Research on organisations, strategy, finance and entrepreneurship, and on the management of people and resources.'
-    },
-    {
-      name: 'Social Sciences',
-      body: 'Research on economies, societies and public policy, and on the institutions that shape public life.'
-    },
-    {
-      name: 'Humanities',
-      body: 'Research on culture, language and history, and the critical study of human expression.'
-    }
-  ];
-
   const authorSteps = [
     {
       step: '01',
@@ -76,7 +61,7 @@
     {
       step: '03',
       title: 'Submit your research',
-      body: 'Send the manuscript to the editorial office by email, including the paper title and the names of every contributing author.',
+      body: 'Send the manuscript to the editorial office by email, with the correct email address and cell number of every author as the guidelines require.',
       href: SUBMIT_HREF,
       linkText: 'Email the editorial office'
     }
@@ -181,7 +166,7 @@
 
         {#if featured}
           <div class="mt-6 border-t border-border pt-5">
-            <p class="eyebrow text-subtle-foreground">Featured article</p>
+            <p class="eyebrow text-subtle-foreground">From this issue</p>
             <p class="mt-2.5 font-serif text-[1.0625rem] leading-snug">{featured.title}</p>
             {#if featured.authors}
               <p class="mt-2 text-[0.875rem] leading-snug text-muted-foreground">{featured.authors}</p>
@@ -300,35 +285,6 @@
         {/each}
       </dl>
     </div>
-  </div>
-</section>
-
-<!-- ===================================================== 5 · DISCIPLINES -->
-<section class="border-y border-border bg-surface-muted" aria-labelledby="scope-heading">
-  <div class="container-page section-y">
-    <header class="max-w-[62ch]">
-      <h2 id="scope-heading" class="display-2">Scope of the journal</h2>
-      <p class="measure mt-4 text-muted-foreground">
-        GJMSSH publishes research in management, the social sciences and the humanities, and invites submissions from
-        researchers worldwide.
-      </p>
-    </header>
-
-    <ul class="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-3">
-      {#each disciplines as discipline (discipline.name)}
-        <li class="border-t border-border-strong pt-5">
-          <h3 class="font-serif text-[1.1875rem]">{discipline.name}</h3>
-          <p class="measure mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{discipline.body}</p>
-        </li>
-      {/each}
-    </ul>
-
-    <p class="mt-10">
-      <a class="arrow-link" href="/vision-mission.html">
-        Read the journal's aims and scope
-        <ArrowRight aria-hidden="true" />
-      </a>
-    </p>
   </div>
 </section>
 
@@ -474,7 +430,7 @@
         </p>
       </div>
       <div class="flex flex-wrap gap-3">
-        <Button variant="light" href={SUBMIT_HREF}>Submission instructions</Button>
+        <Button variant="light" href={SUBMIT_HREF}>Email your manuscript</Button>
         <Button variant="light" href="/author-guideline.html">Author guidelines</Button>
       </div>
     </div>

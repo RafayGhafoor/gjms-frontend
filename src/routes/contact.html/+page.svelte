@@ -24,7 +24,7 @@
 </script>
 
 <Seo
-  title="Contact"
+  title="Contact the editorial office"
   {description}
   path="/contact.html"
   jsonLd={[

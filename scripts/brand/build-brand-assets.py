@@ -8,7 +8,7 @@ Sources (kept in docs/brand/, not deployed):
 Derivatives (written to static/, which is copied verbatim into build/):
   brand/gjms-mark.png / -dark.png          transparent icon, light- and dark-UI variants
   brand/gjms-lockup.png / -dark.png        transparent lockup, light- and dark-UI variants
-  icon-512.png, icon-192.png               schema.org logo and PWA icons
+  icon-512.png, icon-192.png               square schema.org logo + PWA icons
   apple-touch-icon.png                     opaque 180px tile for iOS
   favicon-32.png, favicon-32-dark.png      browser tab icons per colour scheme
   favicon.ico                              legacy /favicon.ico request
@@ -93,6 +93,22 @@ def fit_box(image: Image.Image, box: int) -> Image.Image:
     return image.resize((max(1, round(image.width * scale)), max(1, round(image.height * scale))), Image.LANCZOS)
 
 
+def square_tile(image: Image.Image, size: int, content_ratio: float = 1.0) -> Image.Image:
+    """Centre the mark on a transparent square canvas.
+
+    The artwork is wider than it is tall (the cropped mark is ~1.46:1), so
+    fitting the long side alone produced a 512x351 file for an app icon declared
+    as 512x512 — the manifest and the <link rel="icon" sizes> attribute were
+    both stating a size the file did not have. Padding to the square canvas is
+    what makes those declarations true, and it leaves the painted mark exactly
+    as large as fit_box made it.
+    """
+    tile = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+    mark = fit_box(image, max(1, round(size * content_ratio)))
+    tile.paste(mark, ((size - mark.width) // 2, (size - mark.height) // 2), mark)
+    return tile
+
+
 def save(image: Image.Image, path: Path) -> None:
     image.save(path, optimize=True)
     print(f'  {path.relative_to(ROOT)}  {image.width}x{image.height}  {path.stat().st_size / 1024:.1f} KB')
@@ -123,18 +139,21 @@ for suffix, width in (('-1x', 192), ('', 384)):
     save(fit_width(lockup_dark, width), BRAND / f'gjms-lockup-dark{suffix}.png')
 
 # --- icons -------------------------------------------------------------------
-save(fit_box(icon, 512), STATIC / 'icon-512.png')
-save(fit_box(icon, 192), STATIC / 'icon-192.png')
+# Square canvases: these files are declared with square sizes (the webmanifest
+# for the PWA icons, `sizes="32x32"` in the head for the favicons), so a
+# long-side fit would make every one of those declarations false.
+save(square_tile(icon, 512, 0.9), STATIC / 'icon-512.png')
+save(square_tile(icon, 192, 0.9), STATIC / 'icon-192.png')
 
 apple = Image.new('RGB', (180, 180), 'white')
 apple_mark = fit_box(icon, 132)
 apple.paste(apple_mark, ((180 - apple_mark.width) // 2, (180 - apple_mark.height) // 2), apple_mark)
 save(apple, STATIC / 'apple-touch-icon.png')
 
-save(fit_box(icon, 32), STATIC / 'favicon-32.png')
-save(fit_box(icon_dark, 32), STATIC / 'favicon-32-dark.png')
+save(square_tile(icon, 32), STATIC / 'favicon-32.png')
+save(square_tile(icon_dark, 32), STATIC / 'favicon-32-dark.png')
 
-ico = fit_box(icon, 48)
+ico = square_tile(icon, 48)
 ico.save(STATIC / 'favicon.ico', sizes=[(16, 16), (32, 32), (48, 48)])
 print(f'  static/favicon.ico  multi-size  {(STATIC / "favicon.ico").stat().st_size / 1024:.1f} KB')
 

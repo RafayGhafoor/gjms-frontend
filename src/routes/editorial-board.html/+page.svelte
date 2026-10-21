@@ -48,7 +48,7 @@
 </script>
 
 <Seo
-  title="Editorial board"
+  title="Editorial board: editor-in-chief and members"
   {description}
   path="/editorial-board.html"
   jsonLd={[
@@ -100,7 +100,7 @@
           {content.editorialBoard.editorInChief}
         </p>
         <p class="mt-2 text-[0.875rem] text-subtle-foreground">
-          Editor-in-chief · {stats.firstYear}–{stats.lastYear}
+          Editor-in-chief
         </p>
       </div>
       <div class="sm:ml-auto">
@@ -122,8 +122,12 @@
       <div>
         <h2 id="members-heading" class="display-2">Editorial board members</h2>
         <p aria-live="polite" aria-atomic="true" class="mt-2 text-[0.9375rem] text-muted-foreground">
-          Showing <span class="font-semibold text-heading tabular-nums">{formatCount(filtered.length)}</span> of
-          <span class="tabular-nums">{formatCount(members.length)}</span> members
+          {#if q.trim()}
+            Showing <span class="font-semibold text-heading tabular-nums">{formatCount(filtered.length)}</span> of
+            <span class="tabular-nums">{formatCount(members.length)}</span> members
+          {:else}
+            <span class="tabular-nums">{formatCount(members.length)}</span> members
+          {/if}
         </p>
       </div>
       <div class="w-full sm:w-72">

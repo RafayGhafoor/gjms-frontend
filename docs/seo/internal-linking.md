@@ -4,8 +4,8 @@ Generated from the built HTML: which page types link to which.
 
 | From | Links out to |
 | --- | --- |
-| home | page (55), home (4), issue (4), article (3) |
-| page | page (299), home (108), issue (105), article (43) |
+| home | page (54), home (4), issue (4), article (3) |
+| page | page (299), home (110), issue (105), article (43) |
 | issue | page (1000), issue (356), article (341), home (250) |
 | article | page (6479), article (1772), home (1705), issue (1023) |
 | redirect |  |
@@ -27,11 +27,11 @@ Generated from the built HTML: which page types link to which.
 
 | Page | Type | Inbound internal links |
 | --- | --- | --- |
-| index.html | home | 2072 |
-| author-guideline.html | page | 1646 |
+| index.html | home | 2074 |
+| author-guideline.html | page | 1645 |
 | articles.html | page | 1616 |
-| archive.html | page | 1275 |
+| archive.html | page | 1276 |
 | current-issue.html | page | 821 |
 | editorial-board.html | page | 819 |
-| vision-mission.html | page | 819 |
+| vision-mission.html | page | 818 |
 | contact.html | page | 414 |

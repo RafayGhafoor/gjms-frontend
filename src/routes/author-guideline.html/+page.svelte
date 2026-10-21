@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import Seo from '$lib/components/site/seo.svelte';
   import PageHeader from '$lib/components/site/page-header.svelte';
   import Button from '$lib/components/ui/button.svelte';
@@ -23,10 +24,47 @@
   const sections = $derived(guidelines.sections.map((section) => ({ ...section, id: anchor(section.title) })));
   const highlights = $derived(guidelines.highlights);
 
+  /* Contents list. The two sections that bracket the numbered requirements are
+     part of the page, so they belong in it; the rail marks where the reader is. */
+  const toc = $derived([
+    { id: 'key-facts', title: 'Before you submit' },
+    ...sections.map((section) => ({ id: section.id, title: section.title })),
+    { id: 'ethics-and-integrity', title: 'Ethics and publication integrity' },
+    { id: 'disclaimer-heading', title: 'Disclaimer' }
+  ]);
+
+  let activeId = $state('');
+
+  onMount(() => {
+    const targets = toc
+      .map((entry) => document.getElementById(entry.id))
+      .filter((element): element is HTMLElement => Boolean(element));
+    if (!targets.length || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length) activeId = visible[0].target.id;
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 1] }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  });
+
+  /* The 30-day figure is the journal's time to publication — its own guidelines
+     publish a two-week decision and publication in 30 days — so the label says
+     which of the two it is. The fee is written "US$200" in the guidelines text
+     and "$200" in the stats block; the page uses the guidelines' form. */
+  const fee = $derived(content.stats.publicationFee.replace(/^\$/, 'US$'));
+
   const facts = $derived([
-    { term: 'Decision within', detail: `${content.stats.daysToPublish} days` },
+    { term: 'Publication within', detail: `${content.stats.daysToPublish} days` },
     { term: 'Acceptance rate', detail: content.stats.acceptanceRate },
-    { term: 'Publication fee', detail: content.stats.publicationFee }
+    { term: 'Publication fee', detail: fee }
   ]);
 
   const description = $derived(
@@ -67,25 +105,20 @@
     <nav aria-labelledby="on-this-page">
       <h2 id="on-this-page" class="eyebrow text-subtle-foreground">On this page</h2>
       <ol class="mt-4">
-        {#each sections as section (section.id)}
+        {#each toc as entry (entry.id)}
           <li class="border-t border-border last:border-b">
             <a
-              class="block py-2.5 text-[0.875rem] text-muted-foreground no-underline transition-colors hover:text-accent-foreground"
-              href="#{section.id}"
+              class="block py-2.5 text-[0.875rem] no-underline transition-colors {activeId === entry.id
+                ? 'font-semibold text-accent-foreground'
+                : 'text-muted-foreground hover:text-accent-foreground'}"
+              href="#{entry.id}"
+              aria-current={activeId === entry.id ? 'true' : undefined}
             >
-              {section.title}
+              {entry.title}
             </a>
           </li>
         {/each}
       </ol>
-      <p class="mt-4">
-        <a
-          class="inline-block py-0.5 text-[0.8125rem] font-semibold text-accent-foreground no-underline hover:underline hover:underline-offset-4"
-          href="#ethics-and-integrity"
-        >
-          Ethics and publication integrity
-        </a>
-      </p>
     </nav>
   </aside>
 

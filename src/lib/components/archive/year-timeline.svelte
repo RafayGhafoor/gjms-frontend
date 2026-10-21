@@ -78,8 +78,8 @@
             style="width: {Math.max(6, (node.articles / max) * 46)}px"
             aria-hidden="true"
           ></span>
-          <span class="w-14 shrink-0 text-right text-[0.625rem] text-subtle-foreground tabular-nums">
-            {node.articles} art.
+          <span class="w-14 shrink-0 text-right text-[0.6875rem] text-subtle-foreground tabular-nums">
+            {node.articles}<span class="sr-only"> articles</span>
           </span>
         </a>
       </li>
